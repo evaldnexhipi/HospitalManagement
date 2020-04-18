@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/departament/{number}",name="admin_profile")
      */
-    public function getAdmin($number, EntityManagerInterface $em){
+    public function getDepartament($number, EntityManagerInterface $em){
         $dep = $em->getRepository('App:Departament')->findOneBy(['name'=>'Departamenti_'.$number]);
         $arr = [];
         $arr [] = ['name' => $dep->getName()];
