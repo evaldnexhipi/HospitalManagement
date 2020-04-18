@@ -41,7 +41,9 @@ class HomeController extends AbstractController
      * @Route("/product/upload",name="upload_product")
      */
     public function uploadFile(Request $request, EntityManagerInterface $em){
+        /** @var Product $product */
         $product = new Product();
+
         $form = $this->createForm(ProductType::class,$product);
         $form->handleRequest($request);
 
@@ -56,8 +58,8 @@ class HomeController extends AbstractController
 
                 try{
                     $brochureFile->move(
-                      $this->getParameter('brochures_directory'),
-                      $newFilename
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
                     );
                 }
                 catch(FileException $e){
