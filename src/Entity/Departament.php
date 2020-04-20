@@ -39,9 +39,21 @@ class Departament
      */
     private $rooms;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="departament", orphanRemoval=true)
+     */
+    private $services;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Hall", mappedBy="departament", orphanRemoval=true)
+     */
+    private $halls;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->halls = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +110,68 @@ class Departament
             // set the owning side to null (unless already changed)
             if ($room->getDepartament() === $this) {
                 $room->setDepartament(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->setDepartament($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+            // set the owning side to null (unless already changed)
+            if ($service->getDepartament() === $this) {
+                $service->setDepartament(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hall[]
+     */
+    public function getHalls(): Collection
+    {
+        return $this->halls;
+    }
+
+    public function addHall(Hall $hall): self
+    {
+        if (!$this->halls->contains($hall)) {
+            $this->halls[] = $hall;
+            $hall->setDepartament($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHall(Hall $hall): self
+    {
+        if ($this->halls->contains($hall)) {
+            $this->halls->removeElement($hall);
+            // set the owning side to null (unless already changed)
+            if ($hall->getDepartament() === $this) {
+                $hall->setDepartament(null);
             }
         }
 
