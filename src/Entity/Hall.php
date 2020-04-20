@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Hall
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="hall")
+     */
+    private $itemsLocations;
+
+    public function __construct()
+    {
+        $this->itemsLocations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,37 @@ class Hall
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemsLocation[]
+     */
+    public function getItemsLocations(): Collection
+    {
+        return $this->itemsLocations;
+    }
+
+    public function addItemsLocation(ItemsLocation $itemsLocation): self
+    {
+        if (!$this->itemsLocations->contains($itemsLocation)) {
+            $this->itemsLocations[] = $itemsLocation;
+            $itemsLocation->setHall($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsLocation(ItemsLocation $itemsLocation): self
+    {
+        if ($this->itemsLocations->contains($itemsLocation)) {
+            $this->itemsLocations->removeElement($itemsLocation);
+            // set the owning side to null (unless already changed)
+            if ($itemsLocation->getHall() === $this) {
+                $itemsLocation->setHall(null);
+            }
+        }
 
         return $this;
     }
