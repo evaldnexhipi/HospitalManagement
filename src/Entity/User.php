@@ -118,6 +118,10 @@ class User implements UserInterface
         return $this;
     }
 
+    public function addRole ($role){
+        array_push($this->roles,$role);
+    }
+
     /**
      * @see UserInterface
      */

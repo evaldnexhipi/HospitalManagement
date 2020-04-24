@@ -41,11 +41,20 @@
             <li><a href="#">Faqe2</a></li>
             <li><a href="#">Faqe3</a></li>
             <li><a href="#">Faqe4</a></li>
-            <li><a href="#">Faqe5</a></li>
 
-            {# should be rendered #}
-            <li><a href = "{{ path('app_login') }}">Login</a></li>
-            {# should be rendered #}
+            {% if is_granted('ROLE_USER') %}
+                <li><a href="#">Hello {{ app.user.firstName }}</a></li>
+            {% else %}
+                <li><a href="#">Faqe5</a></li>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <li><a href = "{{ path('app_logout') }}">Logout</a></li>
+                {# Gjera te tjera qe mund te kete nese eshte loguar#}
+            {% else %}
+                <li><a href = "{{ path('app_login') }}">Login</a></li>
+            {% endif %}
+
         </ul>
     </nav>
     <div class="clearfix">

@@ -13,12 +13,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-class HomeController extends AbstractController
+class HomeController extends BaseController
 {
     /**
      * @Route("/",name="homepage")
      */
     public function homepage(){
+
+        /* $this->getUser()*/
+
         return $this->render('Home/homepage.html.twig');
     }
 

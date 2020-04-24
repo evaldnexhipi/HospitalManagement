@@ -34,10 +34,7 @@ class Hall
      */
     private $description;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="hall")
-     */
-    private $itemsLocations;
+
 
     public function __construct()
     {
@@ -85,23 +82,6 @@ class Hall
         return $this;
     }
 
-    /**
-     * @return Collection|ItemsLocation[]
-     */
-    public function getItemsLocations(): Collection
-    {
-        return $this->itemsLocations;
-    }
-
-    public function addItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if (!$this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations[] = $itemsLocation;
-            $itemsLocation->setHall($this);
-        }
-
-        return $this;
-    }
 
     public function removeItemsLocation(ItemsLocation $itemsLocation): self
     {

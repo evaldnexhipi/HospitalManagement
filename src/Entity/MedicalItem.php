@@ -33,10 +33,6 @@ class MedicalItem
      */
     private $status;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="medicalItem", orphanRemoval=true)
-     */
-    private $itemsLocations;
 
     public function __construct()
     {
@@ -84,34 +80,4 @@ class MedicalItem
         return $this;
     }
 
-    /**
-     * @return Collection|ItemsLocation[]
-     */
-    public function getItemsLocations(): Collection
-    {
-        return $this->itemsLocations;
-    }
-
-    public function addItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if (!$this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations[] = $itemsLocation;
-            $itemsLocation->setMedicalItem($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if ($this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations->removeElement($itemsLocation);
-            // set the owning side to null (unless already changed)
-            if ($itemsLocation->getMedicalItem() === $this) {
-                $itemsLocation->setMedicalItem(null);
-            }
-        }
-
-        return $this;
-    }
 }
