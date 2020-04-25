@@ -20,13 +20,7 @@
                 <img src="{{ asset('images/fotoProfili.svg') }}">
                 <h2 class="title" style = "color:#444444;">Mirësevini</h2>
 
-                <div class="div">
-                    <div class="div">
-                        {% if error %}
-                            <div class="alert alert-danger" style="background-color:red; color:white;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-                    </div>
-                </div>
+
 
                 <div class="input-div one">
                     <div class="i">
@@ -50,7 +44,14 @@
                 </div>
                 <a href="#">Harruat Password?</a>
                 <input type="submit" class="btn" value="Login">
-            </form>
+            </form><br>
+            <div class="div">
+                <div class="div">
+                    {% if error %}
+                        <div class="alert alert-danger" style="background-color:red; color:white;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
