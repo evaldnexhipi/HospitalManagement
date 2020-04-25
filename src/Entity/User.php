@@ -3,6 +3,8 @@
 // src/Entity/User.php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -48,10 +50,35 @@ class User implements UserInterface
      */
     private $password;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $gender;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $birthday;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Client", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $client;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\MedicalStaff", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $medicalStaff;
 
     public function getFirstName(): ?string
     {
@@ -152,5 +179,87 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+
+        // set the owning side of the relation if necessary
+        if ($client->getUser() !== $this) {
+            $client->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getMedicalStaff(): ?MedicalStaff
+    {
+        return $this->medicalStaff;
+    }
+
+    public function setMedicalStaff(MedicalStaff $medicalStaff): self
+    {
+        $this->medicalStaff = $medicalStaff;
+
+        // set the owning side of the relation if necessary
+        if ($medicalStaff->getUser() !== $this) {
+            $medicalStaff->setUser($this);
+        }
+
+        return $this;
     }
 }

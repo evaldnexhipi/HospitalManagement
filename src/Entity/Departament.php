@@ -40,20 +40,20 @@ class Departament
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="departament", orphanRemoval=true)
-     */
-    private $services;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hall", mappedBy="departament", orphanRemoval=true)
      */
     private $halls;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="departament", orphanRemoval=true)
+     */
+    private $services;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
-        $this->services = new ArrayCollection();
         $this->halls = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,6 +115,36 @@ class Departament
 
         return $this;
     }
+    /**
+     * @return Collection|Hall[]
+     */
+    public function getHalls(): Collection
+    {
+        return $this->halls;
+    }
+
+    public function addHall(Hall $hall): self
+    {
+        if (!$this->halls->contains($hall)) {
+            $this->halls[] = $hall;
+            $hall->setDepartament($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHall(Hall $hall): self
+    {
+        if ($this->halls->contains($hall)) {
+            $this->halls->removeElement($hall);
+            // set the owning side to null (unless already changed)
+            if ($hall->getDepartament() === $this) {
+                $hall->setDepartament(null);
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection|Service[]
@@ -141,37 +171,6 @@ class Departament
             // set the owning side to null (unless already changed)
             if ($service->getDepartament() === $this) {
                 $service->setDepartament(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Hall[]
-     */
-    public function getHalls(): Collection
-    {
-        return $this->halls;
-    }
-
-    public function addHall(Hall $hall): self
-    {
-        if (!$this->halls->contains($hall)) {
-            $this->halls[] = $hall;
-            $hall->setDepartament($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHall(Hall $hall): self
-    {
-        if ($this->halls->contains($hall)) {
-            $this->halls->removeElement($hall);
-            // set the owning side to null (unless already changed)
-            if ($hall->getDepartament() === $this) {
-                $hall->setDepartament(null);
             }
         }
 

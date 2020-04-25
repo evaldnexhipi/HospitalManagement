@@ -39,10 +39,21 @@ class Room
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="room")
+     */
+    private $itemsLocations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Patient", mappedBy="room", orphanRemoval=true)
+     */
+    private $patients;
+
 
     public function __construct()
     {
         $this->itemsLocations = new ArrayCollection();
+        $this->patients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +105,65 @@ class Room
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemsLocation[]
+     */
+    public function getItemsLocations(): Collection
+    {
+        return $this->itemsLocations;
+    }
+
+    public function addItemsLocation(ItemsLocation $itemsLocation): self
+    {
+        if (!$this->itemsLocations->contains($itemsLocation)) {
+            $this->itemsLocations[] = $itemsLocation;
+            $itemsLocation->addRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsLocation(ItemsLocation $itemsLocation): self
+    {
+        if ($this->itemsLocations->contains($itemsLocation)) {
+            $this->itemsLocations->removeElement($itemsLocation);
+            $itemsLocation->removeRoom($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Patient[]
+     */
+    public function getPatients(): Collection
+    {
+        return $this->patients;
+    }
+
+    public function addPatient(Patient $patient): self
+    {
+        if (!$this->patients->contains($patient)) {
+            $this->patients[] = $patient;
+            $patient->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removePatient(Patient $patient): self
+    {
+        if ($this->patients->contains($patient)) {
+            $this->patients->removeElement($patient);
+            // set the owning side to null (unless already changed)
+            if ($patient->getRoom() === $this) {
+                $patient->setRoom(null);
+            }
+        }
 
         return $this;
     }

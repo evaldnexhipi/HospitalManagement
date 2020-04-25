@@ -34,11 +34,23 @@ class Hall
      */
     private $description;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="hall")
+     */
+    private $itemsLocations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MedicalStaff", mappedBy="hall", orphanRemoval=true)
+     */
+    private $medicalStaff;
+
 
 
     public function __construct()
     {
         $this->itemsLocations = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->medicalStaff = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +102,86 @@ class Hall
             // set the owning side to null (unless already changed)
             if ($itemsLocation->getHall() === $this) {
                 $itemsLocation->setHall(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setHall($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getHall() === $this) {
+                $user->setHall(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemsLocation[]
+     */
+    public function getItemsLocations(): Collection
+    {
+        return $this->itemsLocations;
+    }
+
+    public function addItemsLocation(ItemsLocation $itemsLocation): self
+    {
+        if (!$this->itemsLocations->contains($itemsLocation)) {
+            $this->itemsLocations[] = $itemsLocation;
+            $itemsLocation->addHall($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MedicalStaff[]
+     */
+    public function getMedicalStaff(): Collection
+    {
+        return $this->medicalStaff;
+    }
+
+    public function addMedicalStaff(MedicalStaff $medicalStaff): self
+    {
+        if (!$this->medicalStaff->contains($medicalStaff)) {
+            $this->medicalStaff[] = $medicalStaff;
+            $medicalStaff->setHall($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicalStaff(MedicalStaff $medicalStaff): self
+    {
+        if ($this->medicalStaff->contains($medicalStaff)) {
+            $this->medicalStaff->removeElement($medicalStaff);
+            // set the owning side to null (unless already changed)
+            if ($medicalStaff->getHall() === $this) {
+                $medicalStaff->setHall(null);
             }
         }
 
