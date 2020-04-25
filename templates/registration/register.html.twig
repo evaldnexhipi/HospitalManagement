@@ -16,67 +16,10 @@
             <img src="{{ asset('images/regjistrimFoto.svg') }}">
         </div>
         <div class="login-content">
-            <form action="" method="post">
-                <h1>Regjistrohu!</h1><br>
-                <h3>Ju lutem vendosni sakte kredencialet tuaja!</h3><br>
-                <div class="input-div one">
-                    <h3 for = "firstName">Emër</h3><br>
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <input type="text" class="input" id="firstName" name = "form[firstName]">
-                    </div>
-                </div>
-                <div class="input-div one">
-                    <h3 for="lastName">Mbiemër</h3><br>
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <input type="text" class="input" id="lastName" name = "form[lastName]">
-                    </div>
-                </div>
-
-                <div class="input-div one">
-                    <h3 for = "email">Email</h3><br>
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <input type="email" class="input" id = "mbiemer" id = "email" name = "form[email]">
-                    </div>
-                </div>
-
-                <div class="input-div one">
-                    <h3 for="birthday">Datëlindja</h3><br>
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div>
-                        <input type="date" class="input" id = "birthday" name = "form[birthday]">
-                    </div>
-                </div>
-
-                <div class="input-div one">
-                    <h3 for = "gender">Gjinia</h3><br>
-                    <div class="i">
-                        <i class="fa fa-envelope"></i>
-                    </div>
-                    <div>
-                        <input type="email" class="input" id = "gender" name = "form[email]">
-                    </div>
-                </div>
-                <div for = "plainPassword" class="input-div pass">
-                    <h3>Password</h3><br>
-                    <div class="i">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="div">
-                        <input type="password" class="input" id = "plainPassword" name = "form[plainPassword]">
-                    </div>
-            </form>
+            {{ form_start(registrationForm) }}
+            {{ form_widget(registrationForm) }}
+            <input type="submit" class="btn" value="Regjistrohu">
+            {{ form_end(registrationForm) }}
         </div>
-        <input type="submit" class="btn" value="Regjistrohu">
     </div>
 {% endblock %}

@@ -7,7 +7,12 @@ use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Date;
@@ -20,37 +25,51 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('email')
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
+            ->add('firstName',TextType::class,[
+                'required'=>true,
+                'invalid_message'=>'XXXXXXXxx'
             ])
-            ->add('gender')
-            ->add('birthday', BirthdayType::class)
-            ->add('telephone')
+            ->add('lastName',TextType::class,[
+                'required'=>true,
+            ])
+            ->add('email',EmailType::class,[
+                'required'=>true,
+            ])
+            ->add('password', RepeatedType::class, [
+                'type'=>PasswordType::class,
+                'invalid_message'=>'Fjalekalimit nuk perputhen',
+                'options'=>[
+                    'attr'=>['class'=>'abc']
+                ],
+                'required'=>true,
+                'first_options'=>['label'=>'Fjalekalimi'],
+                'second_options'=>['label'=>'Perserit Fjalekalimin'],
+            ])
+            ->add('gender',ChoiceType::class,[
+                'choices'=>[
+                    'Femer'=>'F',
+                    'Mashkull'=>'M'
+                ],
+                'required'=>true
+            ])
+            ->add('birthday', BirthdayType::class,[
+                'required'=>true
+            ])
+            ->add('telephone',TelType::class,[
+                'required'=>false,
+            ])
+            ->add('address',TextType::class,[
+                'required'=>false,
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Duhet te pranoni kushtet tona!',
                     ]),
                 ],
+                'invalid_message'=>'Duhet te pranoni kushtet tona!'
             ])
-            ->add('gender')
         ;
     }
 
