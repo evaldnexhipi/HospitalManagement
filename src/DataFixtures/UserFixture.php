@@ -71,8 +71,12 @@ class UserFixture extends BaseFixture
 
                 $doc->setSpeciality($speciality);
                 $doc->setStatus('true');
-                $manager->persist($doc);
 
+                $service = $manager->getRepository('App:Service')->findOneBy(['name'=>'Sherbimi_'.($count%7)]);
+                $doc->addService($service);
+                $service->addMedicalStaff($doc);
+
+                $manager->persist($doc);
                 $user->setMedicalStaff($doc);
                 $doc->setUser($user);
             }

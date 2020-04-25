@@ -46,9 +46,15 @@ class Service
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\MedicalStaff", mappedBy="services")
+     */
+    private $medicalStaffs;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->medicalStaffs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +136,34 @@ class Service
             if ($reservation->getService() === $this) {
                 $reservation->setService(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MedicalStaff[]
+     */
+    public function getMedicalStaffs(): Collection
+    {
+        return $this->medicalStaffs;
+    }
+
+    public function addMedicalStaff(MedicalStaff $medicalStaff): self
+    {
+        if (!$this->medicalStaffs->contains($medicalStaff)) {
+            $this->medicalStaffs[] = $medicalStaff;
+            $medicalStaff->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicalStaff(MedicalStaff $medicalStaff): self
+    {
+        if ($this->medicalStaffs->contains($medicalStaff)) {
+            $this->medicalStaffs->removeElement($medicalStaff);
+            $medicalStaff->removeService($this);
         }
 
         return $this;
