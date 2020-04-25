@@ -61,12 +61,18 @@ class MedicalStaff
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Service", inversedBy="medicalStaffs")
+     */
+    private $services;
+
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
         $this->anamneses = new ArrayCollection();
         $this->results = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,6 +244,32 @@ class MedicalStaff
             if ($reservation->getMedicalStaff() === $this) {
                 $reservation->setMedicalStaff(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
         }
 
         return $this;
