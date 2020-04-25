@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
@@ -38,8 +39,14 @@ class Reservation
 
     /**
      * @ORM\Column(type="string", length=15)
+     * @Assert\Choice(choices={"paguaj","pritje"}, message="Rezervimi duhet te kete nje status")
      */
-    private $status;
+    private $status='pritje';
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $day;
 
     public function getId(): ?int
     {
@@ -90,6 +97,18 @@ class Reservation
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getDay(): ?\DateTimeInterface
+    {
+        return $this->day;
+    }
+
+    public function setDay(\DateTimeInterface $day): self
+    {
+        $this->day = $day;
 
         return $this;
     }

@@ -1,0 +1,7 @@
+{% extends 'Home/homepage.html.twig' %}
+{% block body %}
+{{ form_start(reservationForm) }}
+    {{ form_widget(reservationForm) }}
+    <input type="submit" value="Rezervo">
+    {{ form_end(reservationForm) }}
+{% endblock %}

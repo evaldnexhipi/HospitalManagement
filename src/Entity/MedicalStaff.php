@@ -274,4 +274,9 @@ class MedicalStaff
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getUser()->getFirstName();
+    }
 }
