@@ -2,24 +2,134 @@
 
 {% block title %}Regjistrim{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
-    <title>Regjistrimi</title>
-    <link rel="stylesheet" type="text/css" href={{ asset('css/regjistrimCSS.css') }}>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <!-- Icons font CSS-->
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bubblesStyle.css') }}">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet" media="all">
 {% endblock %}
 {% block body %}
-    <img class="wave" src={{ asset("images/vala.png") }}>
-    <div class="container">
-        <div class="img">
-            <img src="{{ asset('images/regjistrimFoto.svg') }}">
-        </div>
-        <div class="login-content">
-            {{ form_start(registrationForm) }}
-            {{ form_widget(registrationForm) }}
-            <input type="submit" class="btn" value="Regjistrohu">
-            {{ form_end(registrationForm) }}
+    <ul class="bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Registration Form</h2>
+                    {{ form_start(registrationForm) }}
+                        <div class="row row-space">
+
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">first name</label>
+                                    {{ form_row(registrationForm.firstName,{'attr':{'class':'input--style-4', 'name':'first_name'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">last name</label>
+                                    {{ form_row(registrationForm.lastName,{'attr':{'class':'input--style-4', 'name':'last_name'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        {{ form_row(registrationForm.birthday,{'attr':{'class':'input--style-4 js-datepicker', 'name':'birthday','type':'text'}}) }}
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        {{ form_row(registrationForm.gender) }}
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    {{ form_row(registrationForm.email, {'attr':{'class':'input--style-4','name':'email'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    {{ form_row(registrationForm.telephone, {'attr':{'class':'input--style-4','name':'phone'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="row row-space">
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Password-i</label>
+                                    {{ form_row(registrationForm.password.first) }}
+                                </div>
+                             </div>
+                             <div class="col-2">
+                                 <div class="input-group">
+                                     <label class="label">Perserit Passwordin</label>
+                                     {{ form_row(registrationForm.password.second) }}
+                                 </div>
+                             </div>
+                         </div>
+
+                            <div class="row row-space">
+                               <div class="input-group">
+                                <label class="label">Addressa</label>
+                                {{ form_row(registrationForm.address,{'attr':{'class':'input--style-4','name':'address'}}) }}
+                               </div>
+                            </div>
+
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    {{ form_row(registrationForm.agreeTerms,{'attr':{'name':'address','class':'label'}}) }}
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn--radius-2 btn--green" type="submit">Submit</button>
+                                </div>
+                            </div>
+
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
 {% endblock %}

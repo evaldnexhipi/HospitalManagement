@@ -27,6 +27,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstName',TextType::class,[
                 'required'=>true,
+
                 'invalid_message'=>'XXXXXXXxx'
             ],
             [ 'attr' => [ 'class' => 'input' ] ])
@@ -34,43 +35,60 @@ class RegistrationFormType extends AbstractType
                 'required'=>true,
             ],
                 [ 'attr' => [ 'class' => 'input' ] ])
+
+                'invalid_message'=>'XXXXXXXxx',
+                'label'=>false
+            ])
+            ->add('lastName',TextType::class,[
+                'required'=>true,
+                'label'=>false,
+            ])
+             85033a6b2a97066458f1e4a770a9391d1afcab6d
             ->add('email',EmailType::class,[
                 'required'=>true,
+                'label'=>false
             ])
             ->add('password', RepeatedType::class, [
                 'type'=>PasswordType::class,
                 'invalid_message'=>'Fjalekalimit nuk perputhen',
                 'options'=>[
-                    'attr'=>['class'=>'abc']
+                    'attr'=>['class'=>'input--style-4', 'name'=>'password']
                 ],
                 'required'=>true,
-                'first_options'=>['label'=>'Fjalekalimi'],
-                'second_options'=>['label'=>'Perserit Fjalekalimin'],
+                'first_options'=>['label'=>false],
+                'second_options'=>['label'=>false],
             ])
             ->add('gender',ChoiceType::class,[
                 'choices'=>[
                     'Femer'=>'F',
                     'Mashkull'=>'M'
                 ],
-                'required'=>true
+                'required'=>true,
+                'label'=>false
             ])
-            ->add('birthday', BirthdayType::class,[
-                'required'=>true
+            ->add('birthday', TextType::class,[
+                'required'=>true,
+                'label'=>false
             ])
             ->add('telephone',TelType::class,[
                 'required'=>false,
+                'label'=>false
             ])
             ->add('address',TextType::class,[
                 'required'=>false,
+                'label'=>false,
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label_attr'=>[
+                  'class'=>'label'
+                ],
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Duhet te pranoni kushtet tona!',
                     ]),
                 ],
-                'invalid_message'=>'Duhet te pranoni kushtet tona!'
+                'invalid_message'=>'Duhet te pranoni kushtet tona!',
             ])
         ;
     }
