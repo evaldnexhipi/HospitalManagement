@@ -3,7 +3,7 @@
 </a></p>
 
 <h1 align="center"> MegaSpital Management </h1>
-<img src="https://github.com/evaldnexhipi/HospitalManagement/blob/master/public/images/logo.png">
+<img align="center" src="https://github.com/evaldnexhipi/HospitalManagement/blob/master/public/images/logo.png">
 <p align="center"> Projekt ne lenden Programim ne Web </p>
 
 <p align="center"> Evald Nexhipi | Kevin Dule</p>
