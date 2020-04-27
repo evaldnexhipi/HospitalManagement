@@ -34,16 +34,17 @@ class RegistrationFormType extends AbstractType
             ->add('lastName',TextType::class,[
                 'required'=>true,
             ],
-                [ 'attr' => [ 'class' => 'input' ] ])
+                [ 'attr' => [ 'class' => 'input' ],
+                    'invalid_message'=>'XXXXXXXxx',
+                    'label'=>false
+                    ])
 
-                'invalid_message'=>'XXXXXXXxx',
-                'label'=>false
-            ])
+
             ->add('lastName',TextType::class,[
                 'required'=>true,
                 'label'=>false,
             ])
-             85033a6b2a97066458f1e4a770a9391d1afcab6d
+
             ->add('email',EmailType::class,[
                 'required'=>true,
                 'label'=>false
