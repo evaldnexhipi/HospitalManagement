@@ -3,6 +3,7 @@
 </a></p>
 
 <h1 align="center"> MegaSpital Management </h1>
+<img src="images/logo.png">
 <p align="center"> Projekt ne lenden Programim ne Web </p>
 
 <p align="center"> Evald Nexhipi | Kevin Dule</p>
