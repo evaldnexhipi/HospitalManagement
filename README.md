@@ -4,7 +4,7 @@
 
 <h1 align="center"> MegaSpital Management </h1>
 <p align="center">
-<img  src="https://github.com/evaldnexhipi/HospitalManagement/blob/master/public/images/logo.png">
+    <img src="https://github.com/evaldnexhipi/HospitalManagement/blob/master/public/images/logo.png">
 </p>
 <p align="center"> Projekt ne lenden Programim ne Web </p>
 
