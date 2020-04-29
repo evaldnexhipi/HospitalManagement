@@ -3,7 +3,6 @@
   --secondColor: #444444/*#16222A*/;
 }
 
-
 footer {
     background: rgb(40, 41, 40);
     background: -webkit-linear-gradient(to right,var(--firstColor),var(--secondColor));

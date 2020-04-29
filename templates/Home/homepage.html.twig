@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/footerCSS.css') }}">
     {% endblock %}
 {% block body %}
+    {% block bubbles %}
 <ul class="bubbles">
     <li></li>
     <li></li>
@@ -31,7 +32,8 @@
     <li></li>
     <li></li>
 </ul>
-
+        {% endblock %}
+{% block navbar %}
 <header>
     <a href="#" class="logo"><img src="{{ asset('images/logo.png') }}" height="66" width="203"></a>
     <div class="menu-toggle"></div>
@@ -60,7 +62,7 @@
     <div class="clearfix">
     </div>
 </header>
-
+{% endblock %}
 <!-- SERVICES -->
 <section class="main-services-area ptb-100">
     <div class="container">
@@ -312,9 +314,8 @@
 <!-- End Doctor Area -->
 
 
-
+{% block footer %}
 <!--FOOTER-->
-<div id = "footer" class="container-fluid testimonial-container">
     <footer class="mainfooter" role="contentinfo">
         <div class="footer-middle">
             <div class="container">
@@ -370,7 +371,7 @@
             </div>
         </div>
     </footer>
-</div>
+    {% endblock %}
 <script>
 
     $(function(){

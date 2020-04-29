@@ -15,10 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
@@ -35,7 +31,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('email',EmailType::class,[
                 'required'=>true,
-                'label'=>false
+                'label'=>false,
             ])
             ->add('password', RepeatedType::class, [
                 'type'=>PasswordType::class,
