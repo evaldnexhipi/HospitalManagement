@@ -27,31 +27,18 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstName',TextType::class,[
                 'required'=>true,
-
-                'invalid_message'=>'XXXXXXXxx'
-            ],
-            [ 'attr' => [ 'class' => 'input' ] ])
-            ->add('lastName',TextType::class,[
-                'required'=>true,
-            ],
-                [ 'attr' => [ 'class' => 'input' ],
-                    'invalid_message'=>'XXXXXXXxx',
-                    'label'=>false
-                    ])
-
-
+                'label'=>false,
+            ])
             ->add('lastName',TextType::class,[
                 'required'=>true,
                 'label'=>false,
             ])
-
             ->add('email',EmailType::class,[
                 'required'=>true,
                 'label'=>false
             ])
             ->add('password', RepeatedType::class, [
                 'type'=>PasswordType::class,
-                'invalid_message'=>'Fjalekalimit nuk perputhen',
                 'options'=>[
                     'attr'=>['class'=>'input--style-4', 'name'=>'password']
                 ],
@@ -67,9 +54,13 @@ class RegistrationFormType extends AbstractType
                 'required'=>true,
                 'label'=>false
             ])
-            ->add('birthday', TextType::class,[
+            ->add('birthday', BirthdayType::class,[
                 'required'=>true,
-                'label'=>false
+                'label'=>false,
+                'attr'=>[
+                    'class'=>'nice-select'
+                ],
+                'html5'=>'false'
             ])
             ->add('telephone',TelType::class,[
                 'required'=>false,
@@ -78,18 +69,6 @@ class RegistrationFormType extends AbstractType
             ->add('address',TextType::class,[
                 'required'=>false,
                 'label'=>false,
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'label_attr'=>[
-                  'class'=>'label'
-                ],
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Duhet te pranoni kushtet tona!',
-                    ]),
-                ],
-                'invalid_message'=>'Duhet te pranoni kushtet tona!',
             ])
         ;
     }

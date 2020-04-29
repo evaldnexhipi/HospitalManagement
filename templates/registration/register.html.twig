@@ -2,18 +2,22 @@
 
 {% block title %}Regjistrim{% endblock %}
 {% block stylesheets %}
-    <!-- Icons font CSS-->
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <!-- Font special for pages-->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e63f0d911b.js" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <!-- Vendor CSS-->
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bubblesStyle.css') }}">
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/sliderCSS.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles1.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/stylesTestimonial.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/doctorsStyle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/footerCSS.css') }}">
 {% endblock %}
 {% block body %}
     <ul class="bubbles">
@@ -28,108 +32,143 @@
         <li></li>
         <li></li>
     </ul>
+    <!-- Fillimit i regjistrimit -->
+    <section class="appointment-area">
+        <div class="container">
+            <div class="appointment-content">
+                <span class="sub-title">Regjistrohu</span>
+                <h2>Mire se erdhet!</h2>
 
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">Registration Form</h2>
+
                     {{ form_start(registrationForm) }}
-                        <div class="row row-space">
 
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">first name</label>
-                                    {{ form_row(registrationForm.firstName,{'attr':{'class':'input--style-4', 'name':'first_name'}}) }}
+                {{ form_errors(registrationForm) }}
+                <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-user"></i>
                                 </div>
-                            </div>
-
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">last name</label>
-                                    {{ form_row(registrationForm.lastName,{'attr':{'class':'input--style-4', 'name':'last_name'}}) }}
-                                </div>
+                                <label>Emri</label>
+                                {{ form_row(registrationForm.firstName, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
 
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        {{ form_row(registrationForm.birthday,{'attr':{'class':'input--style-4 js-datepicker', 'name':'birthday','type':'text'}}) }}
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-envelope"></i>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <div class="rs-select2 js-select-simple select--no-search">
-                                        {{ form_row(registrationForm.gender) }}
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email</label>
-                                    {{ form_row(registrationForm.email, {'attr':{'class':'input--style-4','name':'email'}}) }}
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Phone Number</label>
-                                    {{ form_row(registrationForm.telephone, {'attr':{'class':'input--style-4','name':'phone'}}) }}
-                                </div>
+                                <label>Mbiemri</label>
+                                {{ form_row(registrationForm.lastName, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
 
-                         <div class="row row-space">
-                             <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password-i</label>
-                                    {{ form_row(registrationForm.password.first) }}
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
                                 </div>
-                             </div>
-                             <div class="col-2">
-                                 <div class="input-group">
-                                     <label class="label">Perserit Passwordin</label>
-                                     {{ form_row(registrationForm.password.second) }}
-                                 </div>
-                             </div>
-                         </div>
-
-                            <div class="row row-space">
-                               <div class="input-group">
-                                <label class="label">Addressa</label>
-                                {{ form_row(registrationForm.address,{'attr':{'class':'input--style-4','name':'address'}}) }}
-                               </div>
+                                <label>Email</label>
+                                {{ form_row(registrationForm.email, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
+                        </div>
 
-                            <div class="row row-space">
-                                <div class="col-2">
-                                    {{ form_row(registrationForm.agreeTerms,{'attr':{'name':'address','class':'label'}}) }}
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
                                 </div>
-                                <div class="col-2">
-                                    <button class="btn btn--radius-2 btn--green" type="submit">Submit</button>
-                                </div>
+                                <label>Gjinia</label>
+                                {{ form_row(registrationForm.gender, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
+                        </div>
 
-                    {{ form_end(registrationForm) }}
-                </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                                <label>Password</label>
+                                {{ form_row(registrationForm.password.first, {'attr':{'type':'text','class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                                <label>Password</label>
+                                {{ form_row(registrationForm.password.second, {'attr':{'type':'text','class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                                <label>Telefon</label>
+                                {{ form_row(registrationForm.telephone, {'attr':{'type':'text','class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                                <label>Adrese</label>
+                                {{ form_row(registrationForm.address, {'attr':{'type':'text','class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group" style="border:none;">
+                                <div class="icon">
+                                    <i class="flaticon-phone-call"></i>
+                                </div>
+                                <label>Ditelindja</label>
+                                {{ form_row(registrationForm.birthday, {'attr':{'type':'text','class':'nice-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6">
+                            <button class="btn butoni" style="margin-top:7%;margin-left:35%;">Make Appointment
+                                <i class="flaticon-right-chevron">
+
+                                </i></button>
+                        </div>
+                    {#
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <div class="icon">
+                                    <i class="flaticon-support"></i>
+                                </div>
+                                <label>Select Your Services</label>
+                                <select class="nice-select">
+                                    <option>Cardiology</option>
+                                    <option>Urologic Oncology</option>
+                                    <option>Neurology</option>
+                                    <option>Medicine</option>
+                                    <option>Surgery</option>
+                                    <option>Urology</option>
+                                    <option>Radiology</option>
+                                    <option>Neurosurgery</option>
+                                    <option>Bariatric Surgery</option>
+                                </select>
+                            </div>
+                        </div>
+#}
+                    </div>
+                {{ form_end(registrationForm) }}
             </div>
         </div>
-    </div>
+    </section>
+    <!-- Fund i regjistrimit -->
 {% endblock %}
 {% block javascripts %}
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
-
-    <!-- Main JS-->
-    <script src="js/global.js"></script>
+    {{ parent() }}
 {% endblock %}

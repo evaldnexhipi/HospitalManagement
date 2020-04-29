@@ -369,7 +369,6 @@ nav ul li a:hover {
   .more-services-btn {
     text-align: center;
     margin-top: 5px;
-    order: none;
     line-height: initial;
     text-transform: uppercase;
     border-radius: 30px;
@@ -393,3 +392,134 @@ nav ul li a:hover {
       background: black;
       color:white;
   }
+
+
+/* Formulari Regjistrimit */
+.appointment-area {
+    position: relative;
+    z-index: 1;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.appointment-content {
+    background-color: #ffffff;
+    padding: 40px;
+    position: relative;
+    z-index: 1;
+    -webkit-box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    margin: 5% auto auto;
+}
+
+.appointment-content::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: #ffffff;
+    width: 96%;
+    opacity: .62;
+    height: 50%;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 3px;
+}
+
+.appointment-content .sub-title {
+    display: block;
+    margin-bottom: 5px;
+    color: #19ce67;
+    font-size: 17px;
+    font-family: "Rubik", sans-serif;
+}
+
+.appointment-content h2 {
+    margin-bottom: 0;
+    max-width: 520px;
+    line-height: 1.3;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.appointment-content form {
+    margin-top: 5px;
+}
+
+.appointment-content form .form-group {
+    position: relative;
+    padding-left: 55px;
+    margin-bottom: 0;
+    margin-top: 30px;
+}
+
+.appointment-content form .form-group .icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #19ce67;
+    font-size: 35px;
+}
+
+.appointment-content form .form-group label {
+    display: block;
+    text-transform: uppercase;
+    color: #7d7d7d;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.appointment-content form .form-group .form-control {
+    border: none;
+    height: auto;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 17px;
+    font-weight: 600;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 8px;
+}
+
+.appointment-content form .form-group .form-control::-webkit-input-placeholder {
+    color: #121521;
+}
+
+.appointment-content form .form-group .form-control:-ms-input-placeholder {
+    color: #121521;
+}
+
+.appointment-content form .form-group .form-control::-ms-input-placeholder {
+    color: #121521;
+}
+
+.appointment-content form .form-group .form-control::placeholder {
+    color: #121521;
+}
+
+.appointment-content form .form-group .form-control:focus {
+    border-color: #19ce67;
+    padding-left: 2px;
+}
+
+.appointment-content form .form-group .nice-select,
+.appointment-content form .form-group .nice-select select
+{
+    background-color: transparent;
+    color: #495057;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+    height: unset;
+    line-height: initial;
+    padding: 0 35px 8px 0;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+div.form-group li{
+    color:red;
+}
