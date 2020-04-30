@@ -27,7 +27,7 @@ class UserController extends BaseController
      * @Route("/",name="app_profile_main")
      */
     public function helloPerson(){
-        return new Response("<h1> Hello ".$this->getUser()->getEmail()."</h1>");
+        return $this->render('user/profile.html.twig');
     }
 
     /**
