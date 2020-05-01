@@ -26,17 +26,23 @@
                 <span class="sub-title">Regjistrohu</span>
                 <h2>Mire se erdhet!</h2>
 
-
-                    {{ form_start(registrationForm) }}
-
-                {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm) }}
+                {#
+                <div class="alert alert-danger">
+                    <ul>
+                    {% for error in errors %}
+                        <li>error</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                 #}
                 <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
                                     <i class="flaticon-user"></i>
                                 </div>
-                                <label>Emri</label>
+                                <label>Emri<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.firstName, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -46,7 +52,7 @@
                                 <div class="icon">
                                     <i class="flaticon-envelope"></i>
                                 </div>
-                                <label>Mbiemri</label>
+                                <label>Mbiemri<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.lastName, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -56,7 +62,10 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Email</label>
+                                <label>Email<span style="color:red">*</span></label>
+
+
+
                                 {{ form_row(registrationForm.email, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -66,7 +75,7 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Gjinia</label>
+                                <label>Gjinia<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.gender, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -76,7 +85,7 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Password</label>
+                                <label>Password<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.password.first, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -86,7 +95,7 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Password</label>
+                                <label>Perserit Password<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.password.second, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -96,7 +105,7 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Telefon</label>
+                                <label id="telefonLabel">Telefon</label>
                                 {{ form_row(registrationForm.telephone, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -106,7 +115,7 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Adrese</label>
+                                <label>Adresa</label>
                                 {{ form_row(registrationForm.address, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
@@ -117,38 +126,38 @@
                                 <div class="icon">
                                     <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Ditelindja</label>
+                                <label>Ditelindja<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.birthday, {'attr':{'type':'text','class':'nice-select'}}) }}
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
-                            <button class="btn butoni" style="margin-top:7%;margin-left:35%;">Make Appointment
-                                <i class="flaticon-right-chevron">
-
-                                </i></button>
-                        </div>
-                    {#
-                        <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
+                            <div class="form-group" style="border:none;">
                                 <div class="icon">
-                                    <i class="flaticon-support"></i>
+                                    <i class="flaticon-phone-call"></i>
                                 </div>
-                                <label>Select Your Services</label>
-                                <select class="nice-select">
-                                    <option>Cardiology</option>
-                                    <option>Urologic Oncology</option>
-                                    <option>Neurology</option>
-                                    <option>Medicine</option>
-                                    <option>Surgery</option>
-                                    <option>Urology</option>
-                                    <option>Radiology</option>
-                                    <option>Neurosurgery</option>
-                                    <option>Bariatric Surgery</option>
-                                </select>
+
+                                <label for="registration_form_imageFilename" id="fotoLabel">
+                                    <i class="glyphicon glyphicon-open"></i>&nbsp;
+                                    Foto Profili
+                                </label>
+                                <span>
+                                    <strong style="font-size:13px;" id="file-selected"></strong>
+                                    <span id="file-name" style="font-size:13px;"></span>
+                                </span>
+                                {{ form_row(registrationForm.imageFilename) }}
                             </div>
                         </div>
-#}
+
+                        <div class="col-lg-6 col-md-6">
+                            <button id="butoniSubmit"
+                                    type="submit"
+                                    class="btn butoni"
+                                    style="margin-top:7%;margin-left:35%;">
+                                Regjistrohu
+                                <i class="flaticon-right-chevron">
+                                </i></button>
+                        </div>
                     </div>
                 {{ form_end(registrationForm) }}
             </div>
@@ -159,4 +168,33 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        var count=0;
+        $('#butoniSubmit').click(function () {
+         var telephoneField = $("#registration_form_telephone");
+            if (isNaN(telephoneField.val())) {
+                count++;
+                if (count==1) {
+                    $('#telefonLabel+div').prepend(
+                        '<ul>' +
+                        '<li> Telefoni te permbaje numra </li>' +
+                        '</ul>'
+                    );
+                //REDIRECT AGAIN HERE
+                    location.replace({{ path('app_register') }});
+
+                }
+                //REDIRECT AGAIN HERE
+
+            }
+        });
+        var inputFile = document.getElementById("registration_form_imageFilename");
+        var fileNameField = document.getElementById("file-name");
+        var fileSelectedStrong = document.getElementById('file-selected');
+        inputFile.addEventListener('change',function(event){
+            var uploadedFileName = event.target.files[0].name;
+            fileSelectedStrong.textContent= 'Foto e zgjedhur: ';
+            fileNameField.textContent = uploadedFileName;
+        });
+    </script>
 {% endblock %}

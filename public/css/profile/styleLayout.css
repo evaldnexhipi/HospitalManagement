@@ -116,7 +116,7 @@ footer ul li a{font-family:Roboto,sans-serif;font-weight:400;letter-spacing:.03r
     .fc-unthemed .fc-list-heading td.fc-widget-header{background:#fff}
     .email-header{position:-webkit-sticky;position:sticky;top:65px;z-index:99;background:#f9fafb}
     .page-body{background:#fff}
-    .page-content-wrapper{background:#f9fafb;border-left:1px solid #f2f4f9}
+    .page-content-wrapper{background:linear-gradient(to bottom,#67FF63,white);border-left:1px solid #f2f4f9}
     
 @media (min-width:992px){
     .t-header .t-header-content-wrapper{border-left:1px solid #f2f4f9}

@@ -41,17 +41,20 @@ class UserController extends BaseController
         $form = $this->createForm(ReservationFormType::class);
         $form->handleRequest($request);
 
+        $price=$service->getCost();
         if ($form->isSubmitted() && $form->isValid()) {
             $reservation->setMedicalStaff($form->get('medicalStaff')->getData());
             $reservation->setDay($form->get('day')->getData());
             $reservation->setStatus($form->get('status')->getData());
             $manager->persist($reservation);
             $manager->flush();
+
             echo '<div style="background-color:white; color:black;">U shtua rezervimi</div>';
         }
 
         return $this->render('user/reservation.html.twig', [
             'reservationForm' => $form->createView(),
+            'cost'=>$price
         ]);
     }
 }

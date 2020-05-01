@@ -21,6 +21,7 @@
 <!-- partial:partials/_header.html -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133368331-1"></script>
+
 <nav class="t-header">
     <div class="t-header-brand-wrapper">
         <a href="index.html">
@@ -449,13 +450,13 @@
             </div>
             <div class="btn-group admin-access-level">
                 <div class="avatar">
-                    <img class="profile-img" src="../assets/images/profile/male/image_1.png" alt="">
+                    <img class="profile-img" src="{{ asset('images/user/'~ app.user.imageFilename) }}" alt="">
                 </div>
                 <div class="user-type-wrapper">
                     <p class="user_name">{{ app.user.firstName }}</p>
                     <div class="d-flex align-items-center">
                         <div class="status-indicator small rounded-indicator bg-success"></div>
-                        <small class="user_access_level">{{ app.user.email }}</small>
+                        <small class="user_access_level">{{ app.user.firstName }} {{ app.user.lastName}}</small>
                     </div>
                 </div>
                 <i class="arrow mdi mdi-chevron-right"></i>

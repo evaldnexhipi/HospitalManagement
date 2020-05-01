@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
@@ -44,9 +47,14 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager)
+    public function register(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             GuardAuthenticatorHandler $guardHandler,
+                             LoginFormAuthenticator $authenticator,
+                             EntityManagerInterface $entityManager)
     {
         $user = new User();
+        $client = new Client();
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
@@ -62,10 +70,37 @@ class SecurityController extends AbstractController
                 )
             );
             $user->setGender($form->get('gender')->getData());
-            $user->setBirthday(new DateTime());
+            $user->setBirthday($form->get('birthday')->getData());
+
+            if (!is_numeric($form->get('telephone')->getData())){
+                $form->addError(new FormError('Telefoni te permbaje numra','telephone','telephone','telephone'));
+            }
+
             $user->setTelephone($form->get('telephone')->getData());
             $user->setAddress($form->get('address')->getData());
+
+            $imageFile = $form->get('imageFilename')->getData();
+            if($imageFile){
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(),PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try{
+                    $imageFile->move(
+                        $this->getParameter('user_images_directory'),
+                        $newFilename
+                    );
+                }
+                catch(FileException $e){
+                    dd($e);
+                }
+                $user->setImageFilename($newFilename);
+            }
+
+            $user->setClient($client);
+            $client->setUser($user);
+
             $entityManager->persist($user);
+            $entityManager->persist($client);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
@@ -79,6 +114,7 @@ class SecurityController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'errors'=>$form->getErrors()
         ]);
     }
 }
