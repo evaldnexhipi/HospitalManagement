@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Service;
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+
 use App\Form\ReservationFormType;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -17,12 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-
+use App\Service\Mailer;
+use App\Service\TokenGenerator;
+use App\Form\RegistrationFormType;
 /**
  * @Route("/profile")
  */
 class UserController extends BaseController
 {
+    const DOUBLE_OPT_IN = false;
+
     /**
      * @Route("/",name="app_profile_main")
      */
