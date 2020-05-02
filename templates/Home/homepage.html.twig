@@ -35,7 +35,7 @@
         {% endblock %}
 {% block navbar %}
 <header>
-    <a href="#" class="logo"><img src="{{ asset('images/logo.png') }}" height="66" width="203"></a>
+    <a href="{{ path('homepage') }}" class="logo"><img src="{{ asset('images/logo.png') }}" height="66" width="203"></a>
     <div class="menu-toggle"></div>
     <nav>
         <ul>
@@ -44,8 +44,9 @@
             <li><a href="#">Faqe3</a></li>
             <li><a href="#">Faqe4</a></li>
 
+            {# if else if else ROLE_ADMIN send to admin/profile#}
             {% if is_granted('ROLE_USER') %}
-                <li><a href="#">Hello {{ app.user.firstName }}</a></li>
+                <li><a href="{{ path('app_profile_main') }}">Hello {{ app.user.firstName }}</a></li>
             {% else %}
                 <li><a href="#">Faqe5</a></li>
             {% endif %}
