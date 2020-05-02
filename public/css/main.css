@@ -1,4 +1,7 @@
-
+:root{
+  --theme-color:#67FF63;
+  --sub-color:#525252;
+}
 /* ==========================================================================
    #FONT
    ========================================================================== */
@@ -487,6 +490,7 @@ input {
   cursor: pointer;
 }
 
+
 /* ==========================================================================
    #SELECT2
    ========================================================================== */
@@ -622,4 +626,17 @@ input {
   .card-4 .card-body {
     padding: 50px 40px;
   }
+}
+
+.butoni-2{
+  background: white;
+  color: var(--theme-color);
+  border: 1px solid var(--sub-color);
+  text-decoration: none;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.butoni-2:hover{
+  background: var(--sub-color);
 }

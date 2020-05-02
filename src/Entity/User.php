@@ -3,10 +3,12 @@
 // src/Entity/User.php
 namespace App\Entity;
 
+use App\Validator\AlphabeticContent;
+use App\Validator\NumericContent;
+use App\Validator\PasswordComplex;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -25,6 +27,7 @@ class User implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
+     * @AlphabeticContent()
      */
     private $firstName;
 
@@ -32,6 +35,7 @@ class User implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
+     * @AlphabeticContent()
      */
     private $lastName;
 
@@ -48,6 +52,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @PasswordComplex()
      */
     private $password;
 
@@ -68,6 +73,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @NumericContent()
      */
     private $telephone;
 

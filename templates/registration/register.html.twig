@@ -40,7 +40,8 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-user"></i>
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <i class="flaticon-user" aria-hidden="true"></i>
                                 </div>
                                 <label>Emri<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.firstName, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -50,6 +51,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>
                                     <i class="flaticon-envelope"></i>
                                 </div>
                                 <label>Mbiemri<span style="color:red">*</span></label>
@@ -60,20 +62,18 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                 </div>
                                 <label>Email<span style="color:red">*</span></label>
-
-
-
                                 {{ form_row(registrationForm.email, {'attr':{'type':'text','class':'form-control'}}) }}
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
-                                <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                <div class="icon" style="font-size:23px;">
+                                    <i class="fa fa-mars" aria-hidden="true"></i>
+                                    <i class="fa fa-venus" aria-hidden="true"></i>
                                 </div>
                                 <label>Gjinia<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.gender, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -83,7 +83,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                                 </div>
                                 <label>Password<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.password.first, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -93,7 +93,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                                 </div>
                                 <label>Perserit Password<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.password.second, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -103,7 +103,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
                                 </div>
                                 <label id="telefonLabel">Telefon</label>
                                 {{ form_row(registrationForm.telephone, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -113,7 +113,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-address-card-o" aria-hidden="true"></i>
                                 </div>
                                 <label>Adresa</label>
                                 {{ form_row(registrationForm.address, {'attr':{'type':'text','class':'form-control'}}) }}
@@ -124,7 +124,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group" style="border:none;">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <label>Ditelindja<span style="color:red">*</span></label>
                                 {{ form_row(registrationForm.birthday, {'attr':{'type':'text','class':'nice-select'}}) }}
@@ -134,11 +134,11 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group" style="border:none;">
                                 <div class="icon">
-                                    <i class="flaticon-phone-call"></i>
+                                    <i class="fa fa-picture-o" aria-hidden="true"></i>
                                 </div>
 
                                 <label for="registration_form_imageFilename" id="fotoLabel">
-                                    <i class="glyphicon glyphicon-open"></i>&nbsp;
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
                                     Foto Profili
                                 </label>
                                 <span>
@@ -169,25 +169,25 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        var count=0;
-        $('#butoniSubmit').click(function () {
-         var telephoneField = $("#registration_form_telephone");
-            if (isNaN(telephoneField.val())) {
-                count++;
-                if (count==1) {
-                    $('#telefonLabel+div').prepend(
-                        '<ul>' +
-                        '<li> Telefoni te permbaje numra </li>' +
-                        '</ul>'
-                    );
-                //REDIRECT AGAIN HERE
-                    location.replace({{ path('app_register') }});
+        {#var count=0;#}
+        {#$('#butoniSubmit').click(function () {#}
+        {# var telephoneField = $("#registration_form_telephone");#}
+        {#    if (isNaN(telephoneField.val())) {#}
+        {#        count++;#}
+        {#        if (count==1) {#}
+        {#            $('#telefonLabel+div').prepend(#}
+        {#                '<ul>' +#}
+        {#                '<li> Telefoni te permbaje numra </li>' +#}
+        {#                '</ul>'#}
+        {#            );#}
+        {#        //REDIRECT AGAIN HERE#}
+        {#            location.replace({{ path('app_register') }});#}
 
-                }
-                //REDIRECT AGAIN HERE
+        {#        }#}
+        {#        //REDIRECT AGAIN HERE#}
 
-            }
-        });
+        {#    }#}
+        {#});#}
         var inputFile = document.getElementById("registration_form_imageFilename");
         var fileNameField = document.getElementById("file-name");
         var fileSelectedStrong = document.getElementById('file-selected');
