@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
+    "defuse/php-encryption": {
+        "version": "v2.2.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -105,6 +108,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jms/payment-core-bundle": {
+        "version": "1.4.1"
+    },
     "knplabs/knp-time-bundle": {
         "version": "v1.11.0"
     },
@@ -177,8 +183,14 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "swiftmailer/swiftmailer": {
+        "version": "v6.2.3"
+    },
     "symfony/asset": {
         "version": "v4.4.7"
+    },
+    "symfony/browser-kit": {
+        "version": "v4.4.8"
     },
     "symfony/cache": {
         "version": "v4.4.7"
@@ -225,6 +237,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.7"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.4.8"
     },
     "symfony/dotenv": {
         "version": "v4.4.7"
@@ -420,6 +435,20 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.7"
+    },
+    "symfony/swiftmailer-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "ae4d22af30bbd484506bc1817c5a3ef72c855b93"
+        },
+        "files": [
+            "./config/packages/dev/swiftmailer.yaml",
+            "./config/packages/swiftmailer.yaml",
+            "./config/packages/test/swiftmailer.yaml"
+        ]
     },
     "symfony/templating": {
         "version": "v4.4.7"
