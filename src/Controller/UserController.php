@@ -31,7 +31,7 @@ class UserController extends BaseController
      * @Route("/",name="app_profile_main")
      */
     public function helloPerson(){
-        return new Response("<h1> Hello ".$this->getUser()->getEmail()."</h1>");
+        return $this->render('user/profile.html.twig');
     }
 
     /**
@@ -45,17 +45,20 @@ class UserController extends BaseController
         $form = $this->createForm(ReservationFormType::class);
         $form->handleRequest($request);
 
+        $price=$service->getCost();
         if ($form->isSubmitted() && $form->isValid()) {
             $reservation->setMedicalStaff($form->get('medicalStaff')->getData());
             $reservation->setDay($form->get('day')->getData());
             $reservation->setStatus($form->get('status')->getData());
             $manager->persist($reservation);
             $manager->flush();
+
             echo '<div style="background-color:white; color:black;">U shtua rezervimi</div>';
         }
 
         return $this->render('user/reservation.html.twig', [
             'reservationForm' => $form->createView(),
+            'cost'=>$price
         ]);
     }
 }
