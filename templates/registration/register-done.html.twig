@@ -1,0 +1,13 @@
+{% extends 'registration/email-layout.html.twig' %}
+{% block body_text %}
+    {{ 'Kliko linkun %activationUrl%'|trans({'%activationUrl%' : activationUrl}) }}
+{% endblock %}
+
+{% block body_html_content %}
+    {{ 'Ky eshte nje e-mail konfirmimi nga Qendra Spitalore "Mega Spital"<br>' }}
+    {{ 'Kliko <a href="%activationUrl%" target="_blank"><button style = "background-color:white; color:black">ketu</button></a> per te aktivizuar account<br>'|trans({'%activationUrl%' : activationUrl})|raw }}
+    {{ '<p>Të gjitha të drejtat e rezervuara, 2020.</p>' }}
+{% endblock %}
+{% block footeri %}
+
+{% endblock %}
