@@ -4,3 +4,7 @@
 login_index:
   path:       /login
   controller: App\Controller\SecurityController::index
+
+user_activate:
+  path: /profile
+  controller: App\Controller\SecurityController::index
