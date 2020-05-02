@@ -381,11 +381,12 @@ nav ul li a:hover {
 
   }
 
-  .butoni {
+  .butoni{
     background: #19ce67;
     color: #ffffff;
     border-color: #19ce67;
   }
+
 
   .butoni:hover, .butoni:target{
       border-color:black;
@@ -522,4 +523,23 @@ nav ul li a:hover {
 
 div.form-group li{
     color:red;
+}
+
+input#registration_form_imageFilename {
+    display: none;
+}
+
+label#fotoLabel{
+    background: #444444;
+    padding: 8px;
+    color: #fff;
+    border-radius: 9px;
+    text-align: center;
+    width:60%;
+}
+
+label#fotoLabel:hover{
+    background-color: black;
+    border-color: black;
+    cursor: pointer;
 }
