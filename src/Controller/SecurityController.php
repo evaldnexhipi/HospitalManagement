@@ -5,17 +5,19 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
+use App\Service\TokenGenerator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Date;
-
+use App\Service\Mailer;
 class SecurityController extends AbstractController
 {
     /**
@@ -44,41 +46,54 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager)
+    public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator,  Mailer $mailer): Response
     {
-        $user = new User();
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
             // encode the plain password
-            $user->setFirstName($form->get('firstName')->getData());
-            $user->setLastName($form->get('lastName')->getData());
-            $user->setEmail($form->get('email')->getData());
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
-            $user->setGender($form->get('gender')->getData());
-            $user->setBirthday(new DateTime());
-            $user->setTelephone($form->get('telephone')->getData());
-            $user->setAddress($form->get('address')->getData());
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $token = $tokenGenerator->generateToken();
+            $user->setToken($token);
+            $user->setIsActive(false);
 
-            // do anything else you need here, like send an email
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            if (self::DOUBLE_OPT_IN == false) {
+                $mailer->sendActivationEmailMessage($user);
+                echo '<div style="background-color:red; color:white; text-align: center;">Ne ju dërguam një e-mail konfirmimi në adresën tuaj.</div>';
+            }
+
+
         }
-
-        return $this->render('registration/register.html.twig', [
+        return $this->render('registration/register.html.twig.', [
             'registrationForm' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/activate/{token}", name="activate")
+     */
+    public function activate(Request $request, User $user, GuardAuthenticatorHandler $authenticatorHandler, LoginFormAuthenticator $loginFormAuthenticator)
+    {
+        $user->setIsActive(true);
+        $user->setToken(null);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('success', 'user.welcome');
+
+        // automatic login
+        return $authenticatorHandler->authenticateUserAndHandleSuccess(
+            $user,
+            $request,
+            $loginFormAuthenticator,
+            'main'
+        );
     }
 }
