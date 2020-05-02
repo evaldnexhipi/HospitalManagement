@@ -2,7 +2,7 @@
 
 {% block title %}Login{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
+
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -23,6 +23,8 @@
 {% endblock %}
 
 {% block body %}
+
+
     <form action ="" method="post">
 <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
     <div class="wrapper wrapper--w680">
@@ -50,9 +52,16 @@
                         <button class="btn btn--radius-2 btn--green" type="submit">Logohu</button>
                     </div>
                     <div class="col-2">
+                        <a class="btn btn--radius-2 butoni-2"
+                                type="button"
+                                href="{{ path('app_register') }}">
+                            Regjistrohu
+                        </a>
+                    </div>
 
+                    <div class="row col-2">
                             {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                <div style="color:red"><i class="fa fa-bell" aria-hidden="true"></i> {{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %}
                 </div>
             </div>
