@@ -24,7 +24,7 @@ class ProductType extends AbstractType
                 new File([
                     'maxSize'=>'1024k',
                     'mimeTypes'=>[
-                        'application/pdf',
+                        'application/jpeg',
                         'application/x-pdf',
                     ],
                     'mimeTypesMessage' => 'Please upload a valid PDF document',
