@@ -445,15 +445,12 @@
             "ref": "ae4d22af30bbd484506bc1817c5a3ef72c855b93"
         },
         "files": [
-<<<<<<< HEAD
             "./config/packages/dev/swiftmailer.yaml",
             "./config/packages/swiftmailer.yaml",
-            "./config/packages/test/swiftmailer.yaml"
-=======
+            "./config/packages/test/swiftmailer.yaml",
             "config/packages/dev/swiftmailer.yaml",
             "config/packages/swiftmailer.yaml",
             "config/packages/test/swiftmailer.yaml"
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
         ]
     },
     "symfony/templating": {

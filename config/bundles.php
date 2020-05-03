@@ -17,8 +17,4 @@ return [
     Knp\Bundle\TimeBundle\KnpTimeBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
-<<<<<<< HEAD
-    JMS\Payment\CoreBundle\JMSPaymentCoreBundle::class => ['all' => true],
-=======
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
 ];

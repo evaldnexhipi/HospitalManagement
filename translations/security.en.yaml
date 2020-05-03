@@ -1,10 +1,8 @@
 "Username could not be found.": "Emaili nuk u gjend."
 "Invalid credentials.": "Te dhenat jane gabim."
-<<<<<<< HEAD
 user:
   mailer:
     activation.html: 'Kliko <a href="%activationUrl%" target="_blank">ketu</a> per te aktivizuar account'
     activation.txt: 'Kliko linkun %activationUrl%'
-=======
 "There is already an account with this email": "Ky email ekziston"
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
+

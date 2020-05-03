@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\RequestResetPasswordType;
+use App\Form\ResetPasswordType;
+use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use App\Service\TokenGenerator;
 use DateTime;
@@ -23,15 +26,15 @@ use Symfony\Component\Validator\Constraints\Date;
 use App\Service\Mailer;
 class SecurityController extends AbstractController
 {
+    const DOUBLE_OPT_IN = false;
+
     /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-
         $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig', [
             'controller_name' => 'SecurityController',
             'error' => $error,
@@ -42,71 +45,57 @@ class SecurityController extends AbstractController
     /**
      * @Route("/logout",name="app_logout")
      */
-    public function logout(){
+    public function logout()
+    {
         throw  new \Exception('will be interepted after cApiTomming here');
     }
 
     /**
      * @Route("/register", name="app_register")
      */
-<<<<<<< HEAD
-    public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator,  Mailer $mailer): Response
-    {
-=======
-    public function register(Request $request,
-                             UserPasswordEncoderInterface $passwordEncoder,
-                             GuardAuthenticatorHandler $guardHandler,
-                             LoginFormAuthenticator $authenticator,
-                             EntityManagerInterface $entityManager)
+
+    public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, Mailer $mailer, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $client = new Client();
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-<<<<<<< HEAD
+
             $user = $form->getData();
             // encode the plain password
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
             $token = $tokenGenerator->generateToken();
             $user->setToken($token);
             $user->setIsActive(false);
-=======
+
 
             $user->setFirstName(ucfirst(strtolower($form->get('firstName')->getData())));
             $user->setLastName(ucfirst(strtolower($form->get('lastName')->getData())));
 
             $user->setEmail($form->get('email')->getData());
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
             $user->setGender($form->get('gender')->getData());
             $user->setBirthday($form->get('birthday')->getData());
 
-            if (!is_numeric($form->get('telephone')->getData())){
-                $form->addError(new FormError('Telefoni te permbaje numra','telephone','telephone','telephone'));
+            if (!is_numeric($form->get('telephone')->getData())) {
+                $form->addError(new FormError('Telefoni te permbaje numra', 'telephone', 'telephone', 'telephone'));
             }
 
             $user->setTelephone($form->get('telephone')->getData());
             $user->setAddress($form->get('address')->getData());
 
             $imageFile = $form->get('imageFilename')->getData();
-            if($imageFile){
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(),PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-                try{
+                try {
                     $imageFile->move(
                         $this->getParameter('user_images_directory'),
                         $newFilename
                     );
-                }
-                catch(FileException $e){
+                } catch (FileException $e) {
                     dd($e);
                 }
                 $user->setImageFilename($newFilename);
@@ -115,13 +104,10 @@ class SecurityController extends AbstractController
             $user->setClient($client);
             $client->setUser($user);
 
-            $entityManager->persist($user);
-            $entityManager->persist($client);
-            $entityManager->flush();
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
+            $em->persist($client);
             $em->flush();
 
             if (self::DOUBLE_OPT_IN == false) {
@@ -133,9 +119,10 @@ class SecurityController extends AbstractController
         }
         return $this->render('registration/register.html.twig.', [
             'registrationForm' => $form->createView(),
-            'errors'=>$form->getErrors()
+            'errors' => $form->getErrors()
         ]);
     }
+
     /**
      * @Route("/activate/{token}", name="activate")
      */
@@ -158,4 +145,94 @@ class SecurityController extends AbstractController
             'main'
         );
     }
+
+    /**
+     * @Route("/request-password-reset", name="request_password_reset")
+     */
+    public function requestPasswordReset(UserRepository $user, TokenGenerator $tokenGenerator, Mailer $mailer)
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+            $repository = $this->getDoctrine()->getRepository(User::class);
+            $token = $tokenGenerator->generateToken();
+            $user->setToken($token);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $mailer->sendResetPasswordEmailMessage($user);
+            
+
+    }
+    /**
+     * @Route("/forgotPassword",name="app_forgot_password")
+     */
+    public function forgotPassword(Request $request, UserRepository $userRepository){
+        $email = $request->request->get('email');
+        $user = $userRepository->findOneBy(['email' => ['email'=>$email], 'isActive'=>true]);
+
+        if(!$user){
+            $this->addFlash('noUserFound','Emaili nuk i takon MegaSpital!');
+        }
+        else {
+            if (isset($_POST['dergoEmail'])) {
+                return $this->redirectToRoute('request-password-reset',['email'=>$email]);
+
+            }
+            if (isset($_POST['dergoSMS'])) {
+                return $this->redirectToRoute('app_send_sms', ['email' => $email]);
+            }
+        }
+        return $this->render('security/forgotPassword.html.twig',[]);
+    }
+
+
+    /**
+     * @Route("/reset-password/{token}", name="reset_password")
+     * @param $request Request
+     * @param $user User
+     * @param $authenticatorHandler GuardAuthenticatorHandler
+     * @param $loginFormAuthenticator LoginFormAuthenticator
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
+     */
+    public function resetPassword(Request $request, User $user, GuardAuthenticatorHandler $authenticatorHandler,
+                                  LoginFormAuthenticator $loginFormAuthenticator, UserPasswordEncoderInterface $encoder)
+    {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        $form = $this->createForm(ResetPasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
+            $user = $form->getData();
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $user->setToken(null);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'user.update.success');
+
+            // automatic login
+            return $authenticatorHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $loginFormAuthenticator,
+                'main'
+            );
+        }
+
+        return $this->render('passwordReset/password-reset.html.twig', ['form' => $form->createView()]);
+    }
+
+
 }
+
+
+

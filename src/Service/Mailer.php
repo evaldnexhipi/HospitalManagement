@@ -54,14 +54,14 @@ class Mailer
      */
     public function sendResetPasswordEmailMessage(User $user)
     {
-        $url = $this->router->generate('user_reset_password', ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('reset_password', ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $context = [
             'user' => $user,
             'resetPasswordUrl' => $url,
         ];
 
-        $this->sendMessage('user/email/request-password.html.twig', $context, $this->noreply, $user->getEmail());
+        $this->sendMessage('registration/request-password.html.twig', $context, $this->noreply, $user->getEmail());
     }
 
     /**
