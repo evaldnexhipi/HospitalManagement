@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Emaili ekziston")
  */
 class User implements UserInterface
 {
@@ -102,7 +102,12 @@ class User implements UserInterface
      */
     private $imageFilename;
 
-    public function getFirstName(): ?string
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $smsCode;
+
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -326,6 +331,18 @@ class User implements UserInterface
     public function setImageFilename(string $imageFilename): self
     {
         $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+    public function getSmsCode(): ?int
+    {
+        return $this->smsCode;
+    }
+
+    public function setSmsCode(?int $smsCode): self
+    {
+        $this->smsCode = $smsCode;
 
         return $this;
     }

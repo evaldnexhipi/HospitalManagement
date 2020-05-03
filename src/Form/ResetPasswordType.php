@@ -22,8 +22,8 @@ class ResetPasswordType extends AbstractType
         $builder
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'user.password.first'],
-                'second_options' => ['label' => 'user.password.second'],
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Përsërit password'],
             ]);
     }
 

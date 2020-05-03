@@ -10,24 +10,21 @@ use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use App\Service\TokenGenerator;
-use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Constraints\Date;
 use App\Service\Mailer;
 class SecurityController extends AbstractController
 {
     const DOUBLE_OPT_IN = false;
-
     /**
      * @Route("/login", name="app_login")
      */
@@ -53,8 +50,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-
-    public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, Mailer $mailer, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator,  Mailer $mailer, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $client = new Client();
@@ -64,7 +60,6 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
-            // encode the plain password
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
             $token = $tokenGenerator->generateToken();
             $user->setToken($token);
@@ -77,12 +72,11 @@ class SecurityController extends AbstractController
             $user->setEmail($form->get('email')->getData());
             $user->setGender($form->get('gender')->getData());
             $user->setBirthday($form->get('birthday')->getData());
-
             if (!is_numeric($form->get('telephone')->getData())) {
                 $form->addError(new FormError('Telefoni te permbaje numra', 'telephone', 'telephone', 'telephone'));
             }
-
-            $user->setTelephone($form->get('telephone')->getData());
+            $teli = $form->get('telephone')->getData();
+            $user->setTelephone($teli);
             $user->setAddress($form->get('address')->getData());
 
             $imageFile = $form->get('imageFilename')->getData();
@@ -103,8 +97,6 @@ class SecurityController extends AbstractController
 
             $user->setClient($client);
             $client->setUser($user);
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->persist($client);
@@ -114,10 +106,8 @@ class SecurityController extends AbstractController
                 $mailer->sendActivationEmailMessage($user);
                 echo '<div style="background-color:red; color:white; text-align: center;">Ne ju dërguam një e-mail konfirmimi në adresën tuaj.</div>';
             }
-
-
         }
-        return $this->render('registration/register.html.twig.', [
+        return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'errors' => $form->getErrors()
         ]);
@@ -147,14 +137,14 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/request-password-reset", name="request_password_reset")
+     * @Route("/request-password-reset/{email}", name="request_password_reset")
      */
-    public function requestPasswordReset(UserRepository $user, TokenGenerator $tokenGenerator, Mailer $mailer)
+    public function requestPasswordReset($email, UserRepository $userRepository, TokenGenerator $tokenGenerator, Mailer $mailer)
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('homepage'));
         }
-            $repository = $this->getDoctrine()->getRepository(User::class);
+            $user = $userRepository->findOneBy(['email'=>$email]);
             $token = $tokenGenerator->generateToken();
             $user->setToken($token);
             $em = $this->getDoctrine()->getManager();
@@ -162,8 +152,8 @@ class SecurityController extends AbstractController
             $em->flush();
 
             $mailer->sendResetPasswordEmailMessage($user);
-            
-
+            $this->addFlash('notice','Ne ju dërguam një e-mail për të ndryshuar password');
+            return $this->redirect($this->generateUrl('homepage'));
     }
     /**
      * @Route("/forgotPassword",name="app_forgot_password")
@@ -177,7 +167,7 @@ class SecurityController extends AbstractController
         }
         else {
             if (isset($_POST['dergoEmail'])) {
-                return $this->redirectToRoute('request-password-reset',['email'=>$email]);
+                return $this->redirectToRoute('request_password_reset',['email'=>$email]);
 
             }
             if (isset($_POST['dergoSMS'])) {
@@ -190,12 +180,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reset-password/{token}", name="reset_password")
-     * @param $request Request
-     * @param $user User
-     * @param $authenticatorHandler GuardAuthenticatorHandler
-     * @param $loginFormAuthenticator LoginFormAuthenticator
-     * @param UserPasswordEncoderInterface $encoder
-     * @return Response
      */
     public function resetPassword(Request $request, User $user, GuardAuthenticatorHandler $authenticatorHandler,
                                   LoginFormAuthenticator $loginFormAuthenticator, UserPasswordEncoderInterface $encoder)
@@ -233,6 +217,5 @@ class SecurityController extends AbstractController
 
 
 }
-
 
 
