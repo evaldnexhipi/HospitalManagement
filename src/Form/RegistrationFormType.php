@@ -62,7 +62,7 @@ class RegistrationFormType extends AbstractType
                 'html5'=>'false'
             ])
             ->add('telephone',TelType::class,[
-                'required'=>false,
+                'required'=>true,
                 'label'=>false,
                 'invalid_message'=>'Format i gabuar'
             ])

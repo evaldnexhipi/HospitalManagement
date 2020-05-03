@@ -1,0 +1,50 @@
+{% extends 'Home/homepage.html.twig' %}
+{% block body %}
+    {% block bubbles %}
+        {{ parent() }}
+    {% endblock %}
+    {% block navbar %}
+        {{ parent() }}
+    {% endblock%}
+
+    {% block smallContainer %}
+        <div class="appointment-content col-6" style="background: white;">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-danger" style="text-align: center;">{{message}}</div>
+            {% endfor%}
+            <span class="sub-title">Konfirimim SMS</span>
+            <h4>
+                <strong>
+                    Ne ju derguam nje SMS me kodin e konfirmimit ne Telefonin tuaj!
+                </strong>
+            </h4>
+
+            <form method="post" action="{{ path('app_check_sms',{'email':email}) }}">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <div class="icon">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                            </div>
+                            <label for="smsCode">Kodi i Konfirmimit</label>
+                            <input type="number" name="smsCode" id="smsCode" required="true">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <div class="icon">
+                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            </div>
+                            <label for="smsCode">Konfirmo Kodin e Derguar</label>
+                            <input class="btn butoni" type="submit" name="submit" id="submit" value="Konfirmo">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endblock%}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock%}
+{% endblock %}

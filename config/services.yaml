@@ -1,15 +1,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-<<<<<<< HEAD
     locale: 'en'
     app.email_noreply: megaspital@gmail.com
     app.recaptcha_key: '%env(RECAPTCHA_KEY)%'
     app.recaptcha_secret: '%env(RECAPTCHA_SECRET)%'
-=======
     brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
     user_images_directory: '%kernel.project_dir%/public/images/user'
->>>>>>> b8dcd1da404d3c82a80333099d6e50d2e119df9e
 services:
     # default configuration for services in *this* file
     _defaults:
