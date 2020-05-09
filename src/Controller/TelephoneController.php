@@ -21,12 +21,11 @@ class TelephoneController extends BaseController
     public function sendMessage ($email,UserRepository $userRepository,Request $request,EntityManagerInterface $entityManager){
         $user = $userRepository->findOneBy(['email'=>$email]);
         $teli = $user->getTelephone();
-
 /*
-        $basic = new \Nexmo\Client\Credentials\Basic('2914317d','4MDI85HI34xWdAwA');
-        $client = new \Nexmo\Client($basic);
+Shenim
 */
-
+        
+        
         $random_number = mt_rand(10000,60000);
         $user->setSmsCode($random_number);
 
@@ -34,7 +33,7 @@ class TelephoneController extends BaseController
         $message = $client->message()
             ->send([
                 'to'=>'+355'.substr($teli,1),
-                'from'=>'Vonage SMS API',
+                'from'=>'Qendra MegaSpital',
                 'text'=>'MegaSpital! Kodi i konfirmimit eshte: '.$random_number
             ]);
   */
