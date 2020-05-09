@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -50,9 +51,8 @@ class ServiceRepository extends ServiceEntityRepository
 
     /**
      * @param string|null $term
-     * @return Service[]
      */
-    public function findAllWithSearch(?string $term){
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
         $qb = $this->createQueryBuilder('s')
         ->innerJoin('s.departament','d')
         ->addSelect('d');
@@ -62,9 +62,7 @@ class ServiceRepository extends ServiceEntityRepository
                 ->setParameter('term','%'.$term.'%');
         }
 
-        return $qb->orderBy('s.name','ASC')
-            ->getQuery()
-            ->getResult();
+        return $qb->orderBy('s.name','ASC');
     }
 
 

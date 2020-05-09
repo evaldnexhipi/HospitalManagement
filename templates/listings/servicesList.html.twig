@@ -1,4 +1,21 @@
 {% extends 'Home/homepage.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <style>
+        .page-link{
+            color:green;
+        }
+
+        .page-item.active .page-link {
+            z-index: 1;
+            color: #fff;
+            background-color: green;
+            border-color: green;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     {% block bubbles %}
         {{ parent() }}
@@ -38,7 +55,7 @@
             <div class="row">
 
                 {# Iterate the services #}
-                {% for service in services %}
+                {% for service in pagination %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="main-services-box">
                         <div class="icon">
@@ -46,21 +63,29 @@
                         </div>
                         <h3><a href="#">{{ service.name }}</a></h3>
                         <p>{{ service.description }}</p>
-                        <button type="button">Zgjidh</button>
+                        <button type="button">Skedulo</button>
                     </div>
                 </div>
                     {% else%}
-                        <div class="alert alert-danger" style="text-align: center;">
-                            Nuk u gjet ndonje Sherbim
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="alert alert-danger" style="text-align: center;">
+                                Nuk u gjet ndonje Sherbim
+                            </div>
                         </div>
                 {% endfor %}
 
 
                 {# Iterate the services #}
-
+                {#
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="more-services-btn">
                         <a href="#" class="btn butoni">Më shumë shërbime <i class="flaticon-right-chevron"></i></a>
+                    </div>
+                </div>
+                #}
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="more-services-btn">
+                        {{ knp_pagination_render(pagination) }}
                     </div>
                 </div>
             </div>
