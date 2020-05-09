@@ -47,4 +47,25 @@ class ServiceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     * @return Service[]
+     */
+    public function findAllWithSearch(?string $term){
+        $qb = $this->createQueryBuilder('s')
+        ->innerJoin('s.departament','d')
+        ->addSelect('d');
+
+        if ($term){
+            $qb->andWhere('s.name LIKE :term OR s.description LIKE :term OR d.name LIKE :term OR d.description LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('s.name','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

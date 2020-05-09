@@ -1,0 +1,75 @@
+{% extends 'Home/homepage.html.twig' %}
+{% block body %}
+    {% block bubbles %}
+        {{ parent() }}
+    {% endblock %}
+    {% block navbar %}
+        {{ parent() }}
+    {% endblock%}
+
+    <!-- SERVICES -->
+    <section class="main-services-area ptb-100">
+        <div class="container">
+
+            {# FORM #}
+            <form>
+                <div class="input-group mb-3">
+                    <input type="text"
+                           name="q"
+                           class="form-control"
+                           placeholder="Search..."
+                           value="{{ app.request.query.get('q') }}"
+                    >
+                    <div class="input-group-append">
+                        <button type="submit"
+                                class="btn btn-outline-secondary">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {# FORM #}
+            <div class="section-title">
+                <span>Shërbimet Tona</span>
+                <h2>Lista E Shërbimeve</h2>
+                <p>Më poshtë do të gjeni listën e plotë të shërbimeve tona mjekësore. Ne ofrojmë cilesinë dhe kushtet më moderne në fushën e mjëkësisë.</p>
+            </div>
+
+            <div class="row">
+
+                {# Iterate the services #}
+                {% for service in services %}
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="main-services-box">
+                        <div class="icon">
+                            <i class="flaticon-doctor"></i>
+                        </div>
+                        <h3><a href="#">{{ service.name }}</a></h3>
+                        <p>{{ service.description }}</p>
+                        <button type="button">Zgjidh</button>
+                    </div>
+                </div>
+                    {% else%}
+                        <div class="alert alert-danger" style="text-align: center;">
+                            Nuk u gjet ndonje Sherbim
+                        </div>
+                {% endfor %}
+
+
+                {# Iterate the services #}
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="more-services-btn">
+                        <a href="#" class="btn butoni">Më shumë shërbime <i class="flaticon-right-chevron"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SERVICES -->
+
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock%}
+{% endblock %}

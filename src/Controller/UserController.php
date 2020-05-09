@@ -25,8 +25,6 @@ use App\Form\RegistrationFormType;
  */
 class UserController extends BaseController
 {
-    const DOUBLE_OPT_IN = false;
-
     /**
      * @Route("/",name="app_profile_main")
      */
