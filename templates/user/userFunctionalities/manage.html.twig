@@ -1,0 +1,24 @@
+{% extends 'Home/homepage.html.twig' %}
+{% block stylesheets %}
+{#    <link rel="stylesheet" href="{{ asset('css/styles1.css') }}">#}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="appointment-content col-6" style="background: white;">
+
+            <span class="sub-title">Hi</span>
+            <h4>
+                <strong>
+                   Hiii
+                </strong>
+            </h4>
+
+            {{ form_start(userForm) }}
+                {{ form_errors(userForm) }}
+                {{ form_widget(userForm) }}
+            <input type="submit" name="submit" value="Send">
+            {{ form_end(userForm) }}
+        </div>
+    </div>
+{% endblock %}

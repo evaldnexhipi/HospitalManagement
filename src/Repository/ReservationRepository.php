@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,21 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('r')
+            ->innerJoin('r.client','c')
+            ->addSelect('c');
+
+
+        if ($term){
+            $qb->andWhere('s.name LIKE :term OR s.description LIKE :term OR d.name LIKE :term OR d.description LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('s.name','ASC');
+    }
 }

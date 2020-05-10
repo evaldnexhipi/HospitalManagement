@@ -23,7 +23,6 @@ class ActionsController extends BaseController
             8
         );
 
-
         return $this->render('listings/servicesList.html.twig',[
             'pagination'=>$pagination
         ]);

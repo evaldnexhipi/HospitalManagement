@@ -1,38 +1,113 @@
-<!DOCTYPE html>
-<head>
+{% extends 'Home/homepage.html.twig' %}
+{% block title %} Skedulo {% endblock %}
+{% block stylesheets %}
+{{ parent() }}
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <script src="https://www.paypal.com/sdk/js?client-id=AXMLclNq0YB086Oghzz8OXFgbeidfjMl-oucRdT60_ryHNLPGpe0Hos6UrF0rYOjNqmV2kJ0Y59UJQ4M"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.</script>
-</head>
-<body>
-{{ form_start(reservationForm) }}
-{{ form_widget(reservationForm) }}
-{#
-<input type="submit" value="Rezervo">
-#}
-<div id="paypal-button-container"></div>
-{{ form_end(reservationForm) }}
-<script>
-paypal.Buttons({
-createOrder: function(data, actions) {
-// This function sets up the details of the transaction, including the amount and line item details.
-    return actions.order.create({
-        purchase_units: [{
-        amount: {
-            value: 0.01
-        }
-        }]
-    });
-    },
-    onApprove: function(data, actions) {
-        // This function captures the funds from the transaction.
-        return actions.order.capture().then(function(details) {
-            // This function shows a transaction success message to your buyer.
+{% endblock %}
+{% block body %}
+    {% block navbar %}
+        {{ parent() }}
+    {% endblock%}
 
-            //REDIRECT TO A ROUTE THAT CAN HANDLE IT
-            location.replace({{ path('app_profile_main') }});
+    {#FORM#}
+    <div class="appointment-content col-6" style="background: white;">
+        {% for message in app.flashes('successReservation') %}
+            <div class="alert alert-success" style="text-align: center;">{{message}}</div>
+        {% endfor%}
+        <span class="sub-title">Rezervo Sherbimin Tend</span>
+        <h4>
+            <strong>
+                Perzgjidh Sherbimin Tend
+            </strong>
+        </h4>
+
+        {{ form_start(reservationForm) }}
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                        </div>
+                        <label for="reservation_form_medicalStaff">Perzgjidh Doktor</label>
+                        {{ form_row(reservationForm.medicalStaff, {'attr':{'type':'text','class':'nice-select'}}) }}
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </div>
+                        <label for="reservation_form_medicalStaff">Perzgjidh Daten</label>
+                        {{ form_row(reservationForm.day, {'attr':{'type':'text','class':'nice-select'}}) }}
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-money" aria-hidden="true"></i>
+                        </div>
+                        <label for="reservation_form_medicalStaff">Lere Ne Pritje</label>
+                        <input type="submit" value="Lere ne Pritje" class="btn butoni">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-paypal" aria-hidden="true"></i>
+                        </div>
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(reservationForm) }}
+    </div>
+
+
+        {#
+            <input type="submit" value="Rezervo">
+        #}
+    {#FORM#}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock%}
+{% endblock %}
+{% block javascripts%}
+    {{ parent() }}
+    <script>
+        $(function () {
+           $('.paypal-button').click(function(){
+              alert('hellooo');
+           });
         });
-    }
-}).render('#paypal-button-container');
-</script>
-</body>
+    </script>
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+// This function sets up the details of the transaction, including the amount and line item details.
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value:0.01//{{ cost }}
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                // This function captures the funds from the transaction.
+                return actions.order.capture().then(function(details) {
+                    // This function shows a transaction success message to your buyer.
+
+                    //REDIRECT TO A ROUTE THAT CAN HANDLE IT
+                    //location.replace('http://localhost:8000/profile/paypal/');
+            });
+            }
+        }).render('#paypal-button-container');
+    </script>
+{% endblock %}
