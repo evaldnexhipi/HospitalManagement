@@ -57,7 +57,6 @@ class ReservationRepository extends ServiceEntityRepository
             ->innerJoin('r.client','c')
             ->addSelect('c');
 
-
         if ($term){
             $qb->andWhere('s.name LIKE :term OR s.description LIKE :term OR d.name LIKE :term OR d.description LIKE :term')
                 ->setParameter('term','%'.$term.'%');
@@ -65,4 +64,18 @@ class ReservationRepository extends ServiceEntityRepository
 
         return $qb->orderBy('s.name','ASC');
     }
+
+    /**
+     * @param string|null $term
+     */
+    public function getAllSoonReservations():QueryBuilder {
+        $qb = $this->createQueryBuilder('r')
+        ->andWhere('r.status = :term')
+            ->setParameter('term','pritje');
+
+
+        return $qb->orderBy('r.createdAt','DESC');
+    }
+
+
 }

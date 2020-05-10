@@ -1,0 +1,40 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block trupi %}
+    <div class="content-viewport">
+        {% for message in app.flashes('canceled') %}
+            <div class="alert alert-danger" style="text-align: center;">{{message}}</div>
+        {% endfor%}
+        <table class="table table-light">
+            <thead>
+            <tr>
+                <th>Doktori</th>
+                <th>Sherbimi</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Aprovo</th>
+                <th>Anulo</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in pagination %}
+                <tr>
+                    <td>{{ reservation.medicalStaff.user.firstName }}</td>
+                    <td>{{ reservation.service.name }}</td>
+                    <td>{{ reservation.day|date('d-m-Y') }}</td>
+                    <td>{{ reservation.status }}</td>
+                    <td><a href="{{ path('app_admin_reservations_soon_approve',{id: reservation.id}) }}" class="btn btn-success">Aprovo</a></td>
+                    <td><a href="{{ path('app_user_cancel_reservation',{id: reservation.id}) }}" class="btn btn-danger">Anulo</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+
+    </div>
+{% endblock %}

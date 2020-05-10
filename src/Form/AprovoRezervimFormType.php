@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Reservation;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -17,41 +19,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class UserFormType extends AbstractType
+class AprovoRezervimFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName',TextType::class,[
-                'required'=>true,
-                'label'=>false,
-            ])
-            ->add('lastName',TextType::class,[
-                'required'=>true,
-                'label'=>false,
-            ])
-            ->add('email',EmailType::class,[
-                'required'=>true,
-                'label'=>false,
-                'invalid_message'=>'Emaili ekziston',
-                'csrf_message'=>'Emaili ekziston'
-            ])
-            ->add('telephone',TelType::class,[
-                'required'=>true,
-                'label'=>false,
-                'invalid_message'=>'Format i gabuar'
-            ])
-            ->add('address',TextType::class,[
-                'required'=>false,
-                'label'=>false,
-            ])
+            ->add('client')
+            ->add('medicalStaff')
+            ->add('service')
+            ->add('status')
+            ->add('createdAt')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Reservation::class,
         ]);
     }
 }

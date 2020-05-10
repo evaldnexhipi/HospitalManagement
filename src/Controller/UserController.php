@@ -108,4 +108,14 @@ class UserController extends BaseController
             'userForm'=>$form->createView()
         ]);
     }
+
+    /**
+     * @Route("/addAdminRole",name="app_add_admin_role")
+     */
+    public function addAdminRole (EntityManagerInterface $entityManager){
+        $user = $this->getUser();
+        $user->addRole('ROLE_ADMIN');
+        $entityManager->flush();
+        return new Response('U shtua roli i admin per '.$user->getEmail());
+    }
 }
