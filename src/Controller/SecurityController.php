@@ -159,6 +159,9 @@ class SecurityController extends AbstractController
      * @Route("/forgotPassword",name="app_forgot_password")
      */
     public function forgotPassword(Request $request, UserRepository $userRepository){
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
         $email = $request->request->get('email');
         $user = $userRepository->findOneBy(['email' => ['email'=>$email], 'isActive'=>true]);
 
@@ -201,7 +204,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'user.update.success');
+            //$this->addFlash('success', 'user.update.success');
 
             // automatic login
             return $authenticatorHandler->authenticateUserAndHandleSuccess(

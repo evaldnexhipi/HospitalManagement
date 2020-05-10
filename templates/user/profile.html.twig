@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+ {% block stylesheets %}
     <title>Profili</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('css/profile/materialdesignicons.css') }}">
@@ -17,6 +18,7 @@
     <!-- Layout style -->
     <link rel="shortcut icon" href="../asssets/images/favicon.ico">
     <script src="https://kit.fontawesome.com/e63f0d911b.js" crossorigin="anonymous"></script>
+{% endblock %}
 </head>
 <body class="header-fixed">
 <!-- partial:partials/_header.html -->
@@ -249,7 +251,7 @@
 
             <li>
                 <!--THIS-->
-                <a href="{{ path('app_profile_main') }}">
+                <a href="{{ path('app_user_manage') }}">
                     <span class="link-title">Menaxho Profil </span>
                     {#                    <i class="mdi mdi-gauge link-icon"></i>#}
                     <i class="fa fa-cogs" aria-hidden="true"></i>
@@ -267,43 +269,28 @@
                     {# Nenelement#}
                     <li>
                         <a href="#authentication-pages" data-toggle="collapse" aria-expanded="false">
-                            <span class="link-title">Se shpejti ...</span>
+                            <span class="link-title">Te planifikuara</span>
                         </a>
                         <ul class="collapse navigation-submenu" id="authentication-pages">
                             {#Nen,nen-element#}
                             <li>
-                                <a href="#" target="_blank">Nen-NenElemnti-1</a>
+                                <a href="{{ path('app_user_reservations_soon') }}">Menaxho</a>
                             </li>
                             {#Nen,nen-element#}
-                            <li>
-                                <a href="#" target="_blank">Nen-NenElementi-2</a>
-                            </li>
-                            {#Nen,nen-element#}
-                            <li>
-                                <a href="#" target="_blank">Nen-NenElemnti-3</a>
-                            </li>
                         </ul>
                     </li>
 
                     {#Nenelement#}
                     <li>
                         <a href="#error-pages" data-toggle="collapse" aria-expanded="false">
-                            <span class="link-title">Te kaluara</span>
+                            <span class="link-title">Te kryera</span>
                         </a>
                         <ul class="collapse navigation-submenu" id="error-pages">
                             {#Nen Nenelement#}
                             <li>
-                                <a href="#" target="_blank">Nen-NenElementi-1</a>
+                                <a href="">Menaxho</a>
                             </li>
                             {#Nen Nenelement#}
-                            <li>
-                                <a href="#" target="_blank">Nen-NenElemnti-2</a>
-                            </li>
-
-                            {#Nen Nenelement#}
-                            <li>
-                                <a href="#" target="_blank">Nen-NenElemnti-3</a>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -393,8 +380,13 @@
     </div>
     <!-- partial -->
 
+
+
+
     <div class="page-content-wrapper">
         <div class="page-content-wrapper-inner">
+
+            {% block trupi %}
             <div class="viewport-header">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb has-arrow">
@@ -801,8 +793,16 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
             #}
             <!-- content viewport ends --><!-- partial:partials/_footer.html -->
+=======
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+        <!-- content viewport ends --><!-- partial:partials/_footer.html -->
+>>>>>>> a1f368e892eedaa7641189af79e170ecff064d91
 
             <footer class="footer">
                 <div class="row">
@@ -829,6 +829,7 @@
         </div>
         <!-- page content ends -->
     </div>
+<<<<<<< HEAD
     <!--page body ends -->
 
     <!-- SCRIPT LOADING START FORM HERE /////////////--><!-- plugins:js -->
@@ -839,5 +840,21 @@
     {#<script src="{{ asset('js/profile/Chart.min.js') }}"></script>#}
     <!-- Vendor Js For This Page Ends-->
     <script src="{{ asset('js/profile/script.js') }}"></script>
+=======
+    <!-- page content ends -->
+</div>
+<!--page body ends -->
+
+{% block javascripts %}
+<!-- SCRIPT LOADING START FORM HERE /////////////--><!-- plugins:js -->
+<script src="{{ asset('js/profile/core.js') }}"></script>
+<script src="{{ asset('js/profile/vendor.addons.js') }}"></script>
+<!-- endinject -->
+<!-- Vendor Js For This Page Ends-->
+{#<script src="{{ asset('js/profile/Chart.min.js') }}"></script>#}
+<!-- Vendor Js For This Page Ends-->
+<script src="{{ asset('js/profile/script.js') }}"></script>
+{% endblock %}
+>>>>>>> a1f368e892eedaa7641189af79e170ecff064d91
 </body>
 </html>

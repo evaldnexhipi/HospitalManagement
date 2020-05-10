@@ -95,6 +95,14 @@
 .sidebar .sidebar_footer .user-account .btn-logout{width:91%;max-width:91%;margin:15px 10px 30px 10px;border-radius:4px}.sidebar .sidebar_footer.opened{background:#fff}
 .sidebar .sidebar_footer.opened .admin-access-level{background:#fff}
 .sidebar .sidebar_footer.opened .admin-access-level .arrow{-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}.sidebar .sidebar_footer.opened .user-account{margin-bottom:60px;opacity:1;background:#fff}
+.notification-indicator-primary {
+    background: #67FF63;
+}
+
+.grid-header{
+    border-left:3px solid #67FF63;
+}
+
 footer{position:absolute;bottom:0;left:0;right:0;padding:2rem 2.5rem;max-width:1140px;margin-left:auto;margin-right:auto}@media (max-width:991.98px){
     footer{
         padding:20px 0 30px 0

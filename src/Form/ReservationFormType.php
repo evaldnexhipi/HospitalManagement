@@ -18,14 +18,13 @@ class ReservationFormType extends AbstractType
     {
         $builder
             ->add('medicalStaff',EntityType::class,[
-                'class'=>MedicalStaff::class
+                'class'=>MedicalStaff::class,
+                'label'=>false,
+                'required'=>true
             ])
-            ->add('day',DateType::class)
-            ->add('status',ChoiceType::class,[
-                'choices'=>[
-                    'paguaj'=>'paguaj',
-                    'pritje'=>'pritje'
-                ]
+            ->add('day',DateType::class,[
+                'label'=>false,
+                'required'=>true
             ])
         ;
     }

@@ -63,7 +63,7 @@
                         </div>
                         <h3><a href="#">{{ service.name }}</a></h3>
                         <p>{{ service.description }}</p>
-                        <button type="button">Skedulo</button>
+                        <a href="{{ path('app_profile_reservation',{id: service.id}) }}" class="btn butoni">Skedulo</a>
                     </div>
                 </div>
                     {% else%}
