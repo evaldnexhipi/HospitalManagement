@@ -243,7 +243,7 @@
                 {# Elementi 2#}
                 <li>
                     <!--THIS-->
-                    <a href="{{ path('app_profile_main') }}">
+                    <a href="{{ path('app_admin_profile') }}">
                         <span class="link-title">Pasqyra e Profilit </span>
                         {#                    <i class="mdi mdi-gauge link-icon"></i>#}
                         <i class="fa fa-tachometer" aria-hidden="true"></i>
@@ -252,7 +252,7 @@
 
                 <li>
                     <!--THIS-->
-                    <a href="{{ path('app_user_manage') }}">
+                    <a href="{{ path('app_admin_profile_manage') }}">
                         <span class="link-title">Menaxho Profil </span>
                         {#                    <i class="mdi mdi-gauge link-icon"></i>#}
                         <i class="fa fa-cogs" aria-hidden="true"></i>
@@ -317,6 +317,25 @@
                     </ul>
                 </li>
 
+                {# Nenelement #}
+                <li>
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Stafi Mjekesor</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="ui-elements">
+                        <li>
+                            <a href="{{ path('app_admin_list_staff') }}">Shiko Staf</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_add_staff') }}">Shto Staf</a>
+                        </li>
+                        <li>
+                            <a href="#">Hiq Staf</a>
+                        </li>
+                    </ul>
+                </li>
 
                 {#Menu-2#}
                 <li class="nav-category-divider">Te tjera</li>

@@ -1,4 +1,4 @@
-{% extends 'user/profile.html.twig' %}
+{% extends 'user/admin/admin_profile.html.twig' %}
 {% block stylesheets %}
 {{ parent() }}
     <style>
@@ -27,7 +27,7 @@
                                 <label for="user_form_firstName">Emri</label>
                             </div>
                             <div class="col-md-9 showcase_content_area">
-                                {{ form_row(userForm.firstName) }}
+                                {{ form_row(userForm.firstName,{'attr':{'class':'form-control'}}) }}
                             </div>
                         </div>
                         <div class="form-group row showcase_row_area">
@@ -36,7 +36,7 @@
                                 <label for="user_form_lastName">Mbiemri</label>
                             </div>
                             <div class="col-md-9 showcase_content_area">
-                                {{ form_row(userForm.lastName) }}
+                                {{ form_row(userForm.lastName,{'attr':{'class':'form-control'}}) }}
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                                 <label for="user_form_email">Email</label>
                             </div>
                             <div class="col-md-9 showcase_content_area">
-                                {{ form_row(userForm.email) }}
+                                {{ form_row(userForm.email,{'attr':{'class':'form-control'}}) }}
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                             <label for="user_form_telepone">Telefoni</label>
                         </div>
                         <div class="col-md-9 showcase_content_area">
-                            {{ form_row(userForm.telephone) }}
+                            {{ form_row(userForm.telephone,{'attr':{'class':'form-control'}}) }}
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                             <label for="user_form_address">Adresa</label>
                         </div>
                         <div class="col-md-9 showcase_content_area">
-                            {{ form_row(userForm.address) }}
+                            {{ form_row(userForm.address,{'attr':{'class':'form-control'}}) }}
                         </div>
                     </div>
 

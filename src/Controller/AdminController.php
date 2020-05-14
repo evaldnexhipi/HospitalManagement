@@ -2,15 +2,28 @@
 
 
 namespace App\Controller;
+use App\Entity\MedicalStaff;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\AprovoRezervimFormType;
+use App\Form\RegisterDocFormType;
+use App\Form\RegistrationFormType;
+use App\Form\UserFormType;
+use App\Repository\HallRepository;
+use App\Repository\MedicalStaffRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\SpecialityRepository;
+use App\Service\TokenGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin")
@@ -26,11 +39,28 @@ class AdminController extends BaseController
     }
 
     /**
+     * @Route("/manage",name="app_admin_profile_manage")
+     */
+    public function manageProfile(Request $request, EntityManagerInterface $entityManager) {
+    $user = $this->getUser();
+    $form = $this->createForm(UserFormType::class,$user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()){
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
+
+    return $this->render('user/userFunctionalities/manage.html.twig',[
+        'userForm'=>$form->createView()
+    ]);
+}
+
+    /**
      * @Route("/reservationssoon",name="app_admin_reservations_soon")
      */
     public function listReservationsSoon(ReservationRepository $reservationRepository, Request $request, PaginatorInterface $paginator){
-        $reservations = $reservationRepository->findAll();
-
 //        $q = $request->query->get('q');
         $queryBuilder = $reservationRepository->getAllSoonReservations();
         $pagination = $paginator->paginate(
@@ -47,14 +77,107 @@ class AdminController extends BaseController
     /**
      * @Route("/reservationssoon/approve/{id}",name="app_admin_reservations_soon_approve")
      */
-    public function approveReservation(Reservation $reservation, Request $request){
-        $client = $reservation->getClient()->getUser()->getFirstName();
-        $doctor = $reservation->getMedicalStaff()->getUser()->getFirstName();
-        
+    public function approveReservation(Reservation $reservation, Request $request, EntityManagerInterface $entityManager){
+        $cost = $reservation->getService()->getCost();
+        $form = $this->createForm(AprovoRezervimFormType::class,$reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $reservation->setStatus('paguar');
+
+            $this->addFlash('aprovoSuccess','Rezervimi u aprovua me sukses');
+            $entityManager->flush();
+        }
 
         return $this->render('user/admin/aprovo_rezervim.html.twig',[
-
+            'aprovoForm'=>$form->createView(),
+            'cost'=>$cost
         ]);
-//        return new Response("hello service with id: ".$reservation->getId()." and user: ".$reservation->getClient()->getUser()->getFirstName());
     }
+
+    /**
+     * @Route("/listStaff",name="app_admin_list_staff")
+     */
+    public function listStaff(MedicalStaffRepository $medicalStaffRepository, Request $request, PaginatorInterface $paginator){
+        $q = $request->query->get('q');
+        $queryBuilder = $medicalStaffRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/admin/list_staff.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/addStaff",name="app_admin_add_staff")
+     */
+    public function addStaff(Request $request,TokenGenerator $tokenGenerator, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder){
+        $regForm = $this->createForm(RegistrationFormType::class);
+        $docForm = $this->createForm(RegisterDocFormType::class);
+
+        $regForm->handleRequest($request);
+        $docForm->handleRequest($request);
+
+        if($regForm->isSubmitted() && $regForm->isValid()){
+            $user = new User();
+            $staff = new MedicalStaff();
+            $token = $tokenGenerator->generateToken();
+            $user->setToken($token);
+            $user->setIsActive(true);
+
+
+            $user->setFirstName(ucfirst(strtolower($regForm->get('firstName')->getData())));
+            $user->setLastName(ucfirst(strtolower($regForm->get('lastName')->getData())));
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+            $user->setEmail($regForm->get('email')->getData());
+            $user->setGender($regForm->get('gender')->getData());
+            $user->setBirthday($regForm->get('birthday')->getData());
+            if (!is_numeric($regForm->get('telephone')->getData())) {
+                $regForm->addError(new FormError('Telefoni te permbaje numra', 'telephone', 'telephone', 'telephone'));
+            }
+            $teli = $regForm->get('telephone')->getData();
+            $user->setTelephone($teli);
+            $user->setAddress($regForm->get('address')->getData());
+
+            $imageFile = $regForm->get('imageFilename')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('user_images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    dd($e);
+                }
+                $user->setImageFilename($newFilename);
+            }
+
+            $staff->setHall($docForm->get('hall')->getData());
+            $staff->setSpeciality($docForm->get('speciality')->getData());
+            $staff->setStatus(true);
+
+            $user->setMedicalStaff($staff);
+            $staff->setUser($user);
+            $user->addRole('ROLE_DOC');
+
+            $entityManager->persist($user);
+            $entityManager->persist($staff);
+            $entityManager->flush();
+
+            $this->addFlash('staffRegister','Regjistrim me sukses i stafit');
+        }
+
+        return $this->render('user/admin/add_staff.html.twig',[
+            'regForm'=>$regForm->createView(),
+            'docForm'=>$docForm->createView()
+        ]);
+    }
+
 }
