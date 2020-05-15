@@ -61,10 +61,7 @@ class SecurityController extends AbstractController
 
             $user = $form->getData();
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
-            $token = $tokenGenerator->generateToken();
-            $user->setToken($token);
             $user->setIsActive(false);
-
 
             $user->setFirstName(ucfirst(strtolower($form->get('firstName')->getData())));
             $user->setLastName(ucfirst(strtolower($form->get('lastName')->getData())));

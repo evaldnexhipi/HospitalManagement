@@ -16,6 +16,7 @@ use App\Repository\SpecialityRepository;
 use App\Service\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,10 +126,10 @@ class AdminController extends BaseController
         if($regForm->isSubmitted() && $regForm->isValid()){
             $user = new User();
             $staff = new MedicalStaff();
+            $user = $regForm->getData();
             $token = $tokenGenerator->generateToken();
             $user->setToken($token);
             $user->setIsActive(true);
-
 
             $user->setFirstName(ucfirst(strtolower($regForm->get('firstName')->getData())));
             $user->setLastName(ucfirst(strtolower($regForm->get('lastName')->getData())));
@@ -178,6 +179,18 @@ class AdminController extends BaseController
             'regForm'=>$regForm->createView(),
             'docForm'=>$docForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/removeStaff/{id}",name="app_admin_remove_staff")
+     */
+    public function removeStaff(User $user, EntityManagerInterface $entityManager, Filesystem $filesystem){
+        $filesystem->remove($this->getParameter('user_images_directory').'/'.$user->getImageFilename());
+        $entityManager->remove($user->getMedicalStaff());
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $this->addFlash('deleteSuccess','Personeli u hoq me sukses');
+        return $this->redirectToRoute("app_admin_list_staff");
     }
 
 }

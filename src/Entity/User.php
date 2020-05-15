@@ -107,6 +107,10 @@ class User implements UserInterface
      */
     private $smsCode;
 
+    public function getId(){
+        return $this->id;
+    }
+
     public function getFirstName()
     {
         return $this->firstName;
