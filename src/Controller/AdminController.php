@@ -53,7 +53,7 @@ class AdminController extends BaseController
         $entityManager->flush();
     }
 
-    return $this->render('user/userFunctionalities/manage.html.twig',[
+    return $this->render('user/admin/manage_profile.html.twig',[
         'userForm'=>$form->createView()
     ]);
 }
