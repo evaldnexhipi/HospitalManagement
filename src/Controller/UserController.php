@@ -14,6 +14,7 @@ use App\Repository\ReservationRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -71,11 +72,34 @@ class UserController extends BaseController
     /**
      * @Route("/reservationssoon",name="app_user_reservations_soon")
      */
-    public function showReservationsSoon (ReservationRepository $reservationRepository){
-        $reservations = $reservationRepository->findBy(["client"=>$this->getUser()]);
+    public function showReservationsSoon (ReservationRepository $reservationRepository,Request $request, PaginatorInterface $paginator){
+//        $reservations = $reservationRepository->findBy(["client"=>$this->getUser()]);
+        $queryBuilder = $reservationRepository->getAllSoonReservationsForClient($this->getUser()->getClient()->getId());
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
 
         return $this->render('user/userFunctionalities/rezervimet_soon.html.twig',[
-            'reservations'=>$reservations
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/reservationsdone",name="app_user_reservations_done")
+     */
+    public function showReservationsDone (ReservationRepository $reservationRepository,Request $request, PaginatorInterface $paginator){
+//        $reservations = $reservationRepository->findBy(["client"=>$this->getUser()]);
+        $queryBuilder = $reservationRepository->getAllDoneReservationsForClient($this->getUser()->getClient()->getId());
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/userFunctionalities/rezervimet_done.html.twig',[
+            'pagination'=>$pagination
         ]);
     }
 

@@ -4,8 +4,8 @@
         {% for message in app.flashes('canceled') %}
             <div class="alert alert-danger" style="text-align: center;">{{message}}</div>
         {% endfor%}
-    <table class="table table-light">
-        <thead>
+        <table class="table table-light">
+            <thead>
             <tr>
                 <th>Doktori</th>
                 <th>Sherbimi</th>
@@ -13,8 +13,8 @@
                 <th>Status</th>
                 <th>Anulo</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for reservation in pagination %}
                 <tr>
                     <td>{{ reservation.medicalStaff.user.firstName }}</td>
@@ -24,8 +24,8 @@
                     <td><a href="{{ path('app_user_cancel_reservation',{id: reservation.id}) }}" class="btn btn-danger">Anulo</a></td>
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
 
     {{ knp_pagination_render(pagination) }}

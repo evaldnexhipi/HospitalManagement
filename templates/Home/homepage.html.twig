@@ -46,7 +46,9 @@
 
             {# if else if else ROLE_ADMIN send to admin/profile#}
             {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('app_admin_profile') }}">Admin {{ app.user.firstName }}</a></li>
+                <li><a href="{{ path('app_admin_profile') }}">Admin {{ app.user.firstName }}</a></li>
+            {% elseif is_granted('ROLE_DOC') %}
+                <li><a href="{{ path('app_doc_profile') }}">Doc {{ app.user.firstName }}</a></li>
             {% elseif is_granted('ROLE_USER') %}
                 <li><a href="{{ path('app_profile_main') }}">Hello {{ app.user.firstName }}</a></li>
             {% else %}
