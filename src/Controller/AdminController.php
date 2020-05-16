@@ -76,6 +76,22 @@ class AdminController extends BaseController
     }
 
     /**
+     * @Route("/reservationsdone",name="app_admin_reservations_done")
+     */
+    public function listDoneReservations(ReservationRepository $reservationRepository, Request $request, PaginatorInterface $paginator){
+        $queryBuilder = $reservationRepository->getAllDoneReservations();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/admin/rezervimet_done.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
      * @Route("/reservationssoon/approve/{id}",name="app_admin_reservations_soon_approve")
      */
     public function approveReservation(Reservation $reservation, Request $request, EntityManagerInterface $entityManager){

@@ -65,14 +65,24 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->orderBy('s.name','ASC');
     }
 
-    /**
-     * @param string|null $term
-     */
     public function getAllSoonReservations():QueryBuilder {
         $qb = $this->createQueryBuilder('r')
-        ->andWhere('r.status = :term')
-            ->setParameter('term','pritje');
+        ->andWhere('r.status = :term OR r.status = :term2')
+            ->setParameter('term','pritje')
+            ->setParameter('term2','paguar')
+        ->andWhere('r.day >= current_date()')
+        ;
 
+        return $qb->orderBy('r.createdAt','DESC');
+    }
+
+    public function getAllDoneReservations():QueryBuilder {
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.status = :term OR r.status = :term2')
+            ->setParameter('term','paguar')
+            ->setParameter('term2','kryer')
+            ->andWhere('r.day < current_date()')
+        ;
 
         return $qb->orderBy('r.createdAt','DESC');
     }
