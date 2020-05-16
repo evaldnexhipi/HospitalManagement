@@ -89,6 +89,18 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->orderBy('r.createdAt','DESC');
     }
 
+    public function getAllSoonReservationsForStaff($staffId): QueryBuilder{
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.medicalStaff = :staffid')
+            ->setParameter('staffid',$staffId)
+            ->andWhere('r.status = :term2')
+            ->setParameter('term2','paguar')
+            ->andWhere('r.day >= current_date()')
+        ;
+
+        return $qb->orderBy('r.createdAt','DESC');
+    }
+
     public function getAllDoneReservations():QueryBuilder {
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.status = :term OR r.status = :term2')
@@ -113,5 +125,17 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->orderBy('r.createdAt','DESC');
     }
 
+    public function getAllDoneReservationsForStaff($staffId):QueryBuilder{
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.medicalStaff = :staffid')
+            ->setParameter('staffid',$staffId)
+            ->andWhere('r.status = :term OR r.status = :term2')
+            ->setParameter('term','paguar')
+            ->setParameter('term2','kryer')
+//            ->andWhere('r.day > current_date()')
+        ;
+
+        return $qb->orderBy('r.createdAt','DESC');
+    }
 
 }
