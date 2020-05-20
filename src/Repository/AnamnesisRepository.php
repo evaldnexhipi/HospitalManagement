@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Anamnesis;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,13 @@ class AnamnesisRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAnamnesesForStaff($staffId): QueryBuilder{
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.medicalStaff = :staffid')
+            ->setParameter('staffid',$staffId)
+        ;
+
+        return $qb->orderBy('a.createdAt','DESC');
+    }
 }

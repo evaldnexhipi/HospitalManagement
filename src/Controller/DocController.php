@@ -8,6 +8,7 @@ use App\Entity\Treatment;
 use App\Form\AnamnesisFormType;
 use App\Form\TreatmentFormType;
 use App\Form\UserFormType;
+use App\Repository\AnamnesisRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -90,6 +91,15 @@ class DocController extends BaseController
     }
 
     /**
+     * @Route("/listAnamnesis",name="app_doc_list_anamnesis")
+     */
+    public function listAnamnesis (ReservationRepository $reservationRepository, Request $request, PaginatorInterface $paginator){
+
+
+    }
+
+
+    /**
      * @Route("/makeAppointment/{id}",name="app_doc_make_appointment")
      */
     public function makeAppointment(Reservation $reservation,Request $request, EntityManagerInterface $entityManager){
@@ -133,4 +143,31 @@ class DocController extends BaseController
             'treatmentForm'=>$treatmentForm->createView()
         ]);
     }
+
+    /**
+     * @Route("/listAnamnesis",name="app_doc_list_anamnesis")
+     */
+    public function listAnamneses (AnamnesisRepository $anamnesisRepository, Request $request, PaginatorInterface $paginator){
+//        $q = $request->query->get('q');
+        $queryBuilder = $anamnesisRepository->getAnamnesesForStaff($this->getUser()->getMedicalStaff()->getId());
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/doc/list_anamneses.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+
+    /**
+     * @Route("/addResult",name="app_doc_add_result")
+     */
+    public function addResult (){
+
+
+    }
+
 }

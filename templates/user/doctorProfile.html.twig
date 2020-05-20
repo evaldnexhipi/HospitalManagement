@@ -306,34 +306,13 @@
                     </a>
                     <ul class="collapse navigation-submenu" id="ui-elements">
                         <li>
-                            <a href="#">Historiku</a>
+                            <a href="{{ path('app_doc_list_anamnesis') }}">Historiku</a>
                         </li>
                         <li>
-                            <a href="#">Trajtime</a>
-                        </li>
-                        <li>
-                            <a href="#">Rezultate</a>
+                            <a href="{{ path('app_doc_add_result') }}">Rezultate</a>
                         </li>
                     </ul>
                 </li>
-
-                {# Nenelement #}
-                <li>
-                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
-                        <span class="link-title">Stafi Mjekesor</span>
-                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </a>
-                    <ul class="collapse navigation-submenu" id="ui-elements">
-                        <li>
-                            <a href="{{ path('app_admin_list_staff') }}">Menaxho Staf</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('app_admin_add_staff') }}">Shto Staf</a>
-                        </li>
-                    </ul>
-                </li>
-
                 {#Menu-2#}
                 <li class="nav-category-divider">Te tjera</li>
                 {#Element#}
