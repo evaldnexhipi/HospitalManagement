@@ -4,15 +4,22 @@
 namespace App\Controller;
 use App\Entity\Anamnesis;
 use App\Entity\Reservation;
+use App\Entity\Results;
 use App\Entity\Treatment;
+use App\Entity\User;
 use App\Form\AnamnesisFormType;
+use App\Form\ResultsFormType;
 use App\Form\TreatmentFormType;
 use App\Form\UserFormType;
 use App\Repository\AnamnesisRepository;
+use App\Repository\ClientRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -165,9 +172,55 @@ class DocController extends BaseController
     /**
      * @Route("/addResult",name="app_doc_add_result")
      */
-    public function addResult (){
+    public function addResult (ClientRepository $clientRepository, PaginatorInterface $paginator, Request $request){
 
+        $queryBuilder = $clientRepository->getALLClients();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            2
+        );
 
+        return $this->render('user/doc/list_clients.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/addResultTo/{id}",name="app_doc_add_result_to")
+     */
+    public function addResultTo (User $user, Request $request){
+        $result = new Results();
+        $result->setClient($user->getClient());
+        $result->setMedicalStaff($this->getUser()->getMedicalStaff());
+
+        $form = $this->createForm(ResultsFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $resultsFilename = $form->get('analysisPDF')->getData();
+            if ($resultsFilename) {
+                $originalFilename = pathinfo($resultsFilename->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $resultsFilename->guessExtension();
+
+                try {
+                    $resultsFilename->move(
+                        $this->getParameter('doc_results_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    dd($e);
+                }
+                $result->setAnalysisPDF($newFilename);
+            }
+
+            $this->addFlash('resultsSuccess','Rezultati u shtua me sukses');
+
+        }
+        return $this->render('user/doc/add_result_to.html.twig',[
+            'form'=>$form->createView(),
+            'user_email'=>$user->getEmail()
+        ]);
     }
 
 }
