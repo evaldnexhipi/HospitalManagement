@@ -5,12 +5,16 @@ namespace App\Controller;
 
 
 use App\Entity\Reservation;
+use App\Entity\Results;
 use App\Entity\Service;
 use App\Entity\User;
 
 use App\Form\ReservationFormType;
 use App\Form\UserFormType;
+use App\Repository\AnamnesisRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\ResultsRepository;
+use App\Repository\TreatmentRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -131,6 +135,48 @@ class UserController extends BaseController
             'userForm'=>$form->createView()
         ]);
     }
+
+    /**
+     * @Route("/listAnamneses",name="app_user_list_anamneses")
+     */
+    public function listAnamnesse (AnamnesisRepository $anamnesisRepository, Request $request, PaginatorInterface $paginator){
+        $queryBuilder = $anamnesisRepository->getAnamnesesForClient($this->getUser()->getClient());
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/userFunctionalities/list_anamneses.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/listResults",name="app_user_list_results")
+     */
+    public function listResults (ResultsRepository $resultsRepository, Request $request, PaginatorInterface $paginator){
+        $queryBuilder = $resultsRepository->getResultsForClient($this->getUser()->getClient()->getId());
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            8
+        );
+
+        return $this->render('user/userFunctionalities/list_results.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/downloadResult/{id}",name="app_user_down_result")
+     */
+    public function downloadResults(Results $results){
+        $pdfPath = $this->getParameter('doc_results_directory').'/'.$results->getAnalysisPDF();
+
+        return $this->file($pdfPath);
+    }
+
 
     /**
      * @Route("/addAdminRole",name="app_add_admin_role")

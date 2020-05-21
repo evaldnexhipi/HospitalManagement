@@ -189,7 +189,7 @@ class DocController extends BaseController
     /**
      * @Route("/addResultTo/{id}",name="app_doc_add_result_to")
      */
-    public function addResultTo (User $user, Request $request){
+    public function addResultTo (User $user, Request $request,EntityManagerInterface $entityManager){
         $result = new Results();
         $result->setClient($user->getClient());
         $result->setMedicalStaff($this->getUser()->getMedicalStaff());
@@ -212,6 +212,8 @@ class DocController extends BaseController
                     dd($e);
                 }
                 $result->setAnalysisPDF($newFilename);
+                $entityManager->persist($result);
+                $entityManager->flush();
             }
 
             $this->addFlash('resultsSuccess','Rezultati u shtua me sukses');

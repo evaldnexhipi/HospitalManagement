@@ -1,0 +1,34 @@
+{% extends 'user/profile.html.twig' %}
+{% block trupi %}
+    <div class="content-viewport">
+        <table class="table table-light">
+            <thead>
+            <tr>
+                <th>Doktori</th>
+                <th>Analiza</th>
+                <th>Koha e Ngarkimit</th>
+                <th>Shkarko Rezultat</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for result in pagination %}
+                <tr>
+                    <td>{{result.medicalStaff.user.firstName }} {{ result.medicalStaff.user.lastName }} </td>
+                    <td>{{ result.analysisPDF }}</td>
+                    <td>{{ result.createdAt|date('d-m-Y') }}</td>
+                    <td>
+                        <a class="btn btn-info has-icon" href="{{ path('app_user_down_result',{id: result.id}) }}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            Shkarko
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

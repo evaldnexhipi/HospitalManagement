@@ -57,4 +57,13 @@ class AnamnesisRepository extends ServiceEntityRepository
 
         return $qb->orderBy('a.createdAt','DESC');
     }
+
+    public function getAnamnesesForClient($clientId): QueryBuilder{
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.client = :clientid')
+            ->setParameter('clientid',$clientId)
+        ;
+
+        return $qb->orderBy('a.createdAt','DESC');
+    }
 }

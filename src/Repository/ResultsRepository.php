@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Results;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,13 @@ class ResultsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getResultsForClient($clientId): QueryBuilder{
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.client = :clientid')
+            ->setParameter('clientid',$clientId)
+        ;
+
+        return $qb->orderBy('r.createdAt','DESC');
+    }
 }
