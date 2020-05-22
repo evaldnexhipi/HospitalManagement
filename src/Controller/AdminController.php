@@ -5,16 +5,19 @@ namespace App\Controller;
 use App\Entity\Departament;
 use App\Entity\MedicalStaff;
 use App\Entity\Reservation;
+use App\Entity\Service;
 use App\Entity\User;
 use App\Form\AprovoRezervimFormType;
 use App\Form\DepartamentFormType;
 use App\Form\RegisterDocFormType;
 use App\Form\RegistrationFormType;
+use App\Form\ServiceFormType;
 use App\Form\UserFormType;
 use App\Repository\DepartamentRepository;
 use App\Repository\HallRepository;
 use App\Repository\MedicalStaffRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\SpecialityRepository;
 use App\Service\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -263,6 +266,7 @@ class AdminController extends BaseController
     public function deleteDepartament(Departament $departament, EntityManagerInterface $entityManager)
     {
         $entityManager->remove($departament);
+        $entityManager->flush();
         $this->addFlash('deleteDepSuccess','Departamenti u fshi me sukses');
         return $this->redirectToRoute('app_admin_list_deps');
     }
@@ -284,6 +288,67 @@ class AdminController extends BaseController
            'pagination'=>$pagination
 //            'deps'=>[]
         ]);
+    }
+
+    /**
+     * @Route("/listServices",name="app_admin_list_services")
+     */
+    public function listSerivces (ServiceRepository $serviceRepository, Request $request, PaginatorInterface $paginator){
+        $q = $request->query->get('q');
+        $queryBuilder = $serviceRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_services.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/addService",name="app_admin_add_service")
+     */
+    public function addService (EntityManagerInterface $entityManager, Request $request){
+        $service = new Service();
+        $form = $this->createForm(ServiceFormType::class,$service);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($service);
+            $entityManager->flush();
+            $this->addFlash('serviceSuccess','Sherbimi u shtua me sukses');
+        }
+        return $this->render('user/admin/add_service.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/updateService/{id}",name="app_admin_update_service")
+     */
+    public function updateService (Service $service, Request $request, EntityManagerInterface $entityManager){
+        $form = $this->createForm(ServiceFormType::class,$service);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+            $this->addFlash('serviceUpdateSuccess','Sherbimi u modifikua me sukses');
+        }
+        return $this->render('user/admin/manage_service.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/deleteService/{id}",name="app_admin_delete_service")
+     */
+    public function deleteService(Service $service, EntityManagerInterface $entityManager){
+        $entityManager->remove($service);
+        $entityManager->flush();
+        $this->addFlash('serviceDeleteSucess','Sherbimi u fshi me sukses');
+        return $this->redirectToRoute('app_admin_list_services');
     }
 
     /**

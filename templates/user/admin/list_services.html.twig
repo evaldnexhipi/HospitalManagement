@@ -1,0 +1,66 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="content-viewport">
+        {% for message in app.flashes('serviceDeleteSucess') %}
+            <div class="alert alert-success text-center"> {{ message }}</div>
+        {% endfor %}
+        <table class="table table-light" style="margin-bottom: 1%;">
+            <thead>
+            <form>
+                <tr>
+                    <th>
+                        Kerko Sherbim:
+                    </th>
+                    <th colspan="4">
+                        <input type="text"
+                               name="q"
+                               class="form-control"
+                               placeholder="Search..."
+                               value="{{ app.request.query.get('q') }}"
+                        >
+                    </th>
+                    <th>
+                        <button type="submit"
+                                class="btn btn-outline-secondary">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </th>
+                </tr>
+            </form>
+            </thead>
+        </table>
+
+
+    <div class="row">
+        {% for service in pagination %}
+        <div class="col-3 equel-grid">
+            <div class="grid d-flex flex-column align-items-center justify-content-center">
+                <div class="grid-body text-center">
+                    <h2 class="font-weight-medium">
+                        <span>{{ service.name }}</span>
+                    </h2>
+                    <small class="text-gray d-block mt-3">Kosto</small>
+                    <small class="font-weight-medium text-success">
+                        <span class="animated-count">{{ service.cost }}</span> Euro
+                    </small>
+                    <div class="component-flat mx-auto mb-4" style="margin-top: 1%;">
+                        <a href="{{ path('app_admin_update_service',{id: service.id}) }}" class="btn btn-outline-success">Modifiko</a>
+                        <a href="{{ path('app_admin_delete_service',{id: service.id}) }}" class="btn btn-outline-danger">Fshi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+    <div class="row">
+        <a href="{{ path('app_admin_add_service') }}" class="btn btn-info">Shto Sherbim</a>
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
