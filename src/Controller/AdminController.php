@@ -2,13 +2,16 @@
 
 
 namespace App\Controller;
+use App\Entity\Departament;
 use App\Entity\MedicalStaff;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\AprovoRezervimFormType;
+use App\Form\DepartamentFormType;
 use App\Form\RegisterDocFormType;
 use App\Form\RegistrationFormType;
 use App\Form\UserFormType;
+use App\Repository\DepartamentRepository;
 use App\Repository\HallRepository;
 use App\Repository\MedicalStaffRepository;
 use App\Repository\ReservationRepository;
@@ -208,5 +211,88 @@ class AdminController extends BaseController
         $this->addFlash('deleteSuccess','Personeli u hoq me sukses');
         return $this->redirectToRoute("app_admin_list_staff");
     }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @Route("/addDepartament",name="app_admin_add_department")
+     */
+    public function addDepartament(EntityManagerInterface $entityManager, Request $request){
+        $dep = new Departament();
+        $form = $this->createForm(DepartamentFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $dep->setName($form->get('name')->getData());
+            $dep->setName($form->get('description')->getData());
+
+            $entityManager->persist($dep);
+            $entityManager->flush();
+            $this->addFlash('departamentSuccess','Departamenti u shtua me sukses');
+        }
+
+        return $this->render('user/admin/add_departament.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/updateDepartament/{id}",name="app_admin_update_dep")
+     */
+    public function updateDepartament(Departament $departament, EntityManagerInterface $entityManager, Request $request)
+    {
+        $form = $this->createForm(DepartamentFormType::class,$departament);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $departament->setName($form->get('name')->getData());
+            $departament->setName($form->get('description')->getData());
+
+            $entityManager->flush();
+            $this->addFlash('departamentChange','Departamenti u modifikua me sukses');
+        }
+
+        return $this->render('user/admin/manage_departament.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/deleteDepartament/{id}",name="app_admin_delete_dep")
+     */
+    public function deleteDepartament(Departament $departament, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($departament);
+        $this->addFlash('deleteDepSuccess','Departamenti u fshi me sukses');
+        return $this->redirectToRoute('app_admin_list_deps');
+    }
+
+
+    /**
+     * @Route("/listDepartments",name="app_admin_list_deps")
+     */
+    public function listDepartaments (DepartamentRepository $departamentRepository, Request $request, PaginatorInterface $paginator){
+        $queryBuilder = $departamentRepository->getAllDepartamentsWithQuery();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+
+        return $this->render('user/admin/list_deps.html.twig',[
+           'pagination'=>$pagination
+//            'deps'=>[]
+        ]);
+    }
+
+    /**
+     * @Route("/addPatient",name="app_admin_add_patient")
+     */
+    public function addPatient(EntityManagerInterface $entityManager, Request $request){
+
+    }
+
+
 
 }

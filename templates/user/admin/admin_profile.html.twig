@@ -300,26 +300,6 @@
                 {# Nenelement #}
                 <li>
                     <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
-                        <span class="link-title">Anamneza</span>
-                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
-                    </a>
-                    <ul class="collapse navigation-submenu" id="ui-elements">
-                        <li>
-                            <a href="#">Konsulta</a>
-                        </li>
-                        <li>
-                            <a href="#">Trajtime</a>
-                        </li>
-                        <li>
-                            <a href="#">Rezultate</a>
-                        </li>
-                    </ul>
-                </li>
-
-                {# Nenelement #}
-                <li>
-                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
                         <span class="link-title">Stafi Mjekesor</span>
                         {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
                         <i class="fa fa-users" aria-hidden="true"></i>
@@ -334,7 +314,92 @@
                     </ul>
                 </li>
 
-                {#Menu-2#}
+                {# Nenelement #}
+                <li>
+                    <a href="#spitali" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Pacientet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="spitali">
+                        <li>
+                            <a href="#">Shto Pacient</a>
+                        </li>
+                        <li>
+                            <a href="#">Menaxho Pacient</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {#MENU-2#}
+                <li class="nav-category-divider">MENU</li>
+
+                <li>
+                    <a href="#departament" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Departamentet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="departament">
+                        <li>
+                            <a href="{{ path('app_admin_add_department') }}">Shto Departament</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_list_deps') }}">Menaxho Departament</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#services" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Sherbimet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="services">
+                        <li>
+                            <a href="#">Listo Sherbime</a>
+                        </li>
+                        <li>
+                            <a href="#">Menaxho Sherbime</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#spaces" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Hapesirat</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="spaces">
+                        <li>
+                            <a href="#">Listo Dhomat</a>
+                        </li>
+                        <li>
+                            <a href="#">Listo Sallat</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#assets" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Asete</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="assets">
+                        <li>
+                            <a href="#">Listo Asete</a>
+                        </li>
+                        <li>
+                            <a href="#">Menaxho Asete</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                {#Menu-3#}
                 <li class="nav-category-divider">Te tjera</li>
                 {#Element#}
                 <li>

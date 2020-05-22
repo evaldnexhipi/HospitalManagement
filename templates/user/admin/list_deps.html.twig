@@ -1,0 +1,63 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block trupi %}
+    <div class="content-viewport">
+        <div class="row">
+        {% for message in app.flashes('departamentSuccess') %}
+            <div class="alert alert-success text-center"> {{ message }}</div>
+        {% endfor %}
+            {% for message in app.flashes('deleteDepSuccess') %}
+                <div class="alert alert-success text-center"> {{ message }}</div>
+            {% endfor %}
+        <table class="table table-light">
+            <thead>
+            <tr>
+                <th>Emer</th>
+                <th>Pershkrim</th>
+                <th>Data e Krijimit</th>
+                <th>Modifiko Departament</th>
+                <th>Fshi Departament</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dep in pagination %}
+                <tr>
+                    <td>{{ dep.name }}</td>
+                    <td>{{ dep.description }}</td>
+                    <td>{{ dep.createdAt|date('d-m-Y') }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_update_dep',{id: dep.id}) }}" class="btn btn-warning">
+                            Modifiko
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_admin_delete_dep',{id: dep.id}) }}" class="btn btn-danger">
+                            Fshi
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">
+                        Nuk u gjet ndonje rekord
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div class="row" style="margin-top: 1%;">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row" style="margin-top: 1%;">
+        <a href="{{ path('app_admin_add_department') }}" class="btn btn-info">
+            Shto Departament
+        </a>
+    </div>
+{% endblock %}
+
+
+
