@@ -224,7 +224,7 @@ class AdminController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()){
             $dep->setName($form->get('name')->getData());
-            $dep->setName($form->get('description')->getData());
+            $dep->setDescription($form->get('description')->getData());
 
             $entityManager->persist($dep);
             $entityManager->flush();
@@ -246,7 +246,7 @@ class AdminController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()){
             $departament->setName($form->get('name')->getData());
-            $departament->setName($form->get('description')->getData());
+            $departament->setDescription($form->get('description')->getData());
 
             $entityManager->flush();
             $this->addFlash('departamentChange','Departamenti u modifikua me sukses');
