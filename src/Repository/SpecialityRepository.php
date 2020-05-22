@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Speciality;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,19 @@ class SpecialityRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('s');
+
+        if ($term){
+            $qb->andWhere('s.title LIKE :term OR s.description LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('s.title','ASC');
+    }
+
 }

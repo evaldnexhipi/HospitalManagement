@@ -352,6 +352,23 @@ class AdminController extends BaseController
     }
 
     /**
+     * @Route("/listSpecialities",name="app_admin_list_specialities")
+     */
+    public function listSpecialities(SpecialityRepository $specialityRepository, Request $request, PaginatorInterface $paginator){
+        $q =  $request->query->get('q');
+        $queryBuilder = $specialityRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_specialities.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
      * @Route("/addPatient",name="app_admin_add_patient")
      */
     public function addPatient(EntityManagerInterface $entityManager, Request $request){
