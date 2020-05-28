@@ -65,6 +65,11 @@ class Patient
      */
     private $room;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $cost;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +179,18 @@ class Patient
     public function setRoom(?Room $room): self
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getCost(): ?int
+    {
+        return $this->cost;
+    }
+
+    public function setCost(int $cost): self
+    {
+        $this->cost = $cost;
 
         return $this;
     }

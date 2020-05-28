@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Departament;
 use App\Entity\Hall;
 use App\Entity\MedicalStaff;
+use App\Entity\Patient;
 use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Entity\Service;
@@ -12,6 +13,7 @@ use App\Entity\User;
 use App\Form\AprovoRezervimFormType;
 use App\Form\DepartamentFormType;
 use App\Form\HallFormType;
+use App\Form\PatientFormType;
 use App\Form\RegisterDocFormType;
 use App\Form\RegistrationFormType;
 use App\Form\RoomFormType;
@@ -499,7 +501,19 @@ class AdminController extends BaseController
      * @Route("/addPatient",name="app_admin_add_patient")
      */
     public function addPatient(EntityManagerInterface $entityManager, Request $request){
+        $patient = new Patient();
+        $form = $this->createForm(PatientFormType::class,$patient);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($patient);
+            $entityManager->flush();
+            $this->addFlash('patientSuccess','Pacienti u regjistrua');
+        }
+
+        return $this->render('user/admin/add_patient.html.twig',[
+            'userForm'=>$form->createView()
+        ]);
     }
 
 

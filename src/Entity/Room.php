@@ -168,5 +168,8 @@ class Room
         return $this;
     }
 
-
+    public function __toString()
+    {
+        return $this->getName()." ".$this->getDepartament()->getName();
+    }
 }
