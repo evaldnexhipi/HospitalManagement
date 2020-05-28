@@ -1,0 +1,79 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="content-viewport">
+        {% for message in app.flashes('hallDeleteSuccess') %}
+            <div class="alert alert-success text-center"> {{ message }}</div>
+        {% endfor %}
+        <div class="col-12">
+            <table class="table table-light" style="margin-bottom: 1%;">
+                <thead>
+                <form>
+                    <tr>
+                        <th>
+                            Kerko Salle:
+                        </th>
+                        <th colspan="4">
+                            <input type="text"
+                                   name="q"
+                                   class="form-control"
+                                   placeholder="Search..."
+                                   value="{{ app.request.query.get('q') }}"
+                            >
+                        </th>
+                        <th>
+                            <button type="submit"
+                                    class="btn btn-outline-secondary">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </th>
+                    </tr>
+                </form>
+                </thead>
+            </table>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-light">
+                        <thead>
+                        <th>Salla</th>
+                        <th>Departamenti</th>
+                        <th>Pershkrimi</th>
+                        <th>Modifko</th>
+                        <th>Fshi</th>
+                        </thead>
+                        {% for hall in pagination %}
+                            <tr>
+                                <td>{{ hall.name }}</td>
+                                <td>{{ hall.departament }}</td>
+                                <td>{{ hall.description }}</td>
+                                <td>
+                                    <a href="{{ path('app_admin_update_hall',{id: hall.id}) }}" class="btn btn-warning">Modifiko</a>
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_admin_delete_hall',{id: hall.id}) }} }}" class="btn btn-danger">Fshi</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center alert-warning">Nuk u gjet ndonje salle</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <a href="{{ path('app_admin_add_hall') }}" class="btn btn-info">Shto Salle</a>
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+

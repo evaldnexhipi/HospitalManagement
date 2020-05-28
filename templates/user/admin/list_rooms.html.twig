@@ -1,0 +1,81 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="content-viewport">
+                {% for message in app.flashes('roomDeleteSuccess') %}
+                    <div class="alert alert-success text-center"> {{ message }}</div>
+                {% endfor %}
+       <div class="col-12">
+        <table class="table table-light" style="margin-bottom: 1%;">
+            <thead>
+            <form>
+                <tr>
+                    <th>
+                        Kerko Dhome:
+                    </th>
+                    <th colspan="4">
+                        <input type="text"
+                               name="q"
+                               class="form-control"
+                               placeholder="Search..."
+                               value="{{ app.request.query.get('q') }}"
+                        >
+                    </th>
+                    <th>
+                        <button type="submit"
+                                class="btn btn-outline-secondary">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </th>
+                </tr>
+            </form>
+            </thead>
+        </table>
+
+
+        <div class="row">
+            <div class="col-12">
+                            <table class="table table-light">
+                                <thead>
+                                    <th>Dhoma</th>
+                                    <th>Departamenti</th>
+                                    <th>Kapaciteti</th>
+                                    <th>Statusi</th>
+                                    <th>Modifko</th>
+                                    <th>Fshi</th>
+                                </thead>
+                                {% for room in pagination %}
+                                <tr>
+                                    <td>{{ room.name }}</td>
+                                    <td>{{ room.departament }}</td>
+                                    <td>{{ room.capacity }}</td>
+                                    <td>{{ room.status }}</td>
+                                    <td>
+                                        <a href="{{ path('app_admin_update_room',{id: room.id}) }}" class="btn btn-warning">Modifiko</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('app_admin_delete_room',{id: room.id}) }}" class="btn btn-danger">Fshi</a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center alert-warning">Nuk u gjet ndonje dhome</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <a href="{{ path('app_admin_add_room') }}" class="btn btn-info">Shto Dhome</a>
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+

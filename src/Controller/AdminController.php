@@ -3,20 +3,25 @@
 
 namespace App\Controller;
 use App\Entity\Departament;
+use App\Entity\Hall;
 use App\Entity\MedicalStaff;
 use App\Entity\Reservation;
+use App\Entity\Room;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\AprovoRezervimFormType;
 use App\Form\DepartamentFormType;
+use App\Form\HallFormType;
 use App\Form\RegisterDocFormType;
 use App\Form\RegistrationFormType;
+use App\Form\RoomFormType;
 use App\Form\ServiceFormType;
 use App\Form\UserFormType;
 use App\Repository\DepartamentRepository;
 use App\Repository\HallRepository;
 use App\Repository\MedicalStaffRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\RoomRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\SpecialityRepository;
 use App\Service\TokenGenerator;
@@ -355,7 +360,7 @@ class AdminController extends BaseController
      * @Route("/listSpecialities",name="app_admin_list_specialities")
      */
     public function listSpecialities(SpecialityRepository $specialityRepository, Request $request, PaginatorInterface $paginator){
-        $q =  $request->query->get('q');
+        $q = $request->query->get('q');
         $queryBuilder = $specialityRepository->getWithSearchQueryBuilder($q);
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -366,6 +371,128 @@ class AdminController extends BaseController
         return $this->render('user/admin/list_specialities.html.twig',[
             'pagination'=>$pagination
         ]);
+    }
+
+    /**
+     * @Route("/listRooms",name="app_admin_list_rooms")
+     */
+    public function listRooms(RoomRepository $roomRepository,Request $request, PaginatorInterface $paginator){
+        $q =  $request->query->get('q');
+        $queryBuilder = $roomRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_rooms.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/addRoom",name="app_admin_add_room")
+     */
+    public function addRoom(EntityManagerInterface $entityManager,Request $request){
+        $room = new Room();
+        $form = $this->createForm(RoomFormType::class,$room);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($room);
+            $entityManager->flush();
+            $this->addFlash('roomSuccess','Dhoma u shtua me sukses');
+        }
+
+        return $this->render('user/admin/add_room.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/updateRoom/{id}",name="app_admin_update_room")
+     */
+    public function updateRoom (Room $room,EntityManagerInterface $entityManager,Request $request){
+        $form = $this->createForm(RoomFormType::class,$room);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+            $this->addFlash('roomUpdateSuccess','Dhoma u modifikua me sukses');
+        }
+
+        return $this->render('user/admin/manage_room.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/deleteRoom/{id}",name="app_admin_delete_room")
+     */
+    public function deleteRoom (Room $room,EntityManagerInterface $entityManager){
+        $entityManager->remove($room);
+        $entityManager->flush();
+        $this->addFlash('roomDeleteSuccess','Dhoma u fshi me sukses');
+        return $this->redirectToRoute('app_admin_list_rooms');
+    }
+
+    /**
+     * @Route("/listHalls",name="app_admin_list_halls")
+     */
+    public function listHalls(HallRepository $hallRepository,Request $request, PaginatorInterface $paginator){
+        $q =  $request->query->get('q');
+        $queryBuilder = $hallRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_halls.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/addHall",name="app_admin_add_hall")
+     */
+    public function addHall(EntityManagerInterface $entityManager,Request $request){
+        $hall = new Hall();
+        $form = $this->createForm(HallFormType::class,$hall);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($hall);
+            $entityManager->flush();
+            $this->addFlash('hallSuccess','Salla u shtua me sukses');
+        }
+
+        return $this->render('user/admin/add_hall.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/updateHall/{id}",name="app_admin_update_hall")
+     */
+    public function updateHall (Hall $hall,EntityManagerInterface $entityManager,Request $request){
+        $form = $this->createForm(HallFormType::class,$hall);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->flush();
+            $this->addFlash('hallUpdateSuccess','Salla u modifikua me sukses');
+        }
+
+        return $this->render('user/admin/manage_hall.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/deleteHall/{id}",name="app_admin_delete_hall")
+     */
+    public function deleteHall (Hall $hall, EntityManagerInterface $entityManager){
+        $entityManager->remove($hall);
+        $entityManager->flush();
+        $this->addFlash('hallDeleteSuccess','Salla u fshi me sukses');
+        return $this->redirectToRoute('app_admin_list_halls');
     }
 
     /**

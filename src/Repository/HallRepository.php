@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Hall;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,21 @@ class HallRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('h')
+            ->innerJoin('h.departament','d')
+            ->addSelect('d');
+
+        if ($term){
+            $qb->andWhere('h.name LIKE :term OR h.description LIKE :term OR d.name LIKE :term OR d.description LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('d.name','ASC');
+    }
+
 }

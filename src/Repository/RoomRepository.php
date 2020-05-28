@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Room;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,22 @@ class RoomRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('r')
+            ->innerJoin('r.departament','d')
+            ->addSelect('d');
+
+        if ($term){
+            $qb->andWhere('r.name LIKE :term OR r.status LIKE :term OR d.name LIKE :term OR d.description LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('d.name','ASC');
+    }
+
+
 }
