@@ -559,7 +559,15 @@ class AdminController extends BaseController
         $dompdf->stream("megaspital_".$patient->getId().'.pdf',[
             'Attachment'=>false
         ]);
-
     }
 
+    /**
+     * @Route("/deletePatient/{id}",name="app_admin_delete_patient")
+     */
+    public function deletePatient(Patient $patient, EntityManagerInterface $entityManager){
+        $entityManager->remove($patient);
+        $entityManager->flush();
+        $this->addFlash('deletePatientSuccess','Pacienti u largua nga Spitali');
+        return $this->redirectToRoute('app_admin_list_patients');
+    }
 }
