@@ -29,6 +29,8 @@ use App\Repository\ServiceRepository;
 use App\Repository\SpecialityRepository;
 use App\Service\TokenGenerator;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
@@ -538,7 +540,25 @@ class AdminController extends BaseController
     /**
      * @Route("/leavePatient/{id}",name="app_admin_leave_patient")
      */
-    public function leavePatient(){
+    public function leavePatient(Patient $patient){
+        $tvsh = $patient->getCost()*0.2;
+        $pricetvsh = $patient->getCost()*1.2;
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont','SourceSansPro');
+
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('user/admin/leave_hospital_pdf.html.twig',[
+            'patient'=>$patient,
+            'tvsh'=>$tvsh,
+            'pricetvsh'=>$pricetvsh
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4','portrait');
+        $dompdf->render();
+        $dompdf->stream("megaspital_".$patient->getId().'.pdf',[
+            'Attachment'=>false
+        ]);
 
     }
 
