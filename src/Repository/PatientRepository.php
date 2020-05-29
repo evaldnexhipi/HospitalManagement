@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,20 @@ class PatientRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.room','r')
+            ->addSelect('r');
+
+        if ($term){
+            $qb->andWhere('p.name LIKE :term OR p.surname LIKE :term OR p.email LIKE :term OR p.cost LIKE :term OR r.name')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('p.createdAt','DESC');
+    }
 }

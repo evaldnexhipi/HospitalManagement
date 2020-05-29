@@ -22,6 +22,7 @@ use App\Form\UserFormType;
 use App\Repository\DepartamentRepository;
 use App\Repository\HallRepository;
 use App\Repository\MedicalStaffRepository;
+use App\Repository\PatientRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\RoomRepository;
 use App\Repository\ServiceRepository;
@@ -498,6 +499,24 @@ class AdminController extends BaseController
     }
 
     /**
+     * @Route("/listPatients",name="app_admin_list_patients")
+     */
+    public function listPatients(PatientRepository $patientRepository, Request $request, PaginatorInterface $paginator){
+        $q =  $request->query->get('q');
+        $queryBuilder = $patientRepository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_patients.html.twig',[
+            'pagination'=>$pagination
+        ]);
+    }
+
+
+    /**
      * @Route("/addPatient",name="app_admin_add_patient")
      */
     public function addPatient(EntityManagerInterface $entityManager, Request $request){
@@ -516,6 +535,11 @@ class AdminController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("/leavePatient/{id}",name="app_admin_leave_patient")
+     */
+    public function leavePatient(){
 
+    }
 
 }

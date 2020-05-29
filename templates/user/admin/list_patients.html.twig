@@ -1,0 +1,83 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="content-viewport">
+        {% for message in app.flashes('hallDeleteSuccess') %}
+            <div class="alert alert-success text-center"> {{ message }}</div>
+        {% endfor %}
+        <div class="col-12">
+            <table class="table table-light" style="margin-bottom: 1%;">
+                <thead>
+                <form>
+                    <tr>
+                        <th>
+                            Kerko Pacient:
+                        </th>
+                        <th colspan="4">
+                            <input type="text"
+                                   name="q"
+                                   class="form-control"
+                                   placeholder="Search..."
+                                   value="{{ app.request.query.get('q') }}"
+                            >
+                        </th>
+                        <th>
+                            <button type="submit"
+                                    class="btn btn-outline-secondary">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </th>
+                    </tr>
+                </form>
+                </thead>
+            </table>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-light">
+                        <thead>
+                        <th>Emri</th>
+                        <th>Mbiemri</th>
+                        <th>Dhoma</th>
+                        <th>Kosto</th>
+                        <th>Modifiko</th>
+                        <th>Fshi</th>
+                        </thead>
+                        {% for patient in pagination %}
+                            <tr>
+                                <td>{{ patient.name }}</td>
+                                <td>{{ patient.surname }}</td>
+                                <td>{{ patient.room.name }}</td>
+                                <td>
+                                    {{ patient.cost }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('app_admin_leave_patient',{id: patient.id}) }}" class="btn btn-success">Lë Spitalin</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-danger">Fshi</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center alert-warning">Nuk u gjet ndonje pacient</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <a href="{{ path('app_admin_add_patient') }}" class="btn btn-info">Shto Pacient</a>
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+
