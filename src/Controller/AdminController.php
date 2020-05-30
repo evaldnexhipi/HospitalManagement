@@ -54,38 +54,29 @@ class AdminController extends BaseController
         $reservationsDiffNow = (int) $reservationRepository->getReservationsNumberToPrevMonth();
         $reservationsDiffPrev = (int) $reservationRepository->getReservationsNumberTo2PrevMonths();
         $reservationsNumber = (int) $reservationRepository->getReservationsNumber();
-        $reservationsDifference=0;
-        if ($reservationsDiffPrev!=0) {
-            $reservationsDifference = $reservationsDiffNow - $reservationsDiffPrev;
-        }
+        $reservationsDifference = $reservationsDiffNow - $reservationsDiffPrev;
+
 
         /* Review */
         $reviewsDiffNow = (int) $reviewRepository->getReviewsNumberToPrevMonth();
         $reviewsDiffPrev = (int) $reviewRepository->getReviewsNumberTo2PrevMonths();
         $reviewsNumber = (int) $reviewRepository->getReviewsNumber();
-        $reviewsDifference=0;
-        if ($reviewsDiffPrev!=0){
-            $reviewsDifference = ($reviewsDiffNow - $reviewsDiffPrev);
-        }
+        $reviewsDifference = ($reviewsDiffNow - $reviewsDiffPrev);
+
 
         /* Numri i Pacienteve */
         $patientsDiffNow = (int) $patientRepository->getPatientsNumberToPrevMonth();
         $patientsDiffPrev = (int) $patientRepository->getPatientsNumberTo2PrevMonths();
         $patientsNumber = (int) $patientRepository->getPatientsNumber();
-        $patientsDifference=0;
-        if ($patientsDiffPrev!=0){
-            $patientsDifference = ($patientsDiffNow - $patientsDiffPrev);
-        }
+        $patientsDifference = ($patientsDiffNow - $patientsDiffPrev);
+
 
         /* Numri i te Ardhurave */
-//        dd($reservationRepository->getTotalCost());
         $revenuesDiffNow = (int) $reservationRepository->getTotalCostPrevMonth() + (int) $patientRepository->getTotalCostPrevMonth();
         $revenuesDiffPrev = (int) $reservationRepository->getTotalCostPrev2Months() + (int) $patientRepository->getTotalCostPrev2Months();
         $revenuesNumber = (int) $reservationRepository->getTotalCost() + (int) $patientRepository->getTotalCost();
-        $revenuesDifference=0;
-        if ($revenuesDiffPrev!=0){
-            $revenuesDifference = ($revenuesDiffNow - $revenuesDiffPrev);
-        }
+        $revenuesDifference = ($revenuesDiffNow - $revenuesDiffPrev);
+
 
         $top5Reservations = $reservationRepository->getTop5Reservations();
         $roomCapacity = (int) $roomRepository->getTotalCapacity();
