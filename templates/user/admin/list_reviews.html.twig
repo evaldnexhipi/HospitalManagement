@@ -1,0 +1,49 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                {% for review in pagination %}
+                <div class="col-lg-6">
+                    <div class="grid">
+                        <div class="item-wrapper">
+                            <div class="tab-container">
+                                <ul class="nav nav-tabs" id="bt-tab_1" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="bt-tab_1_1" data-toggle="tab" href="#bt-content_1_1" role="tab" aria-controls="bt-content_1_1" aria-selected="true">
+                                            {{ review.client.user.firstName }} {{ review.client.user.lastName }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link active" id="bt-tab_1_1" data-toggle="tab" href="#bt-content_1_1" role="tab" aria-controls="bt-content_1_1" aria-selected="true">
+                                            {{ review.createdAt|date('d/m/Y') }}
+                                        </a>
+
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="bt-tab_content_1">
+                                    <div class="tab-pane show active" id="bt-content_1_1" role="tabpanel" aria-labelledby="bt-tab_1_1">
+                                        <h6 class="mb-3">Pershtypje-{{ review.id }}</h6>
+                                        <p class="mb-1">{{ review.reviewText }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <a href="{{ path('app_admin_profile') }}" class="btn btn-info">Kthehu Pas</a>
+    </div>
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

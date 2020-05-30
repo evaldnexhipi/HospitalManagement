@@ -6,10 +6,13 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Entity\Results;
+use App\Entity\Review;
 use App\Entity\Service;
 use App\Entity\User;
 
 use App\Form\ReservationFormType;
+use App\Form\ReviewFormType;
+use App\Form\RoomFormType;
 use App\Form\UserFormType;
 use App\Repository\AnamnesisRepository;
 use App\Repository\ReservationRepository;
@@ -177,6 +180,25 @@ class UserController extends BaseController
         return $this->file($pdfPath);
     }
 
+    /**
+     * @Route("/yourFeedback",name="app_user_feedback")
+     */
+    public function yourFeedback(Request $request, EntityManagerInterface $entityManager){
+        $review = new Review();
+        $review->setClient($this->getUser()->getClient());
+        $form = $this->createForm(ReviewFormType::class,$review);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($review);
+            $entityManager->flush();
+            $this->addFlash('reviewSuccess','Faleminderit Per Mendimin Tuaj!');
+        }
+
+        return $this->render('user/userFunctionalities/add_review.html.twig',[
+            'form'=>$form->createView()
+        ]);
+    }
 
     /**
      * @Route("/addAdminRole",name="app_add_admin_role")

@@ -1,0 +1,51 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+    <scirpt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></scirpt>
+{% endblock %}
+{% block trupi %}
+<div class="container">
+    <canvas id="myChart">
+
+    </canvas>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var myChart = document.getElementById("myChart").getContext('2d');
+
+            $.get('http://localhost:8000/getDemoData', function (data) {
+                var cities = new Array();
+                var pops = new Array();
+                for (var i=0; i<data.length; i++){
+                    cities.push(data[i].city);
+                    pops.push(data[i].population);
+                }
+
+                var massPopChart = new Chart(myChart,{
+                    type: 'line', //bar,horizontalBar, pie, line, doughnut, radar, polarArea
+                    data: {
+                        labels: cities,
+                        datasets: [{
+                            label: 'Population',
+                            data:pops,
+                            backgroundColor: 'rgb(255, 99, 132)'
+                        }] //can have more than one data set
+                    },
+                    options: {},
+                    layout: {
+                        padding: {
+                            right: 0,
+                            top: 0,
+                            bottom: 0
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

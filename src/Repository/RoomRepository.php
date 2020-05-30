@@ -65,5 +65,10 @@ class RoomRepository extends ServiceEntityRepository
         return $qb->orderBy('d.name','ASC');
     }
 
-
+    public function getTotalCapacity(){
+        $qb = $this->createQueryBuilder('r')
+            ->select('sum(r.capacity)')
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

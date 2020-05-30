@@ -41,7 +41,17 @@
         <ul>
             <li><a href="#">Faqe1</a></li>
             <li><a href="#">Faqe2</a></li>
-            <li><a href="#">Faqe3</a></li>
+            <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="#">Faqe3</a>
+                {% elseif is_granted('ROLE_DOC') %}
+                <a href="#">Faqe3</a>
+                {% elseif is_granted('ROLE_USER') %}
+                <a href="{{ path('app_user_feedback') }}">Mendimi Juaj</a>
+                {% else %}
+                <a href="#">Faqe3</a>
+                {% endif %}
+            </li>
             <li><a href="{{ path('app_services') }}">Sherbimet</a></li>
 
             {# if else if else ROLE_ADMIN send to admin/profile#}

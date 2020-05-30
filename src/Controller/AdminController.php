@@ -19,11 +19,13 @@ use App\Form\RegistrationFormType;
 use App\Form\RoomFormType;
 use App\Form\ServiceFormType;
 use App\Form\UserFormType;
+use App\Repository\ClientRepository;
 use App\Repository\DepartamentRepository;
 use App\Repository\HallRepository;
 use App\Repository\MedicalStaffRepository;
 use App\Repository\PatientRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\RoomRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\SpecialityRepository;
@@ -36,9 +38,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -50,9 +49,63 @@ class AdminController extends BaseController
     /**
      * @Route("/profile",name="app_admin_profile")
      */
-    public function showProfile(){
+    public function showProfile(ReservationRepository $reservationRepository,ReviewRepository $reviewRepository, PatientRepository $patientRepository, RoomRepository $roomRepository,ClientRepository $clientRepository){
+        /* Rezervime */
+        $reservationsDiffNow = (int) $reservationRepository->getReservationsNumberToPrevMonth();
+        $reservationsDiffPrev = (int) $reservationRepository->getReservationsNumberTo2PrevMonths();
+        $reservationsNumber = (int) $reservationRepository->getReservationsNumber();
+        $reservationsDifference=0;
+        if ($reservationsDiffPrev!=0) {
+            $reservationsDifference = $reservationsDiffNow - $reservationsDiffPrev;
+        }
 
-        return $this->render('user/admin/admin_profile.html.twig');
+        /* Review */
+        $reviewsDiffNow = (int) $reviewRepository->getReviewsNumberToPrevMonth();
+        $reviewsDiffPrev = (int) $reviewRepository->getReviewsNumberTo2PrevMonths();
+        $reviewsNumber = (int) $reviewRepository->getReviewsNumber();
+        $reviewsDifference=0;
+        if ($reviewsDiffPrev!=0){
+            $reviewsDifference = ($reviewsDiffNow - $reviewsDiffPrev);
+        }
+
+        /* Numri i Pacienteve */
+        $patientsDiffNow = (int) $patientRepository->getPatientsNumberToPrevMonth();
+        $patientsDiffPrev = (int) $patientRepository->getPatientsNumberTo2PrevMonths();
+        $patientsNumber = (int) $patientRepository->getPatientsNumber();
+        $patientsDifference=0;
+        if ($patientsDiffPrev!=0){
+            $patientsDifference = ($patientsDiffNow - $patientsDiffPrev);
+        }
+
+        /* Numri i te Ardhurave */
+//        dd($reservationRepository->getTotalCost());
+        $revenuesDiffNow = (int) $reservationRepository->getTotalCostPrevMonth() + (int) $patientRepository->getTotalCostPrevMonth();
+        $revenuesDiffPrev = (int) $reservationRepository->getTotalCostPrev2Months() + (int) $patientRepository->getTotalCostPrev2Months();
+        $revenuesNumber = (int) $reservationRepository->getTotalCost() + (int) $patientRepository->getTotalCost();
+        $revenuesDifference=0;
+        if ($revenuesDiffPrev!=0){
+            $revenuesDifference = ($revenuesDiffNow - $revenuesDiffPrev);
+        }
+
+        $top5Reservations = $reservationRepository->getTop5Reservations();
+        $roomCapacity = (int) $roomRepository->getTotalCapacity();
+        $top6Clients = $clientRepository->getTop6Clienets();
+        $top3Reviews = $reviewRepository->getTop3Reviews();
+
+        return $this->render('user/admin/admin_profile.html.twig',[
+            'reservationsDifference'=>$reservationsDifference,
+            'reservationsNumber'=>$reservationsNumber,
+            'reviewsDifference'=>$reviewsDifference,
+            'reviewsNumber'=>$reviewsNumber,
+            'patientsDifference'=>$patientsDifference,
+            'patientsNumber'=>$patientsNumber,
+            'revenuesDifference'=>$revenuesDifference,
+            'revenuesNumber'=>$revenuesNumber,
+            'top5Reservations'=>$top5Reservations,
+            'roomCapacity'=>$roomCapacity,
+            'top6Clients'=>$top6Clients,
+            'top3Reviews'=>$top3Reviews
+        ]);
     }
 
     /**
@@ -569,5 +622,21 @@ class AdminController extends BaseController
         $entityManager->flush();
         $this->addFlash('deletePatientSuccess','Pacienti u largua nga Spitali');
         return $this->redirectToRoute('app_admin_list_patients');
+    }
+
+    /**
+     * @Route("/clientsFeedback",name="app_admin_clients_feedback")
+     */
+    public function listFeedbacks(ReviewRepository $reviewRepository,Request $request, PaginatorInterface $paginator){
+        $queryBuilder = $reviewRepository->getWithSearchQueryBuilder();
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page',1),
+            6
+        );
+
+        return $this->render('user/admin/list_reviews.html.twig',[
+            'pagination'=>$pagination
+        ]);
     }
 }

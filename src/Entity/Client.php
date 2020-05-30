@@ -46,12 +46,18 @@ class Client
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="client", orphanRemoval=true)
+     */
+    private $reviews;
+
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
         $this->anamneses = new ArrayCollection();
         $this->results = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,5 +201,36 @@ class Client
     public function __toString()
     {
         return $this->getUser()->getFirstName();
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->contains($review)) {
+            $this->reviews->removeElement($review);
+            // set the owning side to null (unless already changed)
+            if ($review->getClient() === $this) {
+                $review->setClient(null);
+            }
+        }
+
+        return $this;
     }
 }

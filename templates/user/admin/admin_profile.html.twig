@@ -400,8 +400,8 @@
                 <li class="nav-category-divider">Te tjera</li>
                 {#Element#}
                 <li>
-                    <a href="pages/apps/email.html">
-                        <span class="link-title">Mendimi juaj</span>
+                    <a href="{{ path('app_admin_clients_feedback') }}">
+                        <span class="link-title">Pershtypjet e Klienteve</span>
                         <i class="fa fa-smile-o" aria-hidden="true"></i>
                         {#                    <i class="mdi mdi-email-outline link-icon"></i>#}
                     </a>
@@ -490,7 +490,7 @@
                                 <div class="grid-body">
                                     <div class="d-flex justify-content-between">
                                         <p class="card-title">Te dhenat per $abcd</p>
-                                        <div class="chartjs-legend" id="sales-revenue-chart-legend">
+                                        <div class="chartjs-legend" id="revenuesChart">
                                             {# Legjenda e Chart.js#}
                                         </div>
                                     </div>
@@ -505,7 +505,7 @@
                                     </div>
                                 </div>
 
-                                <canvas class="mt-4" id="sales-revenue-chart" height="245"></canvas>
+                                <canvas class="mt-4" id="revenuesChartCanvas" height="245"></canvas>
                             </div>
                         </div>
 
@@ -522,13 +522,20 @@
                                                 <i class="fa fa-user-md" aria-hidden="true"></i>
                                             </div>
                                             <h2 class="font-weight-medium">
-                                                <span class="animated-count">21</span>Mije
+                                                <span class="animated-count">{{ reservationsNumber }}</span>
                                             </h2>
-                                            <small class="text-gray d-block mt-3">Numri i Vizitave</small>
+                                            <small class="text-gray d-block mt-3">Numri i Rezervimeve</small>
+                                            {% if reservationsDifference>=0 %}
                                             <small class="font-weight-medium text-success">
                                                 <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
-                                                <span class="animated-count">12.12</span>%
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
                                             </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-danger">
+                                                <i style="color:#ff5f66;" class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
+                                            </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -540,15 +547,20 @@
                                                 <i class="fa fa-smile-o" aria-hidden="true"></i>
                                             </div>
                                             <h2 class="font-weight-medium">
-                                                <span class="animated-count">6.1</span>
-                                                Mije
+                                                <span class="animated-count">{{ reviewsNumber }}</span>
                                             </h2>
                                             <small class="text-gray d-block mt-3">Pershtypje</small>
+                                            {% if reviewsDifference>=0 %}
+                                                <small class="font-weight-medium text-success">
+                                                    <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                    <span class="animated-count">{{ reviewsDifference }}</span>
+                                                </small>
+                                            {% else%}
                                             <small class="font-weight-medium text-danger">
-                                                <i class="fa fa-font-awesome" aria-hidden="true"></i>
-                                                <span class="animated-count">30.54</span>
-                                                %
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ reviewsDifference }}</span>
                                             </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -562,13 +574,19 @@
                                             <div class="profile-img img-rounded bg-inverse-warning no-avatar component-flat mx-auto mb-4">
                                                 <i class="fa fa-font-awesome" aria-hidden="true"></i>
                                             </div>
-                                            <h2 class="font-weight-medium animated-count">12345</h2>
-                                            <small class="text-gray d-block mt-3">Vizita</small>
-                                            <small class="font-weight-medium text-danger">
-                                                <i class="fa fa-font-awesome" aria-hidden="true"></i>
-                                                <span class="animated-count">21.50</span>
-                                                %
+                                            <h2 class="font-weight-medium animated-count">{{ patientsNumber }}</h2>
+                                            <small class="text-gray d-block mt-3">Paciente</small>
+                                            {% if patientsDifference>=0 %}
+                                            <small class="font-weight-medium text-success">
+                                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ patientsDifference }}</span>
                                             </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-danger">
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ patientsDifference }}</span>
+                                            </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -580,15 +598,20 @@
                                                 <i class="fa fa-font-awesome" aria-hidden="true"></i>
                                             </div>
                                             <h2 class="font-weight-medium">
-                                                <span class="animated-count">23.6</span>
-                                                %
+                                                <span class="animated-count">{{ revenuesNumber }}</span>
                                             </h2>
                                             <small class="text-gray d-block mt-3">Te Ardhura</small>
+                                            {% if revenuesDifference>=0 %}
                                             <small class="font-weight-medium text-success">
-                                                <i class="fa fa-font-awesome" aria-hidden="true"></i>
-                                                <span class="animated-count">51.03</span>
-                                                %
+                                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ revenuesDifference }}</span>
                                             </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-success">
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ revenuesDifference }}</span>
+                                            </small>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -602,41 +625,56 @@
                         <div class="col-md-8 equel-grid">
                             <div class="grid">
                                 <div class="grid-body py-3">
-                                    <p class="card-title ml-n1">Historiku i Konsultave</p>
+                                    <p class="card-title ml-n1">Historiku i Rezervimeve</p>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-hover table-sm">
                                         <thead>
                                         <tr class="solid-header">
-                                            <th colspan="2" class="pl-4">Doktori</th>
+                                            <th class="pl-4">Doktor</th>
+                                            <th>Emer Mbiemer</th>
                                             <th>Sherbimi</th>
+                                            <th>Pacienti/Status</th>
                                             <th>Data</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {% for res in top5Reservations %}
                                         <tr>
                                             {# Entry #}
                                             <td class="pr-0 pl-4">
-                                                <img class="profile-img img-sm" src="{{asset('images/user/DSC_0359-5eadb19019f60.jpeg')}}" alt="Foto Profili">
+                                                <img class="profile-img img-sm" src="{{asset('images/user/'~ res.medicalStaff.user.imageFilename) }}" alt="Foto Profili">
                                             </td>
                                             <td class="pl-md-0">
-                                                <small class="text-black font-weight-medium d-block">DokEmer DokMbiemer</small> <span>
-                                      <span class="status-indicator rounded-indicator small bg-primary"></span>
-                                      Status
-                                    </span>
+                                                <small>{{ res.medicalStaff.user.firstName }} {{ res.medicalStaff.user.lastName }}</small>
                                             </td>
                                             <td>
-                                                <small>Gastrohepatologji</small>
+                                                <small>{{ res.service.name }}</small>
                                             </td>
-                                            <td>20-03-2020</td>
+                                            <td class="pl-md-0">
+                                                <small class="text-black font-weight-medium d-block">{{ res.client.user.firstName }} {{ res.client.user.lastName }}</small>
+                                                <span>
+                                                    {% if res.status=='kryer'%}
+                                                    <span class="status-indicator rounded-indicator small bg-danger"></span>
+                                                    {{ res.status }}
+                                                    {% elseif res.status=='pritje' %}
+                                                        <span class="status-indicator rounded-indicator small bg-warning"></span>
+                                                        {{ res.status }}
+                                                    {% else %}
+                                                        <span class="status-indicator rounded-indicator small bg-success"></span>
+                                                    {{ res.status }}
+                                                    {% endif %}
+                                                </span>
+                                            </td>
+                                            <td>{{ res.day|date('d/m/Y') }}</td>
                                         </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
-                                <a class="border-top px-3 py-2 d-block text-gray" href="#">
+                                <a class="border-top px-3 py-2 d-block text-gray" href="{{ path('app_admin_reservations_soon') }}">
                                     <small class="font-weight-medium">
-                                        <i class="fa fa-expand" aria-hidden="true"></i>
-                                        Shiko Me Shume Konsultime ..
+                                        <i class="fa fa-expand" aria-hidden="true"></i> Me shume rezervime ne pritje
                                     </small>
                                 </a>
                             </div>
@@ -652,22 +690,22 @@
                                             <div class="split-header">
                                                 <p class="card-title">Kapaciteti i Spitalit</p>
                                                 <div class="content-wrapper v-centered">
-                                                    <small class="text-muted">text 2</small>
+                                                    <small class="text-muted">Raport</small>
                                                     <span class="btn action-btn btn-refresh btn-xs component-flat">
-                                         <i class="fa fa-refresh" aria-hidden="true"></i>
+                                         <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
                                         </span>
                                                 </div>
                                             </div>
                                             <div class="mt-auto">
-                                                <h3 class="font-weight-medium mt-2">69.05%</h3>
+                                                <h3 class="font-weight-medium mt-2">{{ patientsNumber/roomCapacity*100 }}%</h3>
                                                 <p class="text-gray">NenStatus</p>
                                                 <div class="d-flex justify-content-between text-muted mt-3">
                                                     <small>Kapaciteti</small>
-                                                    <small>35.62  / 2 </small>
+                                                    <small>{{ patientsNumber}}  / {{ roomCapacity}} </small>
                                                 </div>
                                                 <div class="progress progress-slim mt-2">
                                                     {#Matja e progresit#}
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ patientsNumber/roomCapacity*100 }}%;" aria-valuenow="{{ patientsNumber }}" aria-valuemin="0" aria-valuemax="{{ roomCapacity }}">
                                                         {#Matja e progresit#}
                                                     </div>
                                                 </div>
@@ -682,16 +720,31 @@
                                     <div class="grid widget-sales-card d-flex flex-column">
                                         <div class="grid-body pb-3">
                                             <div class="wrapper d-flex">
-                                                <p class="card-title">Trendi</p>
-                                                <div class="badge badge-success ml-auto">+ 12.42%</div>
+                                                <p class="card-title">Trendi i Vizitave</p>
+                                                {% if reservationsDifference>=0 %}
+                                                <div class="badge badge-success ml-auto">+{{ reservationsDifference }}</div>
+                                                {% else %}
+                                                    <div class="badge badge-danger ml-auto">-{{ reservationsDifference }}</div>
+                                                {% endif %}
                                             </div>
                                             <div class="wrapper mt-2">
-                                                <h3>321,212</h3>
-                                                <small class="text-gray">Me shume vizita kete jave</small>
+                                                <h3>{{ reservationsNumber }}</h3>
+                                                <small class="text-gray">Vizita ne total</small>
                                             </div>
                                         </div>
-                                        <div class="mt-auto">
-                                            <canvas class="w-100" id="sales-conversion" height="70"></canvas>
+                                        <div class="grid-body pb-3">
+                                            <div class="wrapper d-flex">
+                                                <p class="card-title">Trendi i Pacienteve</p>
+                                                {% if patientsDifference>=0 %}
+                                                    <div class="badge badge-success ml-auto">+{{ patientsDifference }}</div>
+                                                {% else %}
+                                                    <div class="badge badge-danger ml-auto">-{{ patientsDifference }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="wrapper mt-2">
+                                                <h3>{{ patientsNumber }}</h3>
+                                                <small class="text-gray">Paciente ne total</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -705,7 +758,7 @@
                         <div class="col-md-4 col-sm-6 equel-grid">
                             <div class="grid deposit-balance-card">
                                 <div class="grid-body">
-                                    <p class="card-title">E dhene</p>
+                                    <p class="card-title">Objektiva</p>
                                     <div class="row">
                                         <div class="col-md-12 mt-4">
                                             <div id="current-circle-progress">
@@ -713,29 +766,25 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-center mt-4">
-                                            <h4 class="font-weight-medium">32,436,126 Leke</h4>
+                                            <h4 class="font-weight-medium">{{ revenuesNumber}} Leke</h4>
                                         </div>
                                         <div class="col-12">
                                             <button type="button" class="btn btn-sm btn-block mt-4 btn-success">Shiko Me shume</button>
                                         </div>
                                         <div class="deposit-balance-card-footer">
                                             <div class="footer-col col">
-                                                <small>Objektivi: 100,000,000 Leke</small>
+                                                <small>Objektivi: 100,000 Leke</small>
                                                 <div class="progress progress-slim mt-2">
                                                     {#Progresi#}
-                                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ revenuesNumber/100000*100 }}%;" aria-valuenow="{{ revenuesNumber/100000*100 }}" aria-valuemin="0" aria-valuemax="100000">
                                                         {#Progresi#}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="footer-col col">
-                                                <small>Koha: 25 Dite</small>
-                                                <div class="progress progress-slim mt-2">
-                                                    {#Progres#}
-                                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 76%" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100">
-                                                        {#Progres#}
-                                                    </div>
-                                                </div>
+                                                <small>
+                                                Objektivi per kete vit eshte parashikuar 100000 Leke
+                                                </small>
                                             </div>
                                         </div>
                                     </div>
@@ -747,53 +796,25 @@
                         <div class="col-md-4 col-sm-6 equel-grid">
                             <div class="grid">
                                 <div class="grid-body pb-0">
-                                    <p class="card-title">Vendndodhja e pacienteve</p>
-                                    <small class="mt-4">Shitjet sipas vendndodhjes</small>
+                                    <p class="card-title">Info Rreth Top Klienteve</p>
                                     <div class="table-responsive">
                                         <table class="table mt-2">
                                             <tbody>
-                                            <tr class="text-align-edge">
-                                                <td class="border-top-0">
-                                                    <i class="flag-icon flag-icon-at"></i>
-                                                </td>
-                                                <td class="border-top-0">Vend 1</td>
-                                                <td class="border-top-0 font-weight-bold">ALL 3,434.10</td>
-                                            </tr>
-                                            <tr class="text-align-edge">
-                                                <td>
-                                                    <i class="flag-icon flag-icon-br"></i>
-                                                </td>
-                                                <td>Vend 2</td>
-                                                <td class="font-weight-bold">ALL 3,233.20</td>
-                                            </tr>
-                                            <tr class="text-align-edge">
-                                                <td>
-                                                    <i class="flag-icon flag-icon-de"></i>
-                                                </td>
-                                                <td>Vend 3</td>
-                                                <td class="font-weight-bold">ALL 2,345.20</td>
-                                            </tr>
-                                            <tr class="text-align-edge">
-                                                <td>
-                                                    <i class="flag-icon flag-icon-fr"></i>
-                                                </td>
-                                                <td>Vend 4</td>
-                                                <td class="font-weight-bold">ALL 1,671.10</td>
-                                            </tr>
-                                            <tr class="text-align-edge">
-                                                <td>
-                                                    <i class="flag-icon flag-icon-ca"></i>
-                                                </td>
-                                                <td>Vend 5</td>
-                                                <td class="font-weight-bold">ALL 1,546.00</td>
-                                            </tr>
-                                            <tr class="text-align-edge">
-                                                <td>
-                                                    <i class="flag-icon flag-icon-ch"></i>
-                                                </td>
-                                                <td>Vend 6</td>
-                                                <td class="font-weight-bold">ALL 1,034.10</td>
-                                            </tr>
+                                            {% for client in top6Clients %}
+                                                <tr class="text-align-edge">
+                                                    <td>
+                                                        <img class="profile-img img-sm" src="{{ asset('images/user/'~ client.user.imageFilename) }}"
+                                                    </td>
+                                                    <td>{{ client.user.firstName }} {{ client.user.lastName }}</td>
+                                                    <td class="font-weight-bold">{{ client.user.telephone }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr class="text-align-edge">
+                                                    <td class="border-top-0" colspan="3">
+                                                        Nuk ka ende ndonje te dhene
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -805,64 +826,64 @@
                             <div class="grid">
                                 <div class="grid-body">
                                     <div class="d-flex justify-content-between">
-                                        <p class="card-title">Veprimet e Fundit</p>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-trasnparent btn-xs component-flat pr-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Veprim 1</a>
-                                                <a class="dropdown-item" href="#">Veprim 2</a>
-                                            </div>
-                                        </div>
+                                        <p class="card-title">Vleresimet e Fundit</p>
                                     </div>
                                     <div class="vertical-timeline-wrapper">
                                         <div class="timeline-vertical dashboard-timeline">
+                                            {% for rev in top3Reviews %}
                                             <div class="activity-log">
-                                                <p class="log-name">Person 1</p>
-                                                <div class="log-details">Veprimi a
-                                                    <span class="text-primary ml-1">#Vep</span>
+                                                <p class="log-name">{{ rev.client.user.firstName }}</p>
+                                                <div class="log-details">
+                                                    {{ rev.reviewText|slice(0,30) }}...
                                                 </div>
-                                                <small class="log-time">8 minuta </small>
+                                                <small class="log-time">{{ rev.createdAt|date('d/m/Y')}} </small>
                                             </div>
-                                            <div class="activity-log">
-                                                <p class="log-name">Person 2</p>
-                                                <div class="log-details">Eshte kryer nje ndryshim
-                                                    <div class="grouped-images mt-1">
-                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">
-                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">
-                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">
-                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">
-                                                        <span class="plus-text img-sm">+3</span>
+                                            {% else %}
+                                                <div class="activity-log">
+                                                    <p class="log-name">Asnje Rezultat</p>
+                                                    <div class="log-details">
+                                                        Asnje Rezultat
                                                     </div>
                                                 </div>
-                                                <small class="log-time">3 Ore me pare</small>
-                                            </div>
+                                            {% endfor %}
+{#                                            <div class="activity-log">#}
+{#                                                <p class="log-name">Person 2</p>#}
+{#                                                <div class="log-details">Eshte kryer nje ndryshim#}
+{#                                                    <div class="grouped-images mt-1">#}
+{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
+{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
+{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
+{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
+{#                                                        <span class="plus-text img-sm">+3</span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <small class="log-time">3 Ore me pare</small>#}
+{#                                            </div>#}
 
-                                            <div class="activity-log">
-                                                <p class="log-name">Person 3</p>
-                                                <div class="log-details">Ka kryer
-                                                    <div class="wrapper mt-1">
-                                                        <button type="button" class="btn btn-xs btn-primary">Prano</button>
-                                                        <button type="button" class="btn btn-xs btn-inverse-primary">Mos Prano</button>
-                                                    </div>
-                                                </div>
-                                                <small class="log-time">7 Ore me pare</small>
-                                            </div>
-                                            <div class="activity-log">
-                                                <p class="log-name">Person 4</p>
-                                                <div class="log-details">ksflkslfjsljflsdj</div>
-                                                <small class="log-time">8 Ore me pare</small>
-                                            </div>
-                                            <div class="activity-log">
-                                                <p class="log-name">Person 5</p>
-                                                <div class="log-details">fkskslfkslkflsf</div>
-                                                <small class="log-time">9 Ore me pare</small>
-                                            </div>
+{#                                            <div class="activity-log">#}
+{#                                                <p class="log-name">Person 3</p>#}
+{#                                                <div class="log-details">Ka kryer#}
+{#                                                    <div class="wrapper mt-1">#}
+{#                                                        <button type="button" class="btn btn-xs btn-primary">Prano</button>#}
+{#                                                        <button type="button" class="btn btn-xs btn-inverse-primary">Mos Prano</button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <small class="log-time">7 Ore me pare</small>#}
+{#                                            </div>#}
+{#                                            <div class="activity-log">#}
+{#                                                <p class="log-name">Person 4</p>#}
+{#                                                <div class="log-details">ksflkslfjsljflsdj</div>#}
+{#                                                <small class="log-time">8 Ore me pare</small>#}
+{#                                            </div>#}
+{#                                            <div class="activity-log">#}
+{#                                                <p class="log-name">Person 5</p>#}
+{#                                                <div class="log-details">fkskslfkslkflsf</div>#}
+{#                                                <small class="log-time">9 Ore me pare</small>#}
+{#                                            </div>#}
                                         </div>
                                     </div>
                                 </div>
-                                <a class="border-top px-3 py-2 d-block text-gray" href="#">
+                                <a class="border-top px-3 py-2 d-block text-gray" href="{{ path('app_admin_clients_feedback') }}">
                                     <small class="font-weight-medium">
                                         <i class="mdi mdi-chevron-down mr-2"></i>Shiko Me tej
                                     </small>
@@ -911,6 +932,55 @@
     {#<script src="{{ asset('js/profile/Chart.min.js') }}"></script>#}
     <!-- Vendor Js For This Page Ends-->
     <script src="{{ asset('js/profile/script.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var myChart = document.getElementById("revenuesChartCanvas").getContext('2d');
+
+            $.get('http://localhost:8000/getDemoData', function (data) {
+                var cities = new Array();
+                var pops = new Array();
+                for (var i=0; i<data.length; i++){
+                    cities.push(data[i].city);
+                    pops.push(data[i].population);
+                }
+
+                var massPopChart = new Chart(myChart,{
+                    type: 'line', //bar,horizontalBar, pie, line, doughnut, radar, polarArea
+                    data: {
+                        labels: cities,
+                        datasets: [{
+                            label: 'Popullsia',
+                            data:pops,
+                            backgroundColor: 'rgba(238, 238, 0, 1)'
+                        }] //can have more than one data set
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                            yAxes: [{
+                                // display: false,
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                        }
+                    }
+                });
+            });
+
+            // $("#revenuesChart").html(myChart.generateLegend());
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

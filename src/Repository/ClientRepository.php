@@ -55,4 +55,12 @@ class ClientRepository extends ServiceEntityRepository
 
         return $qb->orderBy('c.createdAt','DESC');
     }
+
+    public function getTop6Clienets() {
+        $qb = $this->createQueryBuilder('c')
+            ->setMaxResults(6)
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

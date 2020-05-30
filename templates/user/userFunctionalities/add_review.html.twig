@@ -1,0 +1,54 @@
+{% extends 'Home/homepage.html.twig' %}
+{% block body %}
+    {% block bubbles %}
+        {{ parent() }}
+    {% endblock %}
+    {% block navbar %}
+        {{ parent() }}
+    {% endblock%}
+
+    {% block smallContainer %}
+        <div class="appointment-content col-6" style="background: white;">
+            <h4>
+                <strong>
+                    Jepni Mendimin Tuaj!
+                </strong>
+            </h4>
+
+            {% for message in app.flashes('reviewSuccess') %}
+                <div class="alert alert-success text-center" style="margin-top: 5%;">{{ message }}</div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <div class="icon">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                            </div>
+                            <label for="review_form_reviewText">Lini nje Pershtypje: </label>
+                            {{ form_row(form.reviewText) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Dergo</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <a href="{{ path('homepage') }}" class="btn btn-info">Faqja kryesore</a>
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    {% endblock%}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock%}
+{% endblock %}
