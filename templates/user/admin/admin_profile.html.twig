@@ -18,6 +18,7 @@
         <!-- Layout style -->
         <link rel="shortcut icon" href="../asssets/images/favicon.ico">
         <script src="https://kit.fontawesome.com/e63f0d911b.js" crossorigin="anonymous"></script>
+
     {% endblock %}
 </head>
 <body class="header-fixed">
@@ -263,7 +264,6 @@
                 <li>
                     <a href="#sample-pages" data-toggle="collapse" aria-expanded="false">
                         <span class="link-title">Rezervimet</span>
-                        {#                    <i class="mdi mdi-flask link-icon"></i>#}
                         <i class="fa fa-calendar-o" aria-hidden="true"></i>
                     </a>
                     <ul class="collapse navigation-submenu" id="sample-pages">
@@ -335,7 +335,7 @@
                     <a href="#departament" data-toggle="collapse" aria-expanded="false">
                         <span class="link-title">Departamentet</span>
                         {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                        <i class="fa fa-hospital-o" aria-hidden="true"></i>
                     </a>
                     <ul class="collapse navigation-submenu" id="departament">
                         <li>
@@ -351,7 +351,7 @@
                     <a href="#services" data-toggle="collapse" aria-expanded="false">
                         <span class="link-title">Sherbimet / Specialitetet</span>
                         {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
                     </a>
                     <ul class="collapse navigation-submenu" id="services">
                         <li>
@@ -367,7 +367,7 @@
                     <a href="#spaces" data-toggle="collapse" aria-expanded="false">
                         <span class="link-title">Hapesirat</span>
                         {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                        <i class="fa fa-joomla" aria-hidden="true"></i>
                     </a>
                     <ul class="collapse navigation-submenu" id="spaces">
                         <li>
@@ -379,21 +379,21 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#assets" data-toggle="collapse" aria-expanded="false">
-                        <span class="link-title">Asete</span>
-                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
-                    </a>
-                    <ul class="collapse navigation-submenu" id="assets">
-                        <li>
-                            <a href="#">Listo Asete</a>
-                        </li>
-                        <li>
-                            <a href="#">Menaxho Asete</a>
-                        </li>
-                    </ul>
-                </li>
+{#                <li>#}
+{#                    <a href="#assets" data-toggle="collapse" aria-expanded="false">#}
+{#                        <span class="link-title">Asete</span>#}
+{#                        #}{#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+{#                        <i class="fa fa-stethoscope" aria-hidden="true"></i>#}
+{#                    </a>#}
+{#                    <ul class="collapse navigation-submenu" id="assets">#}
+{#                        <li>#}
+{#                            <a href="#">Listo Asete</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">Menaxho Asete</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </li>#}
 
 
                 {#Menu-3#}
@@ -414,10 +414,10 @@
                     <div class="user-profile-item-tittle">Rreth Jush</div>
 
 
-                    <a class="user-profile-item" href="#">
-                        <i class="fa fa-cogs" aria-hidden="true"></i> Fushe Ekstra
+                    <a class="user-profile-item" href="{{ path('app_admin_profile') }}">
+                        <i class="fa fa-tachometer" aria-hidden="true"></i> Pasqyra
                     </a>
-                    <a class="user-profile-item" href="#">
+                    <a class="user-profile-item" href="{{ path('app_admin_profile_manage') }}">
                         <i class="fa fa-cogs" aria-hidden="true"></i> Menaxho Profilin
                     </a>
                     <a class="btn btn-success btn-logout" href="{{ path('app_logout') }}">Dil</a>
@@ -433,7 +433,7 @@
                             <small class="user_access_level">{{ app.user.firstName }} {{ app.user.lastName}}</small>
                         </div>
                     </div>
-                    <i class="arrow mdi mdi-chevron-right"></i>
+                    <i class="arrow fa fa-arrow-up"></i>
                 </div>
             </div>
         </div>
@@ -468,10 +468,10 @@
             {% block trupi %}
                 <div class="viewport-header">
                     <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb has-arrow">
+                        <ol class="breadcrumb">
 
                             <li class="breadcrumb-item">
-                                <a href="#">PASQYRA</a>
+                                <a href="{{ path('app_admin_profile') }}">PASQYRA</a>
                             </li>
 
                             <li class="breadcrumb-item active" aria-current="page">
@@ -846,46 +846,12 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
-{#                                            <div class="activity-log">#}
-{#                                                <p class="log-name">Person 2</p>#}
-{#                                                <div class="log-details">Eshte kryer nje ndryshim#}
-{#                                                    <div class="grouped-images mt-1">#}
-{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
-{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
-{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
-{#                                                        <img class="img-sm" src="{{ asset('images/user/DSC_0359-5eadb19019f60.jpeg') }}" alt="Profile Image">#}
-{#                                                        <span class="plus-text img-sm">+3</span>#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                                <small class="log-time">3 Ore me pare</small>#}
-{#                                            </div>#}
-
-{#                                            <div class="activity-log">#}
-{#                                                <p class="log-name">Person 3</p>#}
-{#                                                <div class="log-details">Ka kryer#}
-{#                                                    <div class="wrapper mt-1">#}
-{#                                                        <button type="button" class="btn btn-xs btn-primary">Prano</button>#}
-{#                                                        <button type="button" class="btn btn-xs btn-inverse-primary">Mos Prano</button>#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                                <small class="log-time">7 Ore me pare</small>#}
-{#                                            </div>#}
-{#                                            <div class="activity-log">#}
-{#                                                <p class="log-name">Person 4</p>#}
-{#                                                <div class="log-details">ksflkslfjsljflsdj</div>#}
-{#                                                <small class="log-time">8 Ore me pare</small>#}
-{#                                            </div>#}
-{#                                            <div class="activity-log">#}
-{#                                                <p class="log-name">Person 5</p>#}
-{#                                                <div class="log-details">fkskslfkslkflsf</div>#}
-{#                                                <small class="log-time">9 Ore me pare</small>#}
-{#                                            </div>#}
                                         </div>
                                     </div>
                                 </div>
                                 <a class="border-top px-3 py-2 d-block text-gray" href="{{ path('app_admin_clients_feedback') }}">
                                     <small class="font-weight-medium">
-                                        <i class="mdi mdi-chevron-down mr-2"></i>Shiko Me tej
+                                        <i class="fa fa-expand"></i>Shiko Me tej
                                     </small>
                                 </a>
                             </div>
@@ -912,7 +878,7 @@
                         <a href="#" target="_blank">MegaSpital</a>.
                         All rights reserved</small>
                     <small class="text-gray mt-2">Krijuar me
-                        <i class="mdi mdi-heart text-danger"></i>
+                        <i class="fa fa-heart-o text-danger"></i>
                     </small>
                 </div>
             </div>
