@@ -211,12 +211,31 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getTop5ReservationsForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+            ->setMaxResults(5)
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
     public function getTotalCostForUser($clientId){
         $qb = $this->createQueryBuilder('r')
             ->select('sum(s.cost)')
             ->innerJoin('r.service','s')
             ->andWhere('r.client = :clientId')
             ->setParameter('clientId',$clientId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getTotalCostForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('sum(s.cost)')
+            ->innerJoin('r.service','s')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
         ;
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -231,11 +250,33 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function getReservationsNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.medicalStaff)')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getDoneReservationsNumberForUser($clientId){
         $qb = $this->createQueryBuilder('r')
             ->select('count(r.client)')
             ->andWhere('r.client = :clientId')
             ->setParameter('clientId',$clientId)
+            ->andWhere('r.status = :done')
+            ->setParameter('done','kryer')
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getDoneReservationsNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.medicalStaff)')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
             ->andWhere('r.status = :done')
             ->setParameter('done','kryer')
 

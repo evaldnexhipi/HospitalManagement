@@ -67,11 +67,32 @@ class ResultsRepository extends ServiceEntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function getResultsNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.medicalStaff)')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getLastResultForClient($clientId)
     {
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.client = :clientid')
             ->setParameter('clientid',$clientId)
+            ->orderBy('r.createdAt','DESC')
+            ->setMaxResults(1)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getLastResultForDoc($medicalId)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
             ->orderBy('r.createdAt','DESC')
             ->setMaxResults(1)
         ;

@@ -14,6 +14,8 @@ use App\Form\UserFormType;
 use App\Repository\AnamnesisRepository;
 use App\Repository\ClientRepository;
 use App\Repository\ReservationRepository;
+use App\Repository\ResultsRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -30,8 +32,37 @@ class DocController extends BaseController
     /**
      * @Route("/",name="app_doc_profile")
      */
-    public function helloPerson(){
-        return $this->render('user/doctorProfile.html.twig');
+    public function helloPerson(ReservationRepository $reservationRepository, AnamnesisRepository $anamnesisRepository,ResultsRepository $resultsRepository, ReviewRepository $reviewRepository){
+        /* Rezervime */
+        $reservationsNumber = (int)$reservationRepository->getReservationsNumberForDoc($this->getUser()->getMedicalStaff());
+        $doneReservationsNumber = (int) $reservationRepository->getDoneReservationsNumberForDoc($this->getUser()->getMedicalStaff());
+
+        /* Reviews */
+        $reviewsNumber = (int) $reviewRepository->getReviewsNumber();
+
+        /* Numri i Anamnezave */
+        $anamnesisNumber = (int) $anamnesisRepository->getAnamnesisNumberForDoc($this->getUser()->getMedicalStaff());
+
+        /* Shpenizmet */
+        $expensesNumber = (int) $reservationRepository->getTotalCostForDoc($this->getUser()->getMedicalStaff());
+
+        /* Numri i Rezultateve */
+        $resultsNumber = (int) $resultsRepository->getResultsNumberForDoc($this->getUser()->getMedicalStaff());
+
+        $top5Reservations = $reservationRepository->getTop5ReservationsForDoc($this->getUser()->getMedicalStaff());
+        $lastResult = $resultsRepository->getLastResultForDoc($this->getUser()->getMedicalStaff());
+
+
+        return $this->render('user/doctorProfile.html.twig',[
+            'reservationsNumber'=>$reservationsNumber,
+            'doneReservationsNumber'=>$doneReservationsNumber,
+            'anamnesisNumber'=>$anamnesisNumber,
+            'expensesNumber'=>$expensesNumber,
+            'top5Reservations'=>$top5Reservations,
+            'resultsNumber'=>$resultsNumber,
+            'lastResult'=>$lastResult,
+            'reviewsNumber'=>$reviewsNumber
+        ]);
     }
 
     /**

@@ -76,4 +76,14 @@ class AnamnesisRepository extends ServiceEntityRepository
         ;
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getAnamnesisNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('a')
+            ->select('count(a.medicalStaff)')
+            ->andWhere('a.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
