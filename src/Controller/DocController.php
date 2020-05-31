@@ -36,7 +36,7 @@ class DocController extends BaseController
         /* Rezervime */
         $reservationsNumber = (int)$reservationRepository->getReservationsNumberForDoc($this->getUser()->getMedicalStaff());
         $doneReservationsNumber = (int) $reservationRepository->getDoneReservationsNumberForDoc($this->getUser()->getMedicalStaff());
-
+        $reservationsDifference = (int) $reservationRepository->getReservationsNumberToPrevMonthForUser($this->getUser()) - $reservationRepository->getReservationsNumberTo2PrevMonthsForUser($this->getUser());
         /* Reviews */
         $reviewsNumber = (int) $reviewRepository->getReviewsNumber();
 
@@ -61,7 +61,8 @@ class DocController extends BaseController
             'top5Reservations'=>$top5Reservations,
             'resultsNumber'=>$resultsNumber,
             'lastResult'=>$lastResult,
-            'reviewsNumber'=>$reviewsNumber
+            'reviewsNumber'=>$reviewsNumber,
+            'reservationsDifference'=>$reservationsDifference
         ]);
     }
 

@@ -394,23 +394,27 @@
                                     <div class="grid d-flex flex-column justify-content-between overflow-hidden">
                                         <div class="grid-body">
                                             <div class="d-flex justify-content-between">
-                                                <p class="card-title">Te dhenat per $abcd</p>
-                                                <div class="chartjs-legend" id="sales-revenue-chart-legend">
+                                                <p class="card-title">Te dhenat per 3 Mujorin e Fundit</p>
+                                                <div class="chartjs-legend" id="revenuesChart">
                                                      {# Legjenda e Chart.js #}
                                                 </div>
                                             </div>
                                             <div class="d-flex">
-                                                <p class="d-none d-xl-block">$count% Ne lidhje me vitin YYYY</p>
+                                                <p class="d-none d-xl-block">Numri i rezervimeve 3 muajt e fundit</p>
                                                 <div class="ml-auto">
                                                     <h2 class="font-weight-medium text-gray">
-                                                        <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
-                                                        <span class="animated-count">77.12</span>%
+                                                        {% if reservationsDifference>=0 %}
+                                                            <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
+                                                        {% else %}
+                                                            <i style="color:#00e093;" class="fa fa-level-down" aria-hidden="true"></i>
+                                                        {% endif %}
+                                                        <span class="animated-count">{{ reservationsNumber }}</span>
                                                     </h2>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <canvas class="mt-4" id="sales-revenue-chart" height="245"></canvas>
+                                        <canvas class="mt-4" id="revenuesChartCanvas" height="245"></canvas>
                                     </div>
                                 </div>
 
@@ -670,6 +674,54 @@
 {#<script src="{{ asset('js/profile/Chart.min.js') }}"></script>#}
 <!-- Vendor Js For This Page Ends-->
 <script src="{{ asset('js/profile/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var myChart = document.getElementById("revenuesChartCanvas").getContext('2d');
+
+            $.get('http://localhost:8000/getLastReservationsForUser', function (data) {
+                var months = new Array();
+                var counts = new Array();
+                for (var i=0; i<data.length; i++){
+                    months.push(data[i].month);
+                    counts.push(data[i].count);
+                }
+
+                var massPopChart = new Chart(myChart,{
+                    type: 'line', //bar,horizontalBar, pie, line, doughnut, radar, polarArea
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Muajt',
+                            data:counts,
+                            backgroundColor: 'rgba(238, 238, 0, 1)'
+                        }] //can have more than one data set
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                            yAxes: [{
+                                // display: false,
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                        }
+                    }
+                });
+            });
+
+            // $("#revenuesChart").html(myChart.generateLegend());
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

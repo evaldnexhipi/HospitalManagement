@@ -489,17 +489,21 @@
                             <div class="grid d-flex flex-column justify-content-between overflow-hidden">
                                 <div class="grid-body">
                                     <div class="d-flex justify-content-between">
-                                        <p class="card-title">Te dhenat per $abcd</p>
+                                        <p class="card-title">Te dhenat per 3 Mujorin e Fundit</p>
                                         <div class="chartjs-legend" id="revenuesChart">
                                             {# Legjenda e Chart.js#}
                                         </div>
                                     </div>
                                     <div class="d-flex">
-                                        <p class="d-none d-xl-block">$count% Ne lidhje me vitin YYYY</p>
+                                        <p class="d-none d-xl-block">Numri i rezervimeve 3 muajt e fundit</p>
                                         <div class="ml-auto">
                                             <h2 class="font-weight-medium text-gray">
+                                                {% if reservationsDifference>=0 %}
                                                 <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
-                                                <span class="animated-count">77.12</span>%
+                                                {% else %}
+                                                    <i style="color:#00e093;" class="fa fa-level-down" aria-hidden="true"></i>
+                                                {% endif %}
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
                                             </h2>
                                         </div>
                                     </div>
@@ -905,21 +909,21 @@
         $(document).ready(function() {
             var myChart = document.getElementById("revenuesChartCanvas").getContext('2d');
 
-            $.get('http://localhost:8000/getDemoData', function (data) {
-                var cities = new Array();
-                var pops = new Array();
+            $.get('http://localhost:8000/getLastReservationsFreq', function (data) {
+                var months = new Array();
+                var counts = new Array();
                 for (var i=0; i<data.length; i++){
-                    cities.push(data[i].city);
-                    pops.push(data[i].population);
+                    months.push(data[i].month);
+                    counts.push(data[i].count);
                 }
 
                 var massPopChart = new Chart(myChart,{
                     type: 'line', //bar,horizontalBar, pie, line, doughnut, radar, polarArea
                     data: {
-                        labels: cities,
+                        labels: months,
                         datasets: [{
-                            label: 'Popullsia',
-                            data:pops,
+                            label: 'Muajt',
+                            data:counts,
                             backgroundColor: 'rgba(238, 238, 0, 1)'
                         }] //can have more than one data set
                     },

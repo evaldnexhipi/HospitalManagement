@@ -46,6 +46,7 @@ class UserController extends BaseController
         /* Rezervime */
         $reservationsNumber = (int)$reservationRepository->getReservationsNumberForUser($this->getUser()->getClient());
         $doneReservationsNumber = (int) $reservationRepository->getDoneReservationsNumberForUser($this->getUser()->getClient());
+        $reservationsDifference = (int) $reservationRepository->getReservationsNumberToPrevMonthForUser($this->getUser()) - $reservationRepository->getReservationsNumberTo2PrevMonthsForUser($this->getUser());
         /* Review */
         $reviewsNumber = (int) $reviewRepository->getReviewsNumberForUser($this->getUser()->getClient());
 
@@ -69,7 +70,8 @@ class UserController extends BaseController
             'expensesNumber'=>$expensesNumber,
             'top5Reservations'=>$top5Reservations,
             'resultsNumber'=>$resultsNumber,
-            'lastResult'=>$lastResult
+            'lastResult'=>$lastResult,
+            'reservationsDifference'=>$reservationsDifference
         ]);
     }
 

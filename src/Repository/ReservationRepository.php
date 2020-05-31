@@ -158,6 +158,34 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
+    public function getReservationsNumberToPrevMonthForUser($user){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->innerJoin('r.client','c')
+            ->innerJoin('r.medicalStaff','m')
+            ->andWhere('c.user = :user OR m.user = :user')
+            ->setParameter('user',$user)
+            ->andWhere('r.createdAt>:prev_month and r.createdAt<=:curr_month')
+            ->setParameter('prev_month',new \DateTime('-1 month'))
+            ->setParameter('curr_month',new \DateTime('now'))
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getReservationsNumberTo2PrevMonthsForUser($user){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->innerJoin('r.client','c')
+            ->innerJoin('r.medicalStaff','m')
+            ->andWhere('c.user = :user OR m.user = :user')
+            ->setParameter('user',$user)
+            ->andWhere('r.createdAt>:prev_month and r.createdAt<=:curr_month')
+            ->setParameter('prev_month',new \DateTime('-2 month'))
+            ->setParameter('curr_month',new \DateTime('-1 month'))
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function getReservationsNumber (){
         $qb = $this->createQueryBuilder('r')
             ->select('count(r.id)')
@@ -281,6 +309,32 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('done','kryer')
 
         ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getReservationsCountForMonths($month1,$month2){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->andWhere('r.createdAt>:prev_month and r.createdAt<=:curr_month')
+            ->setParameter('prev_month',$month1)
+            ->setParameter('curr_month',$month2)
+            ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getReservationsCountForMonthsForUser($user,$month1,$month2){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->innerJoin('r.client','c')
+            ->innerJoin('r.medicalStaff','m')
+            ->andWhere('c.user = :user OR m.user = :user')
+            ->setParameter('user',$user)
+            ->andWhere('r.createdAt>:prev_month and r.createdAt<=:curr_month')
+            ->setParameter('prev_month',$month1)
+            ->setParameter('curr_month',$month2)
+        ;
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 }
