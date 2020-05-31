@@ -103,10 +103,10 @@ class ReservationRepository extends ServiceEntityRepository
 
     public function getAllDoneReservations():QueryBuilder {
         $qb = $this->createQueryBuilder('r')
-            ->andWhere('r.status = :term OR r.status = :term2')
-            ->setParameter('term','paguar')
+            ->andWhere(' r.status = :term2')
+//            ->setParameter('term','paguar')
             ->setParameter('term2','kryer')
-            ->andWhere('r.day < current_date()')
+//            ->andWhere('r.day < current_date()')
         ;
 
         return $qb->orderBy('r.createdAt','DESC');
@@ -116,10 +116,10 @@ class ReservationRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.client = :clientid')
             ->setParameter('clientid',$clientId)
-            ->andWhere('r.status = :term OR r.status = :term2')
-            ->setParameter('term','paguar')
+            ->andWhere('r.status = :term2')
+//            ->setParameter('term','paguar')
             ->setParameter('term2','kryer')
-            ->andWhere('r.day < current_date()')
+//            ->andWhere('r.day < current_date()')
         ;
 
         return $qb->orderBy('r.createdAt','DESC');
@@ -129,8 +129,8 @@ class ReservationRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.medicalStaff = :staffid')
             ->setParameter('staffid',$staffId)
-            ->andWhere('r.status = :term OR r.status = :term2')
-            ->setParameter('term','paguar')
+            ->andWhere('r.status = :term2')
+//            ->setParameter('term','paguar')
             ->setParameter('term2','kryer')
 //            ->andWhere('r.day > current_date()')
         ;

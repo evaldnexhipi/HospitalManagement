@@ -71,7 +71,7 @@ class UserController extends BaseController
             'top5Reservations'=>$top5Reservations,
             'resultsNumber'=>$resultsNumber,
             'lastResult'=>$lastResult,
-            'reservationsDifference'=>$reservationsDifference
+            'reservationsDifference'=>$reservationsDifference,
         ]);
     }
 

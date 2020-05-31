@@ -9,6 +9,7 @@
             <tr>
                 <th>Doktori</th>
                 <th>Sherbimi</th>
+                <th>Klient</th>
                 <th>Data</th>
                 <th>Status</th>
                 <th>Aprovo</th>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ reservation.medicalStaff.user.firstName }}</td>
                     <td>{{ reservation.service.name }}</td>
+                    <td>{{ reservation.client.user.firstName }} {{ reservation.client.user.lastName }}</td>
                     <td>{{ reservation.day|date('d-m-Y') }}</td>
                     <td>{{ reservation.status }}</td>
                     <td><a href="{{ path('app_admin_reservations_soon_approve',{id: reservation.id}) }}" class="btn btn-success">Aprovo</a></td>

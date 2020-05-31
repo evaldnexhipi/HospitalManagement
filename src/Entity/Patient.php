@@ -25,6 +25,9 @@ class Patient
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
+     * @Assert\Email(
+     *     message = "Emaili '{{ value }}' nuk eshte i sakte."
+     * )
      */
     private $email;
 

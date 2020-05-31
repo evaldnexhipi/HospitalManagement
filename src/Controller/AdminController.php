@@ -201,6 +201,7 @@ class AdminController extends BaseController
 
         if($regForm->isSubmitted() && $regForm->isValid()){
             $user = new User();
+            $user->setImageFilename('user-default.jpg');
             $staff = new MedicalStaff();
             $user = $regForm->getData();
             $token = $tokenGenerator->generateToken();
@@ -574,7 +575,9 @@ class AdminController extends BaseController
         if ($form->isSubmitted() && $form->isValid()){
             $room = $patient->getRoom();
             $room->setNumberOfPatients($room->getNumberOfPatients()+1);
-//            dd($patient);
+            if ($room->getNumberOfPatients()==$room->getCapacity()){
+                $room->setStatus(false);
+            }
             $entityManager->persist($patient);
             $entityManager->flush();
             $this->addFlash('patientSuccess','Pacienti u regjistrua');
