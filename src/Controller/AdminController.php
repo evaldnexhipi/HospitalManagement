@@ -444,6 +444,7 @@ class AdminController extends BaseController
      */
     public function addRoom(EntityManagerInterface $entityManager,Request $request){
         $room = new Room();
+        $room->setNumberOfPatients(0);
         $form = $this->createForm(RoomFormType::class,$room);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
@@ -571,6 +572,9 @@ class AdminController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            $room = $patient->getRoom();
+            $room->setNumberOfPatients($room->getNumberOfPatients()+1);
+//            dd($patient);
             $entityManager->persist($patient);
             $entityManager->flush();
             $this->addFlash('patientSuccess','Pacienti u regjistrua');
@@ -609,6 +613,8 @@ class AdminController extends BaseController
      * @Route("/deletePatient/{id}",name="app_admin_delete_patient")
      */
     public function deletePatient(Patient $patient, EntityManagerInterface $entityManager){
+        $room = $patient->getRoom();
+        $room->setNumberOfPatients($room->getNumberOfPatients()-1);
         $entityManager->remove($patient);
         $entityManager->flush();
         $this->addFlash('deletePatientSuccess','Pacienti u largua nga Spitali');

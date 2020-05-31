@@ -2,9 +2,13 @@
 
 namespace App\Entity;
 
+use App\Validator\RoomFull;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as AcmeAssert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
@@ -26,6 +30,7 @@ class Room
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @RoomFull()
      */
     private $name;
 
@@ -48,6 +53,11 @@ class Room
      * @ORM\OneToMany(targetEntity="App\Entity\Patient", mappedBy="room", orphanRemoval=true)
      */
     private $patients;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfPatients;
 
 
     public function __construct()
@@ -171,5 +181,17 @@ class Room
     public function __toString()
     {
         return $this->getName()." ".$this->getDepartament()->getName();
+    }
+
+    public function getNumberOfPatients(): ?int
+    {
+        return $this->numberOfPatients;
+    }
+
+    public function setNumberOfPatients(int $numberOfPatients): self
+    {
+        $this->numberOfPatients = $numberOfPatients;
+
+        return $this;
     }
 }

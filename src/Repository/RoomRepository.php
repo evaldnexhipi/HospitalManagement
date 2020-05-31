@@ -71,4 +71,15 @@ class RoomRepository extends ServiceEntityRepository
         ;
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getRoom($value){
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.name = :name')
+            ->setParameter('name','101/A')
+            ->setMaxResults(1);
+
+        //substr($value,0,5)
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }

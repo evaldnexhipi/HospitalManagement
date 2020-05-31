@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use App\Validator\NumericContent;
+use App\Validator\RoomFull;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PatientRepository")
@@ -51,6 +55,7 @@ class Patient
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @NumericContent()
      */
     private $tel;
 
@@ -62,6 +67,7 @@ class Patient
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="patients")
      * @ORM\JoinColumn(nullable=false)
+     * @RoomFull()
      */
     private $room;
 

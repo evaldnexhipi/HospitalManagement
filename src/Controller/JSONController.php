@@ -56,7 +56,7 @@ class JSONController extends BaseController
     }
 
     /**
-     * @Route("/getLastReservationsForUser",name="admin_get_last_res_freq",methods={"GET"})
+     * @Route("/getLastReservationsForUser",name="usr_get_last_res_freq",methods={"GET"})
      */
     public function getLastReservationsDataForUser(ReservationRepository $reservationRepository){
         $month0 = new \DateTime('now');
