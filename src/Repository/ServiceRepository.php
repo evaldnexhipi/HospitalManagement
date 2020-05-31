@@ -65,5 +65,11 @@ class ServiceRepository extends ServiceEntityRepository
         return $qb->orderBy('s.name','ASC');
     }
 
+    public function getTop4Services(){
+        $qb = $this->createQueryBuilder('s')
+            ->setMaxResults(4);
+
+        return $qb->getQuery()->getResult();
+    }
 
 }

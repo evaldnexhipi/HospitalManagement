@@ -201,7 +201,6 @@ class AdminController extends BaseController
 
         if($regForm->isSubmitted() && $regForm->isValid()){
             $user = new User();
-            $user->setImageFilename('user-default.jpg');
             $staff = new MedicalStaff();
             $user = $regForm->getData();
             $token = $tokenGenerator->generateToken();
@@ -235,6 +234,10 @@ class AdminController extends BaseController
                     dd($e);
                 }
                 $user->setImageFilename($newFilename);
+            }
+
+            if (!$user->getImageFilename()){
+                $user->setImageFilename('user-default.jpg');
             }
 
             $staff->setHall($docForm->get('hall')->getData());

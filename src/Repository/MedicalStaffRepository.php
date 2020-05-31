@@ -72,4 +72,10 @@ class MedicalStaffRepository extends ServiceEntityRepository
         return $qb->orderBy('u.firstName','ASC');
     }
 
+    public function getTop4MedicalStaff(){
+        $qb = $this->createQueryBuilder('m')
+            ->setMaxResults(4);
+
+        return $qb->getQuery()->getResult();
+    }
 }

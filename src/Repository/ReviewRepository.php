@@ -98,4 +98,12 @@ class ReviewRepository extends ServiceEntityRepository
         ;
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function getTop4Reviews(){
+        $qb = $this->createQueryBuilder('r')
+            ->setMaxResults(4);
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
