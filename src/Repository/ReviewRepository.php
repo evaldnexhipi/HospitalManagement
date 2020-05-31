@@ -88,4 +88,14 @@ class ReviewRepository extends ServiceEntityRepository
 
         return $qb->orderBy('r.createdAt','ASC')->getQuery()->getResult();
     }
+
+    public function getReviewsNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.client)')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

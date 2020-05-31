@@ -201,4 +201,45 @@ class ReservationRepository extends ServiceEntityRepository
         ;
         return $qb->getQuery()->getResult();
     }
+
+    public function getTop5ReservationsForClient($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+            ->setMaxResults(5)
+            ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getTotalCostForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('sum(s.cost)')
+            ->innerJoin('r.service','s')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getReservationsNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.client)')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+
+            ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getDoneReservationsNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.client)')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+            ->andWhere('r.status = :done')
+            ->setParameter('done','kryer')
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

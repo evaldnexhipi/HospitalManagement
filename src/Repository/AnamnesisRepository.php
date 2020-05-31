@@ -66,4 +66,14 @@ class AnamnesisRepository extends ServiceEntityRepository
 
         return $qb->orderBy('a.createdAt','DESC');
     }
+
+    public function getAnamnesisNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('a')
+            ->select('count(a.client)')
+            ->andWhere('a.client = :clientId')
+            ->setParameter('clientId',$clientId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

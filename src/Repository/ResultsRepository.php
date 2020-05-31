@@ -57,4 +57,25 @@ class ResultsRepository extends ServiceEntityRepository
 
         return $qb->orderBy('r.createdAt','DESC');
     }
+
+    public function getResultsNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.client)')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getLastResultForClient($clientId)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.client = :clientid')
+            ->setParameter('clientid',$clientId)
+            ->orderBy('r.createdAt','DESC')
+            ->setMaxResults(1)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
