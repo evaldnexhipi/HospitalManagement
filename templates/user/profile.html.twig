@@ -320,10 +320,10 @@
             <div class="user-account">
                 <div class="user-profile-item-tittle">Rreth Jush</div>
 
-                <a class="user-profile-item" href="#">
-                    <i class="fa fa-cogs" aria-hidden="true"></i> Fushe Ekstra
+                <a class="user-profile-item" href="{{ path('app_profile_main') }}">
+                    <i class="fa fa-tachometer" aria-hidden="true"></i> Pasqyra
                 </a>
-                <a class="user-profile-item" href="#">
+                <a class="user-profile-item" href="{{ path('app_user_manage') }}">
                     <i class="fa fa-cogs" aria-hidden="true"></i> Menaxho Profilin
                 </a>
                 <a class="btn btn-success btn-logout" href="{{ path('app_logout') }}">Dil</a>
@@ -339,7 +339,7 @@
                         <small class="user_access_level">{{ app.user.firstName }} {{ app.user.lastName}}</small>
                     </div>
                 </div>
-                <i class="arrow mdi mdi-chevron-right"></i>
+                <i class="arrow fa fa-arrow-up"></i>
             </div>
         </div>
     </div>
@@ -651,7 +651,7 @@
                             <a href="#" target="_blank">MegaSpital</a>.
                             All rights reserved</small>
                         <small class="text-gray mt-2">Krijuar me
-                            <i class="mdi mdi-heart text-danger"></i>
+                            <i class="fa fa-heart-o text-danger"></i>
                         </small>
                     </div>
                 </div>
