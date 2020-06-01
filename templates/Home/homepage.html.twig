@@ -39,17 +39,17 @@
     <div class="menu-toggle"></div>
     <nav>
         <ul>
-            <li><a href="#">Faqe1</a></li>
-            <li><a href="#">Faqe2</a></li>
+{#            <li><a href="#">Faqe1</a></li>#}
+            <li><a href="{{ path('app_about_us') }}">Rreth Nesh</a></li>
             <li>
                 {% if is_granted('ROLE_ADMIN') %}
-                <a href="#">Faqe3</a>
+{#                <a href="#">Faqe3</a>#}
                 {% elseif is_granted('ROLE_DOC') %}
-                <a href="#">Faqe3</a>
+{#                <a href="#">Faqe3</a>#}
                 {% elseif is_granted('ROLE_USER') %}
                 <a href="{{ path('app_user_feedback') }}">Mendimi Juaj</a>
                 {% else %}
-                <a href="#">Faqe3</a>
+{#                <a href="#">Faqe3</a>#}
                 {% endif %}
             </li>
             <li><a href="{{ path('app_services') }}">Sherbimet</a></li>
@@ -62,7 +62,7 @@
             {% elseif is_granted('ROLE_USER') %}
                 <li><a href="{{ path('app_profile_main') }}">Hello {{ app.user.firstName }}</a></li>
             {% else %}
-                <li><a href="#">Faqe5</a></li>
+{#                <li><a href="#">Profi</a></li>#}
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}

@@ -34,6 +34,14 @@ class HomeController extends BaseController
     }
 
     /**
+     * @Route("/aboutUs",name="app_about_us")
+     */
+    public function aboutUs(){
+
+        return $this->render('Home/about_us.html.twig');
+    }
+
+    /**
      * @Route("/departament/{number}",name="admin_profile")
      */
     public function getDepartament($number, EntityManagerInterface $em){
