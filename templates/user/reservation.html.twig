@@ -20,6 +20,9 @@
         {% for message in app.flashes('successReservation') %}
             <div class="alert alert-success" style="text-align: center;">{{message}}</div>
         {% endfor%}
+        {% for message in app.flashes('failureReservation') %}
+            <div class="alert alert-danger" style="text-align: center;">{{message}}</div>
+        {% endfor%}
         <span class="sub-title">Rezervo Sherbimin Tend</span>
         <h4>
             <strong>
@@ -74,6 +77,16 @@
                             <i class="fa fa-paypal" aria-hidden="true"></i>
                         </div>
                         <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </div>
+                        <label>Faqja Kryesore</label>
+                        <a href="{{ path('homepage') }}" class="btn butoni">Faqja Kryesore</a>
                     </div>
                 </div>
             </div>

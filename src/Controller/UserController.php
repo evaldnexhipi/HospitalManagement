@@ -100,7 +100,7 @@ class UserController extends BaseController
                 $this->addFlash('successReservation','U shtua rezervimi ne pritje');
             }}
             catch(UniqueConstraintViolationException $e){
-                echo"<p style = 'background-color:red; color: white; text-align: center'>Na vjen keq, doktori qe zgjodhet nuk eshte disponibel ne kete orar</p>";
+                $this->addFlash('failureReservation','Ju lutemi zgjidhni nje date/orar tjeter');
             }
 
         return $this->render('user/reservation.html.twig', [
@@ -127,11 +127,11 @@ class UserController extends BaseController
             $reservation->setStatus('paguar');
             $entityManager->persist($reservation);
             $entityManager->flush();
+            $this->addFlash('successReservation','Rezervimi u krye me sukses');
         }
         catch(UniqueConstraintViolationException $e){
-            echo"<p style = 'background-color:red; color: white; text-align: center'>Na vjen keq, doktori qe zgjodhet nuk eshte disponibel ne kete orar</p>";
+            $this->addFlash('failureReservation','Ju lutemi zgjidhni nje date/orar tjeter');
         }
-        $this->addFlash('successReservation','Rezervimi u krye me sukses');
         return $this->redirectToRoute('app_profile_reservation',['id'=>$serviceID]);
     }
 
