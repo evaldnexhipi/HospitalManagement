@@ -90,8 +90,8 @@ class UserController extends BaseController
             $price=$service->getCost();
             if ($form->isSubmitted() && $form->isValid()) {
                 $reservation->setMedicalStaff($form->get('medicalStaff')->getData());
-                $reservation->setInvoiceDate($form->get('invoiceDate')->getData());
-                $reservation->setAvailableTimes(sprintf("%s,%s,%s", $form->get('availableTimes')->getData(), $form->get('invoiceDate')->getData()->format('Y-m-d'),$form->get('medicalStaff')->getData()));
+                $reservation->setDay($form->get('day')->getData());
+                $reservation->setAvailableTimes(sprintf("%s,%s,%s", $form->get('availableTimes')->getData(), $form->get('day')->getData()->format('Y-m-d'),$form->get('medicalStaff')->getData()));
                 $reservation->setStatus('pritje');
                 $manager->persist($reservation);
                 $manager->flush();

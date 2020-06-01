@@ -25,9 +25,10 @@ class ReservationFormType extends AbstractType
                 'label'=>false,
                 'required'=>true
             ])
-            ->add('invoiceDate', DateType::class, [
+            ->add('day', DateType::class, [
                 'widget'=>'single_text',
-                'required'=>true
+                'required'=>true,
+                'label'=>false
             ])
             ->add('availableTimes', ChoiceType::class,[
                 'label'=>false
@@ -45,7 +46,7 @@ class ReservationFormType extends AbstractType
                 $data = $event->getData();
 
                 //get date
-                $preferredDate = $data['invoiceDate'];
+                $preferredDate = $data['day'];
 
                 // get the availableTimes element and its options
                 $fieldConfig = $form->get('availableTimes')->getConfig();

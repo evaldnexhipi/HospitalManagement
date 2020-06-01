@@ -45,7 +45,7 @@
                             <i class="fa fa-calendar" aria-hidden="true"></i>
                         </div>
                         <label for="reservation_form_medicalStaff">Perzgjidh Daten</label>
-                        {{form_row(reservationForm.invoiceDate, {'attr':{'class':'reservation-date'}})}}
+                        {{form_row(reservationForm.day, {'attr':{'class':'reservation-date nice-select'}})}}
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -54,8 +54,7 @@
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                         </div>
                         <label for="reservation_form_medicalStaff">Perzgjidh Oren</label>
-                        <label>*Oraret e meposhtme jane oraret kur operojne mjeket tane, ato mund te jene te zena nga usera te tjere</label>
-                        {{form_row(reservationForm.availableTimes, {'attr':{'class':'reservation-date'}})}}
+                        {{form_row(reservationForm.availableTimes, {'attr':{'class':'reservation-date nice-select'}})}}
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">

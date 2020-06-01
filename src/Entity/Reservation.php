@@ -47,7 +47,7 @@ class Reservation
     /**
      * @ORM\Column(type="date")
      */
-    private $InvoiceDate;
+    private $day;
     /**
      * @ORM\Column(type="string", unique = true)
      */
@@ -106,14 +106,14 @@ class Reservation
         return $this;
     }
 
-    public function getInvoiceDate(): ?\DateTimeInterface
+    public function getDay(): ?\DateTimeInterface
     {
-        return $this->InvoiceDate;
+        return $this->day;
     }
 
-    public function setInvoiceDate(\DateTimeInterface $InvoiceDate): self
+    public function setDay(\DateTimeInterface $day): self
     {
-        $this->InvoiceDate = $InvoiceDate;
+        $this->day = $day;
 
         return $this;
     }
@@ -127,4 +127,6 @@ class Reservation
     {
         return $this->availableTimes;
     }
+
+
 }
