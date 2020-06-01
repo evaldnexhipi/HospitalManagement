@@ -16,11 +16,13 @@ use App\Form\RoomFormType;
 use App\Form\UserFormType;
 use App\Repository\AnamnesisRepository;
 use App\Repository\ClientRepository;
+use App\Repository\MedicalStaffRepository;
 use App\Repository\PatientRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ResultsRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\RoomRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\TreatmentRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -104,14 +106,33 @@ class UserController extends BaseController
         return $this->render('user/reservation.html.twig', [
             'reservationForm' => $form->createView(),
             'cost'=>$price,
+            'service'=>$service
         ]);
     }
 
     /**
-     * @Route("/makeReservation/paypal/{serviceID}/{doctorID}/{date}",name="app_process_paypal")
+     * @Route("/makeReservation/paypal/{serviceID}/{doctorID}/{day}/{hour}",name="app_process_paypal")
      */
-    public function processPayPal($serviceID, $doctorID, $date){
+    public function processPayPal($serviceID, $doctorID, $day,$hour,EntityManagerInterface $entityManager, ServiceRepository $serviceRepository, MedicalStaffRepository $medicalStaffRepository){
+        $service = $serviceRepository->findOneBy(['id'=>$serviceID]);
+        $staff = $medicalStaffRepository->findOneBy(['id'=>$doctorID]);
 
+        try {
+            $reservation = new Reservation();
+            $reservation->setClient($this->getUser()->getClient());
+            $reservation->setService($service);
+            $reservation->setMedicalStaff($staff);
+            $reservation->setDay(new \DateTime($day));
+            $reservation->setAvailableTimes(sprintf("%s,%s,%s", $hour, $day, $staff->getUser()->getFirstName()));
+            $reservation->setStatus('paguar');
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+        }
+        catch(UniqueConstraintViolationException $e){
+            echo"<p style = 'background-color:red; color: white; text-align: center'>Na vjen keq, doktori qe zgjodhet nuk eshte disponibel ne kete orar</p>";
+        }
+        $this->addFlash('successReservation','Rezervimi u krye me sukses');
+        return $this->redirectToRoute('app_profile_reservation',['id'=>$serviceID]);
     }
 
     /**

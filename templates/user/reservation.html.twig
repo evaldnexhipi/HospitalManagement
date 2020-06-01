@@ -90,8 +90,8 @@
     {{ parent() }}
     <script>
         $(function () {
-           $('.paypal-button').click(function(){
-              alert('hellooo');
+           $('div[role=button]').click(function(){
+               location.replace('http://localhost:8000/profile/reservationssoon');
            });
         });
     </script>
@@ -111,9 +111,13 @@
                 // This function captures the funds from the transaction.
                 return actions.order.capture().then(function(details) {
                     // This function shows a transaction success message to your buyer.
+                    var staff = $('#reservation_form_medicalStaff').val();
+                    var date = $('#reservation_form_day').val();
+                    var hour = $('#reservation_form_availableTimes').val();
 
+                    var service = {{ service.id }} ;
                     //REDIRECT TO A ROUTE THAT CAN HANDLE IT
-                    //location.replace('http://localhost:8000/profile/paypal/');
+                    location.replace('http://localhost:8000/profile/makeReservation/paypal/'+service+'/'+staff+'/'+date+'/'+hour);
             });
             }
         }).render('#paypal-button-container');
