@@ -33,7 +33,7 @@ class JSONController extends BaseController
     public function getLastReservationsData(ReservationRepository $reservationRepository){
         $month0 = new \DateTime('now');
         $month1 = new \DateTime('-31 days');
-        $month2 = new \DateTime('-62 days');
+        $month2 = new \DateTime('-61 days');
         $month3 = new \DateTime('-92 days');
 
         $reservationsCount1 = $reservationRepository->getReservationsCountForMonths($month1,$month0);
@@ -61,7 +61,7 @@ class JSONController extends BaseController
     public function getLastReservationsDataForUser(ReservationRepository $reservationRepository){
         $month0 = new \DateTime('now');
         $month1 = new \DateTime('-31 days');
-        $month2 = new \DateTime('-62 days');
+        $month2 = new \DateTime('-61 days');
         $month3 = new \DateTime('-92 days');
 
         $reservationsCount1 = $reservationRepository->getReservationsCountForMonthsForUser($this->getUser(),$month1,$month0);

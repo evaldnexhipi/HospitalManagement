@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200601003553 extends AbstractMigration
+final class Version20200601013412 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,8 @@ final class Version20200601003553 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE reservation CHANGE invoice_date day DATE NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_42C8495536BC87CB ON reservation (available_times)');
+        $this->addSql('DROP TABLE product');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_42C8495536BC87CE ON reservation (available_times)');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +31,7 @@ final class Version20200601003553 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX UNIQ_42C8495536BC87CB ON reservation');
-        $this->addSql('ALTER TABLE reservation CHANGE day invoice_date DATE NOT NULL');
+        $this->addSql('CREATE TABLE product (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, brochure_filename VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('DROP INDEX UNIQ_42C8495536BC87CE ON reservation');
     }
 }
