@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\MedicalStaff;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,34 @@ class MedicalStaffRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @param string|null $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder {
+        $qb = $this->createQueryBuilder('m')
+            ->innerJoin('m.user','u')
+            ->addSelect('u')
+            ->innerJoin('m.hall','h')
+            ->addSelect('h')
+            ->innerJoin('m.speciality','s')
+            ->addSelect('s')
+            ->innerJoin('h.departament','d')
+            ->addSelect('d')
+        ;
+
+        if ($term){
+            $qb->andWhere('u.firstName LIKE :term OR u.lastName LIKE :term OR h.name LIKE :term OR d.name LIKE :term OR s.title LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+        }
+
+        return $qb->orderBy('u.firstName','ASC');
+    }
+
+    public function getTop4MedicalStaff(){
+        $qb = $this->createQueryBuilder('m')
+            ->setMaxResults(4);
+
+        return $qb->getQuery()->getResult();
+    }
 }

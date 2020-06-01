@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Departament;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,11 @@ class DepartamentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAllDepartamentsWithQuery(): QueryBuilder{
+        $qb = $this->createQueryBuilder('d')
+        ;
+
+        return $qb->orderBy('d.updatedAt','DESC');
+    }
 }

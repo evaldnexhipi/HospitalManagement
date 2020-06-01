@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Menaxhimi i nje Qendre Spitalore{% endblock %}
+{% block title %}MegaSpital{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <script src="https://kit.fontawesome.com/e63f0d911b.js" crossorigin="anonymous"></script>
@@ -41,11 +41,25 @@
         <ul>
             <li><a href="#">Faqe1</a></li>
             <li><a href="#">Faqe2</a></li>
-            <li><a href="#">Faqe3</a></li>
+            <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="#">Faqe3</a>
+                {% elseif is_granted('ROLE_DOC') %}
+                <a href="#">Faqe3</a>
+                {% elseif is_granted('ROLE_USER') %}
+                <a href="{{ path('app_user_feedback') }}">Mendimi Juaj</a>
+                {% else %}
+                <a href="#">Faqe3</a>
+                {% endif %}
+            </li>
             <li><a href="{{ path('app_services') }}">Sherbimet</a></li>
 
             {# if else if else ROLE_ADMIN send to admin/profile#}
-            {% if is_granted('ROLE_USER') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('app_admin_profile') }}">Admin {{ app.user.firstName }}</a></li>
+            {% elseif is_granted('ROLE_DOC') %}
+                <li><a href="{{ path('app_doc_profile') }}">Doc {{ app.user.firstName }}</a></li>
+            {% elseif is_granted('ROLE_USER') %}
                 <li><a href="{{ path('app_profile_main') }}">Hello {{ app.user.firstName }}</a></li>
             {% else %}
                 <li><a href="#">Faqe5</a></li>
@@ -74,49 +88,20 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="main-services-box">
-                    <div class="icon">
-                        <i class="flaticon-doctor"></i>
+            {% for service in top4Services %}
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="main-services-box">
+                        <div class="icon">
+                            <i class="flaticon-doctor"></i>
+                        </div>
+                        <h3><a href="#">{{ service.name }}</a></h3>
+                        <p>{{ service.description }}</p>
                     </div>
-                    <h3><a href="#">Oftalmologji</a></h3>
-                    <p>Shëndeti i syrit është dritarja e jetës suaj.</p>
                 </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="main-services-box">
-                    <div class="icon">
-                        <i class="flaticon-dental-chair"></i>
-                    </div>
-                    <h3><a href="#">Mjekësi e Brendshme</a></h3>
-                    <p>Fjala e fundit për trajtimin e sëmundjeve të brendshme.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="main-services-box">
-                    <div class="icon">
-                        <i class="flaticon-care"></i>
-                    </div>
-                    <h3><a href="#">Dermatologji</a></h3>
-                    <p>Teknikat e fundit kozmetike në fushën e Dermatologjisë.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="main-services-box">
-                    <div class="icon">
-                        <i class="flaticon-brain"></i>
-                    </div>
-                    <h3><a href="#">Kardiologji</a></h3>
-                    <p>Një zemër e shëndoshë në trup të shëndosh.</p>
-                </div>
-            </div>
-
+            {% endfor %}
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="more-services-btn">
-                    <a href="#" class="btn butoni">Më shumë shërbime <i class="flaticon-right-chevron"></i></a>
+                    <a href="{{ path('app_services') }}" class="btn butoni">Më shumë shërbime <i class="flaticon-right-chevron"></i></a>
                 </div>
             </div>
         </div>
@@ -148,54 +133,21 @@
         <div class="row m-0">
             <div class="col-sm-12 align-items-center">
                 <div class="owl-testimonial owl-carousel owl-theme">
-
                     <!--Testimonial Section-->
-                    <div class="testimonial-item  text-center">
-                        <div class="testimonial-box">
-                            <div class="testimonial-text">
-                                <p>Kam kënaqësi të flas për personelin e Megaspital Tiranë. Janë shumë të mirë e të sjellshëm, të përkushtuar për pacientët. Infermierët më lanë përshtypje shumë të mirë. Jam i kënaqur nga çdo njeri. I uroj personelit të Megaspital suksese në të ardhmen.</p>
-                                <span class="testimonial-date">December 20, 2018</span>
-                                <span class="testimonial-arrow position-absolute"></span>
+                    {% for review in top4Reviews %}
+                        <div class="testimonial-item  text-center">
+                            <div class="testimonial-box">
+                                <div class="testimonial-text">
+                                    <p>{{ review.reviewText }}</p>
+                                    <span class="testimonial-date">{{ review.createdAt|date('d/m/Y') }}</span>
+                                    <span class="testimonial-arrow position-absolute"></span>
+                                </div>
                             </div>
+                            <div class="testimonial-photo"><img alt="Foto" src="{{ asset('images/user/'~ review.client.user.imageFilename) }}"></div>
+                            <h5 class="text-capitalize color-black mt-3 mb-1">{{ review.client.user.firstName }}</h5>
+                            <p class="color-pink">Klient</p>
                         </div>
-                        <div class="testimonial-photo"><img alt="" src="{{ asset('images/team-1.jpg') }}"></div>
-                        <h5 class="text-capitalize color-black mt-3 mb-1">Evald Nexhipi</h5>
-                        <p class="color-pink">Student</p>
-                    </div>
-                    <!--Testimonial Section-->
-                    <div class="testimonial-item item text-center">
-                        <div class="testimonial-text position-relative mb-4">
-                            <p>Kam kënaqësi të flas për personelin e Megaspital Tiranë. Janë shumë të mirë e të sjellshëm, të përkushtuar për pacientët. Infermierët më lanë përshtypje shumë të mirë. Jam i kënaqur nga çdo njeri. I uroj personelit të Megaspital suksese në të ardhmen.</p>
-                            <span class="testimonial-date">October 13, 2018</span>
-                            <span class="testimonial-arrow position-absolute"></span>
-                        </div>
-                        <div class="testimonial-photo"><img alt="" src="{{ asset('images/team-4.jpg') }}"></div>
-                        <h5 class="text-capitalize color-black mt-3 mb-1">Kevin Dule</h5>
-                        <p class="color-pink">Model</p>
-                    </div>
-                    <!--Testimonial Section-->
-                    <div class="testimonial-item item text-center">
-                        <div class="testimonial-text position-relative mb-4">
-                            <p>Kam kënaqësi të flas për personelin e Megaspital Tiranë. Janë shumë të mirë e të sjellshëm, të përkushtuar për pacientët. Infermierët më lanë përshtypje shumë të mirë. Jam i kënaqur nga çdo njeri. I uroj personelit të Megaspital suksese në të ardhmen.</p>
-                            <span class="testimonial-date">April 23, 2018</span>
-                            <span class="testimonial-arrow position-absolute"></span>
-                        </div>
-                        <div class="testimonial-photo"><img alt="" src="{{ asset('images/team-2.jpg') }}"></div>
-                        <h5 class="text-capitalize color-black mt-3 mb-1">Teena Williamson</h5>
-                        <p class="color-pink">SEO Specialist</p>
-                    </div>
-                    <!--Testimonial Section-->
-                    <div class="testimonial-item  item text-center">
-                        <div class="testimonial-text position-relative mb-4">
-                            <p>Kam kënaqësi të flas për personelin e Megaspital Tiranë. Janë shumë të mirë e të sjellshëm, të përkushtuar për pacientët. Infermierët më lanë përshtypje shumë të mirë. Jam i kënaqur nga çdo njeri. I uroj personelit të Megaspital suksese në të ardhmen.</p>
-                            <span class="testimonial-date">June 04, 2018</span>
-                            <span class="testimonial-arrow position-absolute"></span>
-                        </div>
-                        <div class="testimonial-photo"><img alt="" src="{{ asset('images/team-3.jpg') }}"></div>
-                        <h5 class="text-capitalize color-black mt-3 mb-1">Micheal Anderson</h5>
-                        <p class="color-pink">The New Company</p>
-                    </div>
-                    <!--Testimonial Section-->
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -214,10 +166,11 @@
 
         <div class="row clearfix">
             <!-- Team Block -->
+            {% for med in top4MedicalStaff %}
             <div class="team-block col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="inner-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
                     <div class="image">
-                        <img src="{{ asset('images/doktor1.jpg') }}" alt="" />
+                        <img src="{{ asset('images/user/'~ med.user.imageFilename) }}" alt="" />
                         <div class="overlay-box">
                             <ul class="social-icons">
                                 <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
@@ -226,85 +179,16 @@
                                 <li><a href="#"><span class="fab fa-skype"></span></a></li>
                                 <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
                             </ul>
-                            <a href="#" class="appointment">Rezervo Takim</a>
+                            <a href="#" class="appointment">{{ med.user.firstName }} {{ med.user.lastName }}</a>
                         </div>
                     </div>
                     <div class="lower-content">
-                        <h3><a href="#">Dr. Agim Sallaku</a></h3>
-                        <div class="designation">Onkolog</div>
+                        <h3><a href="#">Dr. {{ med.user.firstName }} {{ med.user.lastName }}</a></h3>
+                        <div class="designation">{{ med.speciality.title }}</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Team Block -->
-            <div class="team-block col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                <div class="inner-box wow fadeInUp" data-wow-delay="250ms" data-wow-duration="1500ms">
-                    <div class="image">
-                        <img src="{{ asset('images/doktor2.jpg') }}" alt="" />
-                        <div class="overlay-box">
-                            <ul class="social-icons">
-                                <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                                <li><a href="#"><span class="fab fa-google"></span></a></li>
-                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                <li><a href="#"><span class="fab fa-skype"></span></a></li>
-                                <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                            </ul>
-                            <a href="#" class="appointment">Rezervo Takim</a>
-                        </div>
-                    </div>
-                    <div class="lower-content">
-                        <h3><a href="#">Dr. Arben Hoxha</a></h3>
-                        <div class="designation">Kardiolog</div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Team Block -->
-            <div class="team-block col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                <div class="inner-box wow fadeInUp" data-wow-delay="500ms" data-wow-duration="1500ms">
-                    <div class="image">
-                        <img src="{{ asset('images/doktor3.jpg') }}" alt="" />
-                        <div class="overlay-box">
-                            <ul class="social-icons">
-                                <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                                <li><a href="#"><span class="fab fa-google"></span></a></li>
-                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                <li><a href="#"><span class="fab fa-skype"></span></a></li>
-                                <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                            </ul>
-                            <a href="#" class="appointment">Rezervo Takim</a>
-                        </div>
-                    </div>
-                    <div class="lower-content">
-                        <h3><a href="#">Dr. Edlira Canaj</a></h3>
-                        <div class="designation">Kardiologe</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Team Block -->
-            <div class="team-block col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                <div class="inner-box wow fadeInUp" data-wow-delay="750ms" data-wow-duration="1500ms">
-                    <div class="image">
-                        <img src="{{ asset('images/doktor4.jpg') }}" alt="" />
-                        <div class="overlay-box">
-                            <ul class="social-icons">
-                                <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                                <li><a href="#"><span class="fab fa-google"></span></a></li>
-                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                                <li><a href="#"><span class="fab fa-skype"></span></a></li>
-                                <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                            </ul>
-                            <a href="#" class="appointment">Rezervo Takim</a>
-                        </div>
-                    </div>
-                    <div class="lower-content">
-                        <h3><a href="#">Dr. Herion Prifti</a></h3>
-                        <div class="designation">Dermatolog</div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
 
 

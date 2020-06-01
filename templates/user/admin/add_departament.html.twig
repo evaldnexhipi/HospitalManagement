@@ -1,0 +1,41 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block trupi %}
+    <div class="row">
+        <div class="col-lg-6 equel-grid">
+            <div class="grid">
+                <p class="grid-header">Shto Departament</p>
+                <div class="grid-body">
+                    {% for message in app.flashes('departamentSuccess') %}
+                        <div class="alert alert-success text-center"> {{ message }}</div>
+                    {% endfor %}
+                    {{ form_start(form) }}
+                    <div class="item-wrapper" id="form2">
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                <label for="departament_form_name">Emri</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(form.name, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                <label for="departament_form_description">Pershkrimi</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(form.description, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Shto Departament</button>
+                        <a href="{{ path('app_admin_list_deps') }}" class="btn btn-warning"> Kthehu Te Departamentet</a>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

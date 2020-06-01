@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Anamnesis;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,42 @@ class AnamnesisRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getAnamnesesForStaff($staffId): QueryBuilder{
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.medicalStaff = :staffid')
+            ->setParameter('staffid',$staffId)
+        ;
+
+        return $qb->orderBy('a.createdAt','DESC');
+    }
+
+    public function getAnamnesesForClient($clientId): QueryBuilder{
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('a.client = :clientid')
+            ->setParameter('clientid',$clientId)
+        ;
+
+        return $qb->orderBy('a.createdAt','DESC');
+    }
+
+    public function getAnamnesisNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('a')
+            ->select('count(a.client)')
+            ->andWhere('a.client = :clientId')
+            ->setParameter('clientId',$clientId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getAnamnesisNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('a')
+            ->select('count(a.medicalStaff)')
+            ->andWhere('a.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,19 @@ class ClientRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getALLClients(): QueryBuilder{
+        $qb = $this->createQueryBuilder('c')
+        ;
+
+        return $qb->orderBy('c.createdAt','DESC');
+    }
+
+    public function getTop6Clienets() {
+        $qb = $this->createQueryBuilder('c')
+            ->setMaxResults(6)
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

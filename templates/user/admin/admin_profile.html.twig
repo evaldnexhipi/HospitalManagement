@@ -1,0 +1,956 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    {% block stylesheets %}
+        <title>Profili</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="{{ asset('css/profile/materialdesignicons.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/profile/vendor.addons.css') }}">
+        <!-- endinject -->
+        <!-- vendor css for this page -->
+        <link rel="stylesheet" href="{{ asset('css/profile/flagicon.min.css') }}">
+        <!-- End vendor css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="{{ asset('css/profile/style.css') }}">
+        <!-- endinject --><!-- Layout style -->
+        <link rel="stylesheet" href="{{ asset('css/profile/styleLayout.css') }}">
+        <!-- Layout style -->
+        <link rel="shortcut icon" href="../asssets/images/favicon.ico">
+        <script src="https://kit.fontawesome.com/e63f0d911b.js" crossorigin="anonymous"></script>
+
+    {% endblock %}
+</head>
+<body class="header-fixed">
+<!-- partial:partials/_header.html -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133368331-1"></script>
+
+<nav class="t-header">
+    <div class="t-header-brand-wrapper">
+        <a href="{{ path('homepage') }}">
+            <img class="logo" src="{{asset('images/logo.png')}}" alt="">
+            {#<img class="logo-mini" src="../assets/images/logo_mini.svg" alt="">#}
+        </a>
+        <button class="t-header-toggler t-header-desk-toggler d-none d-lg-block">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="t-header-content-wrapper">
+        <div class="t-header-content">
+            <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none">
+                {#                <i class="mdi mdi-menu"></i>#}
+                <i class="fa fa-bars"></i>
+            </button>
+{#            <form action="#" class="t-header-search-box">#}
+{#                <div class="input-group">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <div class="input-group-text">#}
+{#                            #}{#                            <i class="mdi mdi-magnify"></i>#}
+{#                            <i class="fa fa-search" aria-hidden="true"></i>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search" autocomplete="off">#}
+{#                </div>#}
+{#            </form>#}
+            <ul class="nav ml-auto">
+
+                {# Seksioni i Njoftimeve#}
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link" href="#" id="notificationDropdown" data-toggle="dropdown" aria-expanded="false">#}
+{#                        #}{#                        <i class="mdi mdi-bell-outline mdi-1x"></i>#}
+{#                        <i class="fa fa-bell-o" aria-hidden="true"></i>#}
+{#                    </a>#}
+{#                    <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="notificationDropdown">#}
+
+{#                        <div class="dropdown-header">#}
+{#                            <h6 class="dropdown-title">Njoftime</h6>#}
+{#                            <p class="dropdown-title-text">Keni $count njoftime te palexuar</p>#}
+{#                        </div>#}
+{#                        <div class="dropdown-body">#}
+
+{#                            #}{# Njoftim#}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="icon-wrapper rounded-circle bg-inverse-primary text-primary">#}
+{#                                    #}{#                                    <i class="mdi mdi-alert"></i>#}
+{#                                    <i class="fa fa-podcast" aria-hidden="true"></i>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Njoftim 1</small>#}
+{#                                    <small class="content-text">Juve keni 1 Njoftim te Ri te derguar</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            #}{#Njoftim#}
+
+{#                            #}{#Njoftim#}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="icon-wrapper rounded-circle bg-inverse-success text-success">#}
+{#                                    #}{#                                    <i class="mdi mdi-cloud-upload"></i>#}
+{#                                    <i class="fa fa-podcast" aria-hidden="true"></i>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Njoftim 2</small>#}
+{#                                    <small class="content-text">Juve keni 1 Njoftim te Ri te derguar</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            #}{#Njoftim#}
+
+{#                            #}{#Njoftim#}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="icon-wrapper rounded-circle bg-inverse-warning text-warning">#}
+{#                                    #}{#                                    <i class="mdi mdi-security"></i>#}
+{#                                    <i class="fa fa-podcast" aria-hidden="true"></i>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Njoftim 3</small>#}
+{#                                    <small class="content-text">Juve keni 1 Njoftim te Ri te derguar</small>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            #}{#Njoftim#}
+{#                        </div>#}
+
+{#                        <div class="dropdown-footer">#}
+{#                            <a href="#">Shiko te gjitha njoftimet</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </li>#}
+                {# Seksioni i Njoftimeve#}
+
+                {# Seksioni i Mesazheve#}
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link" href="#" id="messageDropdown" data-toggle="dropdown" aria-expanded="false">#}
+{#                        #}{#                        <i class="mdi mdi-message-outline mdi-1x"></i>#}
+{#                        <i class="fa fa-envelope-o" aria-hidden="true"></i>#}
+{#                        <span class="notification-indicator notification-indicator-primary notification-indicator-ripple"></span>#}
+{#                    </a>#}
+{#                    <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="messageDropdown">#}
+{#                        <div class="dropdown-header">#}
+{#                            <h6 class="dropdown-title">Mesazhe</h6>#}
+{#                            <p class="dropdown-title-text">Keni 3 mesazhe te palexuara</p>#}
+{#                        </div>#}
+{#                        <div class="dropdown-body">#}
+
+{#                            #}{# Mesazh #}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="image-wrapper">#}
+{#                                    <img class="profile-img" src="{{ asset('images/user/'~ app.user.imageFilename) }}" alt="profile image">#}
+{#                                    <div class="status-indicator rounded-indicator bg-success">#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Person 1</small>#}
+{#                                    <small class="content-text">Permbajtja 1</small>#}
+{#                                </div>#}
+{#                            </div>#}
+
+{#                            #}{# Mesazh #}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="image-wrapper">#}
+{#                                    <img class="profile-img" src="{{ asset('images/user/'~ app.user.imageFilename) }}" alt="profile image">#}
+{#                                    <div class="status-indicator rounded-indicator bg-success">#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Person 2</small>#}
+{#                                    <small class="content-text">Permbajtja 2</small>#}
+{#                                </div>#}
+{#                            </div>#}
+
+{#                            #}{#Mesazh#}
+{#                            <div class="dropdown-list">#}
+{#                                <div class="image-wrapper">#}
+{#                                    <img class="profile-img" src="{{ asset('images/user/'~ app.user.imageFilename) }}" alt="profile image">#}
+{#                                    <div class="status-indicator rounded-indicator bg-warning">#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="content-wrapper">#}
+{#                                    <small class="name">Person 3</small>#}
+{#                                    <small class="content-text">Permbajtja 3</small>#}
+{#                                </div>#}
+{#                            </div>#}
+
+
+{#                        </div>#}
+{#                        <div class="dropdown-footer">#}
+{#                            <a href="#">Shiko Me tej</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </li>#}
+
+                {# Seksion Shtese#}
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link" href="#" id="appsDropdown" data-toggle="dropdown" aria-expanded="false">#}
+{#                        #}{#                        <i class="mdi mdi-apps mdi-1x"></i>#}
+{#                        <i class="fa fa-plus" aria-hidden="true"></i>#}
+{#                    </a>#}
+{#                    <div class="dropdown-menu navbar-dropdown dropdown-menu-right" aria-labelledby="appsDropdown">#}
+{#                        <div class="dropdown-header">#}
+{#                            <h6 class="dropdown-title">Seksion</h6>#}
+{#                            <p class="dropdown-title-text mt-2">Seksioni shtese ne Header</p>#}
+{#                        </div>#}
+{#                        <div class="dropdown-body border-top pt-0">#}
+
+{#                            #}{# Permbajtje#}
+{#                            <a class="dropdown-grid">#}
+{#                                #}{#                                <i class="grid-icon mdi mdi-jira mdi-2x"></i>#}
+{#                                <i class="fa fa-plus" aria-hidden="true"></i>#}
+{#                                <span class="grid-tittle">Permb 1</span>#}
+{#                            </a>#}
+{#                            #}{# Permbajtje#}
+{#                            <a class="dropdown-grid">#}
+{#                                #}{#                                <i class="grid-icon mdi mdi-trello mdi-2x"></i>#}
+{#                                <i class="fa fa-plus" aria-hidden="true"></i>#}
+{#                                <span class="grid-tittle">Permb 2</span>#}
+{#                            </a>#}
+{#                            #}{# Permbajtje#}
+{#                            <a class="dropdown-grid">#}
+{#                                #}{#                                <i class="grid-icon mdi mdi-artstation mdi-2x"></i>#}
+{#                                <i class="fa fa-plus" aria-hidden="true"></i>#}
+{#                                <span class="grid-tittle">Permb 3</span>#}
+{#                            </a>#}
+{#                            #}{# Permbajtje#}
+{#                            <a class="dropdown-grid">#}
+{#                                #}{#                                <i class="grid-icon mdi mdi-bitbucket mdi-2x"></i>#}
+{#                                <i class="fa fa-plus" aria-hidden="true"></i>#}
+{#                                <span class="grid-tittle">Permb 4</span>#}
+{#                            </a>#}
+{#                        </div>#}
+
+{#                        <div class="dropdown-footer"><a href="#">Shiko Me tej</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </li>#}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+<!-- partial -->
+<div class="page-body">
+    {% block main_body %}
+        <!-- partial:partials/_sidebar.html -->
+        <div class="sidebar">
+            <ul class="navigation-menu">
+                {# Elementi 1#}
+                <li class="nav-category-divider">MENU</li>
+
+                {# Elementi 2#}
+                <li>
+                    <!--THIS-->
+                    <a href="{{ path('app_admin_profile') }}">
+                        <span class="link-title">Pasqyra e Profilit </span>
+                        {#                    <i class="mdi mdi-gauge link-icon"></i>#}
+                        <i class="fa fa-tachometer" aria-hidden="true"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <!--THIS-->
+                    <a href="{{ path('app_admin_profile_manage') }}">
+                        <span class="link-title">Menaxho Profil </span>
+                        {#                    <i class="mdi mdi-gauge link-icon"></i>#}
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                    </a>
+                </li>
+
+                {# Elementi 3#}
+                <li>
+                    <a href="#sample-pages" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Rezervimet</span>
+                        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="sample-pages">
+                        {# Nenelement#}
+                        <li>
+                            <a href="#authentication-pages" data-toggle="collapse" aria-expanded="false">
+                                <span class="link-title">Te planifikuara</span>
+                            </a>
+                            <ul class="collapse navigation-submenu" id="authentication-pages">
+                                {#Nen,nen-element#}
+                                <li>
+                                    <a href="{{ path('app_admin_reservations_soon') }}">Menaxho</a>
+                                </li>
+                                {#Nen,nen-element#}
+                            </ul>
+                        </li>
+
+                        {#Nenelement#}
+                        <li>
+                            <a href="#error-pages" data-toggle="collapse" aria-expanded="false">
+                                <span class="link-title">Te kryera</span>
+                            </a>
+                            <ul class="collapse navigation-submenu" id="error-pages">
+                                {#Nen Nenelement#}
+                                <li>
+                                    <a href="{{ path('app_admin_reservations_done') }}">Menaxho</a>
+                                </li>
+                                {#Nen Nenelement#}
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                {# Nenelement #}
+                <li>
+                    <a href="#ui-elements" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Stafi Mjekesor</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="ui-elements">
+                        <li>
+                            <a href="{{ path('app_admin_list_staff') }}">Menaxho Staf</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_add_staff') }}">Shto Staf</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {# Nenelement #}
+                <li>
+                    <a href="#spitali" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Pacientet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="spitali">
+                        <li>
+                            <a href="{{ path('app_admin_list_patients') }}">Listo Paciente</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {#MENU-2#}
+                <li class="nav-category-divider">MENU</li>
+
+                <li>
+                    <a href="#departament" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Departamentet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="departament">
+                        <li>
+                            <a href="{{ path('app_admin_add_department') }}">Shto Departament</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_list_deps') }}">Menaxho Departament</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#services" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Sherbimet / Specialitetet</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="services">
+                        <li>
+                            <a href="{{ path('app_admin_list_services') }}">Listo Sherbime</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_list_specialities') }}">Listo Specialitet</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#spaces" data-toggle="collapse" aria-expanded="false">
+                        <span class="link-title">Hapesirat</span>
+                        {#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+                        <i class="fa fa-joomla" aria-hidden="true"></i>
+                    </a>
+                    <ul class="collapse navigation-submenu" id="spaces">
+                        <li>
+                            <a href="{{ path('app_admin_list_rooms') }}">Listo Dhomat</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_admin_list_halls') }}">Listo Sallat</a>
+                        </li>
+                    </ul>
+                </li>
+
+{#                <li>#}
+{#                    <a href="#assets" data-toggle="collapse" aria-expanded="false">#}
+{#                        <span class="link-title">Asete</span>#}
+{#                        #}{#                    <i class="mdi mdi-bullseye link-icon"></i>#}
+{#                        <i class="fa fa-stethoscope" aria-hidden="true"></i>#}
+{#                    </a>#}
+{#                    <ul class="collapse navigation-submenu" id="assets">#}
+{#                        <li>#}
+{#                            <a href="#">Listo Asete</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#">Menaxho Asete</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </li>#}
+
+
+                {#Menu-3#}
+                <li class="nav-category-divider">Te tjera</li>
+                {#Element#}
+                <li>
+                    <a href="{{ path('app_admin_clients_feedback') }}">
+                        <span class="link-title">Pershtypjet e Klienteve</span>
+                        <i class="fa fa-smile-o" aria-hidden="true"></i>
+                        {#                    <i class="mdi mdi-email-outline link-icon"></i>#}
+                    </a>
+                </li>
+            </ul>
+
+            {# Profili i permbledhur #}
+            <div class="sidebar_footer">
+                <div class="user-account">
+                    <div class="user-profile-item-tittle">Rreth Jush</div>
+
+
+                    <a class="user-profile-item" href="{{ path('app_admin_profile') }}">
+                        <i class="fa fa-tachometer" aria-hidden="true"></i> Pasqyra
+                    </a>
+                    <a class="user-profile-item" href="{{ path('app_admin_profile_manage') }}">
+                        <i class="fa fa-cogs" aria-hidden="true"></i> Menaxho Profilin
+                    </a>
+                    <a class="btn btn-success btn-logout" href="{{ path('app_logout') }}">Dil</a>
+                </div>
+                <div class="btn-group admin-access-level">
+                    <div class="avatar">
+                        <img class="profile-img" src="{{ asset('images/user/'~ app.user.imageFilename) }}" alt="">
+                    </div>
+                    <div class="user-type-wrapper">
+                        <p class="user_name">{{ app.user.firstName }}</p>
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator small rounded-indicator bg-success"></div>
+                            <small class="user_access_level">{{ app.user.firstName }} {{ app.user.lastName}}</small>
+                        </div>
+                    </div>
+                    <i class="arrow fa fa-arrow-up"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- POP-upi i Djathte -->
+        <div class="right-sidebar">
+            <div class="sidebar-inner">
+                <div class="right-sidebar-toggler">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </div>
+                <div class="theme-mode-wrapper">
+                    <a class="preview-image active" href="{{ path('homepage') }}" class="theme-mode">
+                        <img src="{{ asset('images/system/homepage_screenshot.png') }}" alt="Faqja Kryesore">
+                        <p>Faqja Kryesore</p>
+                    </a>
+                    {#                <a class="preview-image" href="../demo_2/index.html" class="theme-mode">#}
+                    {#                    <img src="../assets/images/screenshots/dark.png" alt="Dil">#}
+                    {#                    <p>Dil</p>#}
+                    {#                </a>#}
+                </div>
+            </div>
+        </div>
+        <!-- partial -->
+    {% endblock %}
+
+
+
+    <div class="page-content-wrapper">
+        <div class="page-content-wrapper-inner">
+
+            {% block trupi %}
+                <div class="viewport-header">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('app_admin_profile') }}">PASQYRA</a>
+                            </li>
+
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Pikepamje
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+
+
+                <!-- BOX-i i madh per grafikun -->
+                <div class="content-viewport">
+                    <div class="row">
+                        <div class="col-md-7 equel-grid order-md-2">
+                            <div class="grid d-flex flex-column justify-content-between overflow-hidden">
+                                <div class="grid-body">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">Te dhenat per 3 Mujorin e Fundit</p>
+                                        <div class="chartjs-legend" id="revenuesChart">
+                                            {# Legjenda e Chart.js#}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="d-none d-xl-block">Numri i rezervimeve 3 muajt e fundit</p>
+                                        <div class="ml-auto">
+                                            <h2 class="font-weight-medium text-gray">
+                                                {% if reservationsDifference>=0 %}
+                                                <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
+                                                {% else %}
+                                                    <i style="color:#00e093;" class="fa fa-level-down" aria-hidden="true"></i>
+                                                {% endif %}
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <canvas class="mt-4" id="revenuesChartCanvas" height="245"></canvas>
+                            </div>
+                        </div>
+
+
+                        <!-- BOXET E VEGJEL -->
+                        <div class="col-md-5 order-md-0">
+
+                            <!-- RRESHTI i PARE -->
+                            <div class="row">
+                                <div class="col-6 equel-grid">
+                                    <div class="grid d-flex flex-column align-items-center justify-content-center">
+                                        <div class="grid-body text-center">
+                                            <div class="profile-img img-rounded bg-inverse-primary no-avatar component-flat mx-auto mb-4">
+                                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            </div>
+                                            <h2 class="font-weight-medium">
+                                                <span class="animated-count">{{ reservationsNumber }}</span>
+                                            </h2>
+                                            <small class="text-gray d-block mt-3">Numri i Rezervimeve</small>
+                                            {% if reservationsDifference>=0 %}
+                                            <small class="font-weight-medium text-success">
+                                                <i style="color:#00e093;" class="fa fa-level-up" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
+                                            </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-danger">
+                                                <i style="color:#ff5f66;" class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ reservationsDifference }}</span>
+                                            </small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 equel-grid">
+                                    <div class="grid d-flex flex-column align-items-center justify-content-center">
+                                        <div class="grid-body text-center">
+                                            <div class="profile-img img-rounded bg-inverse-danger no-avatar component-flat mx-auto mb-4">
+                                                <i class="fa fa-smile-o" aria-hidden="true"></i>
+                                            </div>
+                                            <h2 class="font-weight-medium">
+                                                <span class="animated-count">{{ reviewsNumber }}</span>
+                                            </h2>
+                                            <small class="text-gray d-block mt-3">Pershtypje</small>
+                                            {% if reviewsDifference>=0 %}
+                                                <small class="font-weight-medium text-success">
+                                                    <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                    <span class="animated-count">{{ reviewsDifference }}</span>
+                                                </small>
+                                            {% else%}
+                                            <small class="font-weight-medium text-danger">
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ reviewsDifference }}</span>
+                                            </small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--RRESHTI 2 -->
+                            <div class="row">
+                                <div class="col-6 equel-grid">
+                                    <div class="grid d-flex flex-column align-items-center justify-content-center">
+                                        <div class="grid-body text-center">
+                                            <div class="profile-img img-rounded bg-inverse-warning no-avatar component-flat mx-auto mb-4">
+                                                <i class="fa fa-font-awesome" aria-hidden="true"></i>
+                                            </div>
+                                            <h2 class="font-weight-medium animated-count">{{ patientsNumber }}</h2>
+                                            <small class="text-gray d-block mt-3">Paciente</small>
+                                            {% if patientsDifference>=0 %}
+                                            <small class="font-weight-medium text-success">
+                                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ patientsDifference }}</span>
+                                            </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-danger">
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ patientsDifference }}</span>
+                                            </small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 equel-grid">
+                                    <div class="grid d-flex flex-column align-items-center justify-content-center">
+                                        <div class="grid-body text-center">
+                                            <div class="profile-img img-rounded bg-inverse-success no-avatar component-flat mx-auto mb-4">
+                                                <i class="fa fa-font-awesome" aria-hidden="true"></i>
+                                            </div>
+                                            <h2 class="font-weight-medium">
+                                                <span class="animated-count">{{ revenuesNumber }}</span>
+                                            </h2>
+                                            <small class="text-gray d-block mt-3">Te Ardhura</small>
+                                            {% if revenuesDifference>=0 %}
+                                            <small class="font-weight-medium text-success">
+                                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ revenuesDifference }}</span>
+                                            </small>
+                                            {% else %}
+                                            <small class="font-weight-medium text-success">
+                                                <i class="fa fa-level-down" aria-hidden="true"></i>
+                                                <span class="animated-count">{{ revenuesDifference }}</span>
+                                            </small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--HISTORIKU I REZERVIMEVE -->
+                    <div class="row">
+                        <div class="col-md-8 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body py-3">
+                                    <p class="card-title ml-n1">Historiku i Rezervimeve</p>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                        <tr class="solid-header">
+                                            <th class="pl-4">Doktor</th>
+                                            <th>Emer Mbiemer</th>
+                                            <th>Sherbimi</th>
+                                            <th>Pacienti/Status</th>
+                                            <th>Data</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for res in top5Reservations %}
+                                        <tr>
+                                            {# Entry #}
+                                            <td class="pr-0 pl-4">
+                                                <img class="profile-img img-sm" src="{{asset('images/user/'~ res.medicalStaff.user.imageFilename) }}" alt="Foto Profili">
+                                            </td>
+                                            <td class="pl-md-0">
+                                                <small>{{ res.medicalStaff.user.firstName }} {{ res.medicalStaff.user.lastName }}</small>
+                                            </td>
+                                            <td>
+                                                <small>{{ res.service.name }}</small>
+                                            </td>
+                                            <td class="pl-md-0">
+                                                <small class="text-black font-weight-medium d-block">{{ res.client.user.firstName }} {{ res.client.user.lastName }}</small>
+                                                <span>
+                                                    {% if res.status=='kryer'%}
+                                                    <span class="status-indicator rounded-indicator small bg-danger"></span>
+                                                    {{ res.status }}
+                                                    {% elseif res.status=='pritje' %}
+                                                        <span class="status-indicator rounded-indicator small bg-warning"></span>
+                                                        {{ res.status }}
+                                                    {% else %}
+                                                        <span class="status-indicator rounded-indicator small bg-success"></span>
+                                                    {{ res.status }}
+                                                    {% endif %}
+                                                </span>
+                                            </td>
+                                            <td>{{ res.day|date('d/m/Y') }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a class="border-top px-3 py-2 d-block text-gray" href="{{ path('app_admin_reservations_soon') }}">
+                                    <small class="font-weight-medium">
+                                        <i class="fa fa-expand" aria-hidden="true"></i> Me shume rezervime ne pritje
+                                    </small>
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <!-- BOXI i dyte ne te djathte -->
+                        <div class="col-md-4 equel-grid">
+                            <div class="row flex-grow">
+                                <div class="col-12 equel-grid">
+                                    <div class="grid widget-revenue-card">
+                                        <div class="grid-body d-flex flex-column h-100">
+                                            <div class="split-header">
+                                                <p class="card-title">Kapaciteti i Spitalit</p>
+                                                <div class="content-wrapper v-centered">
+                                                    <small class="text-muted">Raport</small>
+                                                    <span class="btn action-btn btn-refresh btn-xs component-flat">
+                                         <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                        </span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-auto">
+                                                <h3 class="font-weight-medium mt-2">{{ patientsNumber/roomCapacity*100 }}%</h3>
+                                                <p class="text-gray">NenStatus</p>
+                                                <div class="d-flex justify-content-between text-muted mt-3">
+                                                    <small>Kapaciteti</small>
+                                                    <small>{{ patientsNumber}}  / {{ roomCapacity}} </small>
+                                                </div>
+                                                <div class="progress progress-slim mt-2">
+                                                    {#Matja e progresit#}
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ patientsNumber/roomCapacity*100 }}%;" aria-valuenow="{{ patientsNumber }}" aria-valuemin="0" aria-valuemax="{{ roomCapacity }}">
+                                                        {#Matja e progresit#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--TRENDI -->
+                                <div class="col-12 equel-grid">
+                                    <div class="grid widget-sales-card d-flex flex-column">
+                                        <div class="grid-body pb-3">
+                                            <div class="wrapper d-flex">
+                                                <p class="card-title">Trendi i Vizitave</p>
+                                                {% if reservationsDifference>=0 %}
+                                                <div class="badge badge-success ml-auto">+{{ reservationsDifference }}</div>
+                                                {% else %}
+                                                    <div class="badge badge-danger ml-auto">-{{ reservationsDifference }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="wrapper mt-2">
+                                                <h3>{{ reservationsNumber }}</h3>
+                                                <small class="text-gray">Vizita ne total</small>
+                                            </div>
+                                        </div>
+                                        <div class="grid-body pb-3">
+                                            <div class="wrapper d-flex">
+                                                <p class="card-title">Trendi i Pacienteve</p>
+                                                {% if patientsDifference>=0 %}
+                                                    <div class="badge badge-success ml-auto">+{{ patientsDifference }}</div>
+                                                {% else %}
+                                                    <div class="badge badge-danger ml-auto">-{{ patientsDifference }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="wrapper mt-2">
+                                                <h3>{{ patientsNumber }}</h3>
+                                                <small class="text-gray">Paciente ne total</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--BOXI Rresht 3 i pare -->
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 equel-grid">
+                            <div class="grid deposit-balance-card">
+                                <div class="grid-body">
+                                    <p class="card-title">Objektiva</p>
+                                    <div class="row">
+                                        <div class="col-md-12 mt-4">
+                                            <div id="current-circle-progress">
+                                                <span class="circle-progress-value font-weight-medium text-primary h4"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center mt-4">
+                                            <h4 class="font-weight-medium">{{ revenuesNumber}} Leke</h4>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-sm btn-block mt-4 btn-success">Shiko Me shume</button>
+                                        </div>
+                                        <div class="deposit-balance-card-footer">
+                                            <div class="footer-col col">
+                                                <small>Objektivi: 100,000 Leke</small>
+                                                <div class="progress progress-slim mt-2">
+                                                    {#Progresi#}
+                                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ revenuesNumber/100000*100 }}%;" aria-valuenow="{{ revenuesNumber/100000*100 }}" aria-valuemin="0" aria-valuemax="100000">
+                                                        {#Progresi#}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="footer-col col">
+                                                <small>
+                                                Objektivi per kete vit eshte parashikuar 100000 Leke
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 col-sm-6 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body pb-0">
+                                    <p class="card-title">Info Rreth Top Klienteve</p>
+                                    <div class="table-responsive">
+                                        <table class="table mt-2">
+                                            <tbody>
+                                            {% for client in top6Clients %}
+                                                <tr class="text-align-edge">
+                                                    <td>
+                                                        <img class="profile-img img-sm" src="{{ asset('images/user/'~ client.user.imageFilename) }}"
+                                                    </td>
+                                                    <td>{{ client.user.firstName }} {{ client.user.lastName }}</td>
+                                                    <td class="font-weight-bold">{{ client.user.telephone }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr class="text-align-edge">
+                                                    <td class="border-top-0" colspan="3">
+                                                        Nuk ka ende ndonje te dhene
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 equel-grid">
+                            <div class="grid">
+                                <div class="grid-body">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title">Vleresimet e Fundit</p>
+                                    </div>
+                                    <div class="vertical-timeline-wrapper">
+                                        <div class="timeline-vertical dashboard-timeline">
+                                            {% for rev in top3Reviews %}
+                                            <div class="activity-log">
+                                                <p class="log-name">{{ rev.client.user.firstName }}</p>
+                                                <div class="log-details">
+                                                    {{ rev.reviewText|slice(0,30) }}...
+                                                </div>
+                                                <small class="log-time">{{ rev.createdAt|date('d/m/Y')}} </small>
+                                            </div>
+                                            {% else %}
+                                                <div class="activity-log">
+                                                    <p class="log-name">Asnje Rezultat</p>
+                                                    <div class="log-details">
+                                                        Asnje Rezultat
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="border-top px-3 py-2 d-block text-gray" href="{{ path('app_admin_clients_feedback') }}">
+                                    <small class="font-weight-medium">
+                                        <i class="fa fa-expand"></i>Shiko Me tej
+                                    </small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+        <!-- content viewport ends --><!-- partial:partials/_footer.html -->
+
+        <footer class="footer">
+            <div class="row">
+                <div class="col-sm-6 text-center text-sm-right order-sm-1">
+                    <ul class="text-gray">
+                        <li><a href="#">Info i metejshem?</a>
+                        </li>
+                        <li>
+                            <a href="#">Mbeshtetje</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 text-center text-sm-left mt-3 mt-sm-0">
+                    <small class="text-muted d-block">Evald Nexhipi | Kevin Dule © 2020
+                        <a href="#" target="_blank">MegaSpital</a>.
+                        All rights reserved</small>
+                    <small class="text-gray mt-2">Krijuar me
+                        <i class="fa fa-heart-o text-danger"></i>
+                    </small>
+                </div>
+            </div>
+        </footer>
+        <!-- partial -->
+    </div>
+    <!-- page content ends -->
+</div>
+<!--page body ends -->
+
+{% block javascripts %}
+    <!-- SCRIPT LOADING START FORM HERE /////////////--><!-- plugins:js -->
+    <script src="{{ asset('js/profile/core.js') }}"></script>
+    <script src="{{ asset('js/profile/vendor.addons.js') }}"></script>
+    <!-- endinject -->
+    <!-- Vendor Js For This Page Ends-->
+    {#<script src="{{ asset('js/profile/Chart.min.js') }}"></script>#}
+    <!-- Vendor Js For This Page Ends-->
+    <script src="{{ asset('js/profile/script.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var myChart = document.getElementById("revenuesChartCanvas").getContext('2d');
+
+            $.get('http://localhost:8000/getLastReservationsFreq', function (data) {
+                var months = new Array();
+                var counts = new Array();
+                for (var i=0; i<data.length; i++){
+                    months.push(data[i].month);
+                    counts.push(data[i].count);
+                }
+
+                var massPopChart = new Chart(myChart,{
+                    type: 'line', //bar,horizontalBar, pie, line, doughnut, radar, polarArea
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Muajt',
+                            data:counts,
+                            backgroundColor: 'rgba(238, 238, 0, 1)'
+                        }] //can have more than one data set
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                            yAxes: [{
+                                // display: false,
+                                gridLines: {
+                                    display: false,
+                                }
+                            }],
+                        }
+                    }
+                });
+            });
+
+            // $("#revenuesChart").html(myChart.generateLegend());
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends 'user/profile.html.twig' %}
+{% block trupi %}
+    <div class="content-viewport">
+        <table class="table table-light">
+            <thead>
+            <tr>
+                <th>Doktori</th>
+                <th>Trajtimi</th>
+                <th>Diagnoza</th>
+                <th>Simptoma</th>
+                <th>Vizituar me</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for anamnesis in pagination %}
+                <tr>
+                    <td>{{ anamnesis.medicalStaff.user.firstName }} {{ anamnesis.medicalStaff.user.lastName }} </td>
+                    <td>{{ anamnesis.treatment }}</td>
+                    <td>{{ anamnesis.diagnosis }}</td>
+                    <td>{{ anamnesis.symptoms }}</td>
+                    <td>{{ anamnesis.createdAt|date('d-m-Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

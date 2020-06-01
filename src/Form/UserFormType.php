@@ -24,67 +24,26 @@ class UserFormType extends AbstractType
         $builder
             ->add('firstName',TextType::class,[
                 'required'=>true,
-                'label'=>true,
+                'label'=>false,
             ])
             ->add('lastName',TextType::class,[
                 'required'=>true,
-                'label'=>true,
+                'label'=>false,
             ])
             ->add('email',EmailType::class,[
                 'required'=>true,
-                'label'=>true,
+                'label'=>false,
                 'invalid_message'=>'Emaili ekziston',
                 'csrf_message'=>'Emaili ekziston'
             ])
-            ->add('password', RepeatedType::class, [
-                'type'=>PasswordType::class,
-                'options'=>[
-                    'attr'=>['class'=>'input--style-4', 'name'=>'password']
-                ],
-                'required'=>true,
-                'first_options'=>['label'=>true],
-                'second_options'=>['label'=>true],
-                'invalid_message'=>'Fjalekalimet nuk perputhen'
-            ])
-            ->add('gender',ChoiceType::class,[
-                'choices'=>[
-                    'Femer'=>'F',
-                    'Mashkull'=>'M'
-                ],
-                'required'=>true,
-                'label'=>true
-            ])
-            ->add('birthday', DateType::class,[
-                'required'=>true,
-                'label'=>false,
-                'attr'=>[
-                    'class'=>'js-datepicker'
-                ],
-                'html5'=>'false'
-            ])
             ->add('telephone',TelType::class,[
                 'required'=>true,
-                'label'=>true,
+                'label'=>false,
                 'invalid_message'=>'Format i gabuar'
             ])
             ->add('address',TextType::class,[
                 'required'=>false,
-                'label'=>true,
-            ])
-            ->add('imageFilename',FileType::class,[
-                'label'=>true,
-                'mapped'=>false,
-                'required'=>false,
-                'constraints'=>[
-                    new File([
-                        'maxSize'=>'8192k',
-                        'mimeTypes'=>[
-                            'image/jpeg',
-                            'image/jpg',
-                        ],
-                        'mimeTypesMessage' => 'Ju lutemi te vendosni nje foto',
-                    ])
-                ],
+                'label'=>false,
             ])
         ;
     }

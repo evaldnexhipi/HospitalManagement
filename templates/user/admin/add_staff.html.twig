@@ -1,0 +1,179 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #form1 li{
+            color: red;
+            list-style-type: circle;
+        }
+
+        #form2 li{
+            color: red;
+            list-style-type: circle;
+        }
+    </style>
+{% endblock %}
+{% block trupi %}
+    <div class="row">
+        <div class="col-lg-6 equel-grid">
+            <div class="grid">
+                <p class="grid-header">Te Dhenat Baze</p>
+                <div class="grid-body">
+                    <div class="item-wrapper" id="form1">
+                        {{ form_start(regForm) }}
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <label for="user_form_firstName">Emri</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.firstName,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <label for="user_form_lastName">Mbiemri</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.lastName,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                <label for="user_form_email">Email</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.email,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-mars" aria-hidden="true"></i>
+                                <i class="fa fa-venus" aria-hidden="true"></i>
+                                <label for="user_form_email">Gjinia</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.gender, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <label for="user_form_email">Password</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.password.first,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                                <label for="user_form_email">Perserit Password</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.password.second,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <label for="user_form_email">Telefoni</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.telephone,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 equel-grid">
+            <div class="grid">
+                <p class="grid-header">Te Dhena Te Tjera</p>
+                <div class="grid-body">
+                    <div class="item-wrapper" id="form2">
+                        {% for message in app.flashes('staffRegister') %}
+                            <div class="alert alert-success" style="text-align: center;">Shtim me sukses ne Staf</div>
+                        {% endfor %}
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+                                <label for="user_form_email">Ditelindje</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.birthday,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                <label for="user_form_email">Adresa</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.address,{'attr':{'class':'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                <label for="user_form_email">Foto</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(regForm.imageFilename,{'attr':{'class':'btn btn-success'}}) }}
+                            </div>
+                        </div>
+
+                        {{ form_start(docForm) }}
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <label for="user_form_telepone">Salla </label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+{#                                <select class="custom-select" name="hall" id="name">#}
+{#                                    {% for hall in halls %}
+{#                                    <option value="{{ hall.id }}">{{ hall }}</option>#}
+{#                                    {% endfor %}
+{#
+{#                                </select>#}
+                                {{ form_row(docForm.hall,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <label for="user_form_telepone">Specialiteti </label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+{#                                <select class="custom-select" name="speciality" id="speciality">#}
+{#                                    {% for speciality in specialities %}#}
+{#                                        <option value="{{ speciality.id }}">{{ speciality }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+                                {{ form_row(docForm.speciality,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        {{ form_row(regForm._token) }}
+                        <button type="submit" class="btn btn-success">Shto Staf</button>
+                        {{ form_end(docForm) }}
+                        {{ form_end(regForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -65,7 +65,6 @@ class SecurityController extends AbstractController
             $user->setToken($token);
             $user->setIsActive(false);
 
-
             $user->setFirstName(ucfirst(strtolower($form->get('firstName')->getData())));
             $user->setLastName(ucfirst(strtolower($form->get('lastName')->getData())));
 
@@ -93,6 +92,10 @@ class SecurityController extends AbstractController
                     dd($e);
                 }
                 $user->setImageFilename($newFilename);
+            }
+
+            if (!$user->getImageFilename()){
+                $user->setImageFilename('user-default.jpg');
             }
 
             $user->setClient($client);

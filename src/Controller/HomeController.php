@@ -6,6 +6,9 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\MedicalStaffRepository;
+use App\Repository\ReviewRepository;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -18,11 +21,16 @@ class HomeController extends BaseController
     /**
      * @Route("/",name="homepage")
      */
-    public function homepage(){
-
+    public function homepage(ServiceRepository $serviceRepository, ReviewRepository $reviewRepository, MedicalStaffRepository $medicalStaffRepository){
         /* $this->getUser()*/
-
-        return $this->render('Home/homepage.html.twig');
+        //$serviceRepository->getTop4Services();
+        //$reviewRepository->getTop4Reviews();
+        //$medicalStaffRepository->getTop4MedicalStaff()
+        return $this->render('Home/homepage.html.twig',[
+            'top4Services'=>$serviceRepository->getTop4Services(),
+            'top4Reviews'=>$reviewRepository->getTop4Reviews(),
+            'top4MedicalStaff'=>$medicalStaffRepository->getTop4MedicalStaff()
+        ]);
     }
 
     /**

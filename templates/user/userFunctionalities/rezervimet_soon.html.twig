@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for reservation in reservations %}
+            {% for reservation in pagination %}
                 <tr>
                     <td>{{ reservation.medicalStaff.user.firstName }}</td>
                     <td>{{ reservation.service.name }}</td>
@@ -28,7 +28,7 @@
     </table>
     </div>
 
-
+    {{ knp_pagination_render(pagination) }}
     <!--HISTORIKU I REZERVIMEVE -->
     <div class="row">
 

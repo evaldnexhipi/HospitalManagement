@@ -1,0 +1,63 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+{% block trupi %}
+    <div class="content-viewport">
+        {% for message in app.flashes('deleteSuccess') %}
+            <div class="alert alert-success text-center"> {{ message }}</div>
+        {% endfor %}
+        <table class="table table-light">
+            <thead>
+            <form>
+            <tr>
+                <th>
+                   Kerko Staf:
+                </th>
+                <th colspan="4">
+                    <input type="text"
+                           name="q"
+                           class="form-control"
+                           placeholder="Search..."
+                           value="{{ app.request.query.get('q') }}"
+                    >
+                </th>
+                <th>
+                    <button type="submit"
+                            class="btn btn-outline-secondary">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </th>
+            </tr>
+            </form>
+            <tr>
+                <th>Emer</th>
+                <th>Mbiemer</th>
+                <th>Salla</th>
+                <th>Specialiteti</th>
+                <th>Departamenti</th>
+                <th>Fshi Staff</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for staff in pagination %}
+                <tr>
+                    <td>{{ staff.user.firstName }}</td>
+                    <td>{{ staff.user.lastName }}</td>
+                    <td>{{ staff.hall.name }}</td>
+                    <td>{{ staff.speciality.title }}</td>
+                    <td>{{ staff.hall.departament.name }}</td>
+                    <td>
+                        <a href="{{ path("app_admin_remove_staff",{id: staff.user.id}) }}" class="btn btn-danger">
+                            Fshi Staf
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!--HISTORIKU I REZERVIMEVE -->
+    <div class="row">
+
+    </div>
+{% endblock %}

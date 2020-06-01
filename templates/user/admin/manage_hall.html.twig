@@ -1,0 +1,52 @@
+{% extends 'user/admin/admin_profile.html.twig' %}
+
+{% block trupi %}
+    <div class="row">
+        <div class="col-lg-6 equel-grid">
+            <div class="grid">
+                <p class="grid-header">Ndrysho Salle</p>
+                <div class="grid-body">
+                    {% for message in app.flashes('hallUpdateSuccess') %}
+                        <div class="alert alert-success text-center"> {{ message }}</div>
+                    {% endfor %}
+                    {{ form_start(form) }}
+                    <div class="item-wrapper" id="form2">
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                <label for="room_form_name">Emri</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(form.name, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                <label for="room_form_description">Pershkrimi</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(form.description, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                <label for="service_form_departament">Departamenti</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(form.departament, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Ndrysho Salle</button>
+                        <a href="{{ path('app_admin_list_halls') }}" class="btn btn-warning"> Kthehu Te Sallat</a>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

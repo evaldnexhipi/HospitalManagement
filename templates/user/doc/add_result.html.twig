@@ -1,0 +1,71 @@
+{% extends 'user/doctorProfile.html.twig' %}
+{% block trupi %}
+    <div class="row">
+        <div class="col-lg-6 equel-grid">
+            <div class="grid">
+                <p class="grid-header">Kryej Vizite</p>
+                <div class="grid-body">
+                    {% for message in app.flashes('anamnesisSuccess') %}
+                        <div class="alert alert-success"> {{ message }}</div>
+                    {% endfor %}
+                    {{ form_start(anamnesisForm) }}
+                    <div class="item-wrapper" id="form2">
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                                <label for="aprovo_rezervim_form_client">Klient</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(anamnesisForm.client, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-user-md" aria-hidden="true"></i>
+                                <label for="aprovo_rezervim_form_medicalStaff">Doktor</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(anamnesisForm.medicalStaff, {'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-stethoscope" aria-hidden="true"></i>
+                                <label for="aprovo_rezervim_form_service">Diagnoza</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(anamnesisForm.diagnosis,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                <label for="aprovo_rezervim_form_status">Simptoma</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(anamnesisForm.symptoms,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group row showcase_row_area">
+                            <div class="col-md-3 showcase_text_area">
+                                <i class="fa fa-medkit" aria-hidden="true"></i>
+                                <label for="cost">Trajtimi</label>
+                            </div>
+                            <div class="col-md-9 showcase_content_area">
+                                {{ form_row(anamnesisForm.treatment,{'attr':{'class':'custom-select'}}) }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success" name="anamnesisButton">Kryej Takim</button>
+
+                        {{ form_end(anamnesisForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Results;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,55 @@ class ResultsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getResultsForClient($clientId): QueryBuilder{
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.client = :clientid')
+            ->setParameter('clientid',$clientId)
+        ;
+
+        return $qb->orderBy('r.createdAt','DESC');
+    }
+
+    public function getResultsNumberForUser($clientId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.client)')
+            ->andWhere('r.client = :clientId')
+            ->setParameter('clientId',$clientId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getResultsNumberForDoc($medicalId){
+        $qb = $this->createQueryBuilder('r')
+            ->select('count(r.medicalStaff)')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getLastResultForClient($clientId)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.client = :clientid')
+            ->setParameter('clientid',$clientId)
+            ->orderBy('r.createdAt','DESC')
+            ->setMaxResults(1)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getLastResultForDoc($medicalId)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.medicalStaff = :medicalId')
+            ->setParameter('medicalId',$medicalId)
+            ->orderBy('r.createdAt','DESC')
+            ->setMaxResults(1)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
