@@ -10,3 +10,4 @@
 
 <p align="center"> Evald Nexhipi | Kevin Dule</p>
 
+Projekti eshte i zhvilluar ne Symfony 4. 
