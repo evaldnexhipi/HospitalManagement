@@ -5,9 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use  Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ * @UniqueEntity(fields = {"availableTimes"}, errorPath="availableTimes", message="This port is already in use on that host")
  */
 class Reservation
 {
@@ -39,14 +40,18 @@ class Reservation
 
     /**
      * @ORM\Column(type="string", length=15)
-     * @Assert\Choice(choices={"paguaj","pritje"}, message="Rezervimi duhet te kete nje status")
+     * @Assert\Choice(choices={"paguaj","pritje"})
      */
     private $status='pritje';
 
     /**
      * @ORM\Column(type="date")
      */
-    private $day;
+    private $InvoiceDate;
+    /**
+     * @ORM\Column(type="string", unique = true)
+     */
+    private $availableTimes;
 
     public function getId(): ?int
     {
@@ -101,15 +106,25 @@ class Reservation
         return $this;
     }
 
-    public function getDay(): ?\DateTimeInterface
+    public function getInvoiceDate(): ?\DateTimeInterface
     {
-        return $this->day;
+        return $this->InvoiceDate;
     }
 
-    public function setDay(\DateTimeInterface $day): self
+    public function setInvoiceDate(\DateTimeInterface $InvoiceDate): self
     {
-        $this->day = $day;
+        $this->InvoiceDate = $InvoiceDate;
 
         return $this;
+    }
+    public function setAvailableTimes(string $availableTimes): ?self
+    {
+        $this->availableTimes = $availableTimes;
+
+        return $this;
+    }
+    public function getAvailableTimes(): ?string
+    {
+        return $this->availableTimes;
     }
 }

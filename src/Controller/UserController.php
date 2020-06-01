@@ -13,6 +13,7 @@ use App\Form\UserFormType;
 use App\Repository\ReservationRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,25 +40,29 @@ class UserController extends BaseController
      */
     public function makeReservation(Service $service, Request $request, EntityManagerInterface $manager)
     {
-        $reservation = new Reservation();
-        $reservation->setClient($this->getUser()->getClient());
-        $reservation->setService($service);
-        $form = $this->createForm(ReservationFormType::class);
-        $form->handleRequest($request);
+        try{$reservation = new Reservation();
+            $reservation->setClient($this->getUser()->getClient());
+            $reservation->setService($service);
+            $form = $this->createForm(ReservationFormType::class);
+            $form->handleRequest($request);
 
-        $price=$service->getCost();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setMedicalStaff($form->get('medicalStaff')->getData());
-            $reservation->setDay($form->get('day')->getData());
-            $reservation->setStatus('pritje');
-            $manager->persist($reservation);
-            $manager->flush();
-            $this->addFlash('successReservation','U shtua rezervimi ne pritje');
-        }
+            $price=$service->getCost();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $reservation->setMedicalStaff($form->get('medicalStaff')->getData());
+                $reservation->setInvoiceDate($form->get('invoiceDate')->getData());
+                $reservation->setAvailableTimes(sprintf("%s,%s,%s", $form->get('availableTimes')->getData(), $form->get('invoiceDate')->getData()->format('Y-m-d'),$form->get('medicalStaff')->getData()));
+                $reservation->setStatus('pritje');
+                $manager->persist($reservation);
+                $manager->flush();
+                $this->addFlash('successReservation','U shtua rezervimi ne pritje');
+            }}
+            catch(UniqueConstraintViolationException $e){
+                echo"<p style = 'background-color:red; color: white; text-align: center'>Na vjen keq, doktori qe zgjodhet nuk eshte disponibel ne kete orar</p>";
+            }
 
         return $this->render('user/reservation.html.twig', [
             'reservationForm' => $form->createView(),
-            'cost'=>$price
+            'cost'=>$price,
         ]);
     }
 

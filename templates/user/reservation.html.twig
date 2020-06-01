@@ -4,6 +4,10 @@
 {{ parent() }}
     <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AXMLclNq0YB086Oghzz8OXFgbeidfjMl-oucRdT60_ryHNLPGpe0Hos6UrF0rYOjNqmV2kJ0Y59UJQ4M"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.</script>
 {% endblock %}
 {% block body %}
@@ -41,10 +45,19 @@
                             <i class="fa fa-calendar" aria-hidden="true"></i>
                         </div>
                         <label for="reservation_form_medicalStaff">Perzgjidh Daten</label>
-                        {{ form_row(reservationForm.day, {'attr':{'type':'text','class':'nice-select'}}) }}
+                        {{form_row(reservationForm.invoiceDate, {'attr':{'class':'reservation-date'}})}}
                     </div>
                 </div>
-
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <div class="icon">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        </div>
+                        <label for="reservation_form_medicalStaff">Perzgjidh Oren</label>
+                        <label>*Oraret e meposhtme jane oraret kur operojne mjeket tane, ato mund te jene te zena nga usera te tjere</label>
+                        {{form_row(reservationForm.availableTimes, {'attr':{'class':'reservation-date'}})}}
+                    </div>
+                </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="form-group">
                         <div class="icon">
@@ -69,10 +82,6 @@
     </div>
 
 
-        {#
-            <input type="submit" value="Rezervo">
-        #}
-    {#FORM#}
 
     {% block footer %}
         {{ parent() }}
