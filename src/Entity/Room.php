@@ -44,10 +44,6 @@ class Room
      */
     private $status;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="room")
-     */
-    private $itemsLocations;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Patient", mappedBy="room", orphanRemoval=true)
@@ -62,7 +58,6 @@ class Room
 
     public function __construct()
     {
-        $this->itemsLocations = new ArrayCollection();
         $this->patients = new ArrayCollection();
     }
 
@@ -119,33 +114,6 @@ class Room
         return $this;
     }
 
-    /**
-     * @return Collection|ItemsLocation[]
-     */
-    public function getItemsLocations(): Collection
-    {
-        return $this->itemsLocations;
-    }
-
-    public function addItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if (!$this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations[] = $itemsLocation;
-            $itemsLocation->addRoom($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if ($this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations->removeElement($itemsLocation);
-            $itemsLocation->removeRoom($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Patient[]

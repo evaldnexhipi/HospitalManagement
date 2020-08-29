@@ -323,6 +323,7 @@ class AdminController extends BaseController
      */
     public function deleteDepartament(Departament $departament, EntityManagerInterface $entityManager)
     {
+
         $entityManager->remove($departament);
         $entityManager->flush();
         $this->addFlash('deleteDepSuccess','Departamenti u fshi me sukses');

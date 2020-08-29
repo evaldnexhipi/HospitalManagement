@@ -64,4 +64,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function getIncidences($number){
+        $qb = $this->createQueryBuilder('u')
+            ->select('count(u.smsCode)')
+            ->andWhere('u.smsCode = :numer')
+            ->setParameter('numer',$number)
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

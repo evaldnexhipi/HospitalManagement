@@ -9,6 +9,7 @@
             <tr>
                 <th>Doktori</th>
                 <th>Sherbimi</th>
+                <th>Klienti</th>
                 <th>Data</th>
                 <th>Status</th>
                 <th>Anulo</th>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ reservation.medicalStaff.user.firstName }}</td>
                     <td>{{ reservation.service.name }}</td>
+                    <td>{{ reservation.client.user.firstName }} {{ reservation.client.user.lastName }}</td>
                     <td>{{ reservation.day|date('d-m-Y') }}</td>
                     <td>{{ reservation.status }}</td>
                     <td><a href="{{ path('app_user_cancel_reservation',{id: reservation.id}) }}" class="btn btn-danger">Anulo</a></td>

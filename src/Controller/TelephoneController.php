@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Nexmo\Client;
+use Nexmo\Client\Credentials\Basic;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,23 +26,31 @@ class TelephoneController extends BaseController
 /*
 Shenim
 */
-        
-        
-        $random_number = mt_rand(10000,60000);
-        $user->setSmsCode($random_number);
+        $basic = new Basic('2914317d','4MDI85HI34xWdAwA');
+        $client= new Client($basic);
 
-/*
-        $message = $client->message()
-            ->send([
-                'to'=>'+355'.substr($teli,1),
-                'from'=>'Qendra MegaSpital',
-                'text'=>'MegaSpital! Kodi i konfirmimit eshte: '.$random_number
-            ]);
-  */
+        $unique=false;
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        while(!$unique){
+            $random_number = mt_rand(10000,60000);
+            if ($userRepository->getIncidences($random_number)==0){
+                $unique=true;
+            }
+        }
 
+        if ($unique) {
+            $user->setSmsCode($random_number);
+
+            $message = $client->message()
+                ->send([
+                    'to' => '+355' . substr($teli, 1),
+                    'from' => 'Vonage APIs',
+                    'text' => 'MegaSpital! Kodi i konfirmimit eshte: ' . $random_number
+                ]);
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
         return $this->render('security/smsSent.html.twig',[
             'email'=>$email
         ]);

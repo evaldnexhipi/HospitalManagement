@@ -8,6 +8,12 @@
                     {% for message in app.flashes('anamnesisSuccess') %}
                         <div class="alert alert-success"> {{ message }}</div>
                     {% endfor %}
+                    {% for message in app.flashes('treatmentSuccess') %}
+                        <div class="alert alert-success"> {{ message }}</div>
+                    {% endfor %}
+                    {% for message in app.flashes('failureTreatment') %}
+                        <div class="alert alert-danger"> {{ message }}</div>
+                    {% endfor %}
                     {{ form_start(anamnesisForm) }}
                     <div class="item-wrapper" id="form2">
                         <div class="form-group row showcase_row_area">

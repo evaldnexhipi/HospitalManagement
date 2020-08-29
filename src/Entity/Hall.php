@@ -35,20 +35,12 @@ class Hall
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ItemsLocation", mappedBy="hall")
-     */
-    private $itemsLocations;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\MedicalStaff", mappedBy="hall", orphanRemoval=true)
      */
     private $medicalStaff;
 
-
-
     public function __construct()
     {
-        $this->itemsLocations = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->medicalStaff = new ArrayCollection();
     }
@@ -95,19 +87,6 @@ class Hall
     }
 
 
-    public function removeItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if ($this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations->removeElement($itemsLocation);
-            // set the owning side to null (unless already changed)
-            if ($itemsLocation->getHall() === $this) {
-                $itemsLocation->setHall(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|User[]
      */
@@ -134,24 +113,6 @@ class Hall
             if ($user->getHall() === $this) {
                 $user->setHall(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ItemsLocation[]
-     */
-    public function getItemsLocations(): Collection
-    {
-        return $this->itemsLocations;
-    }
-
-    public function addItemsLocation(ItemsLocation $itemsLocation): self
-    {
-        if (!$this->itemsLocations->contains($itemsLocation)) {
-            $this->itemsLocations[] = $itemsLocation;
-            $itemsLocation->addHall($this);
         }
 
         return $this;

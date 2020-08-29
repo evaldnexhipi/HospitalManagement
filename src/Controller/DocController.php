@@ -17,6 +17,7 @@ use App\Repository\ReservationRepository;
 use App\Repository\ResultsRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -165,13 +166,18 @@ class DocController extends BaseController
         }
 
         if (isset($_POST['treatmentButton'])) {
-            $treatmentForm->handleRequest($request);
-            if ($treatmentForm->isSubmitted() && $treatmentForm->isValid()){
-                $treatment = $treatmentForm->getData();
+            try {
+                $treatmentForm->handleRequest($request);
+                if ($treatmentForm->isSubmitted() && $treatmentForm->isValid()) {
+                    $treatment = $treatmentForm->getData();
 
-                $entityManager->persist($treatment);
-                $entityManager->flush();
-                $this->addFlash('treatmentSuccess','Trajtimi u shtua me sukses');
+                    $entityManager->persist($treatment);
+                    $entityManager->flush();
+                    $this->addFlash('treatmentSuccess', 'Trajtimi u shtua me sukses');
+                }
+            }
+            catch (UniqueConstraintViolationException $e){
+                $this->addFlash('failureTreatment','Emri i Trajtimit duhet te jete i vecante');
             }
         }
 

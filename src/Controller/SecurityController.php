@@ -52,6 +52,10 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, TokenGenerator $tokenGenerator, UserPasswordEncoderInterface $encoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator,  Mailer $mailer, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        if($this->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+            return $this->redirectToRoute('homepage');
+        }
+
         $user = new User();
         $client = new Client();
         $form = $this->createForm(RegistrationFormType::class);
